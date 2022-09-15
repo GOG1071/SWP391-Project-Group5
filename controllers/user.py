@@ -15,4 +15,3 @@ def forgot_password():
 
 def register_seller():
     pass
-
