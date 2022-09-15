@@ -1,6 +1,7 @@
 import controllers.user
 from decorators.authentication import login_required
-from flask import Blueprint, jsonify, request, render_template
+from flask import Blueprint, jsonify, request, render_template, session
+
 
 user_router = Blueprint('user_router', __name__)
 
