@@ -1,8 +1,8 @@
 from models.user import UserRole, User
 from models.model import db
 
-def register():
-    pass
+def register(request):
+    if(request.)
 
 def login():
     pass
