@@ -21,4 +21,5 @@ db.create_all(app=app)
 
 app.register_blueprint(user_router, url_prefix="/user")
 
+
 app.run("0.0.0.0", port=os.environ["port"], debug=True)
