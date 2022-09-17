@@ -22,7 +22,8 @@ app.secret_key = os.getenv('SECRET_KEY')
 
 #start database
 db.init_app(app)
-db.create_all(app=app)
+
+# db.create_all(app=app)    -->     create new database, don't use this if you already have db.sqlite3 database
 
 #register blueprint
 app.register_blueprint(user_router, url_prefix="/user")
