@@ -27,6 +27,7 @@ db.create_all(app=app)
 #register blueprint
 app.register_blueprint(user_router, url_prefix="/user")
 
+
 @app.route("/")
 def index():
     return "Hello World!"
