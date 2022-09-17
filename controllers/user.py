@@ -8,6 +8,7 @@ from models.model import db
 def register():
     pass
 
+
 def login():
     if request.method == "POST":
         name = 
@@ -21,4 +22,3 @@ def forgot_password():
 
 def register_seller():
     pass
-

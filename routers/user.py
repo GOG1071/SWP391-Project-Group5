@@ -1,6 +1,7 @@
 import controllers.user
 from decorators.authentication import login_required
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, render_template, session
+
 
 user_router = Blueprint('user_router', __name__)
 
@@ -10,8 +11,8 @@ def index():
 
 @user_router.route("/register", methods=["POST", "GET"])
 def register():
-    pass
-
+    if(request.method == "POST"):
+        return controllers.user.register(request)
 @user_router.route("/login", methods=["POST", "GET"])
 def login():
     return controllers.user.login()
