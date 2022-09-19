@@ -15,7 +15,10 @@ def register():
         return controllers.user.register(request)
 @user_router.route("/login", methods=["POST", "GET"])
 def login():
-    return controllers.user.login()
+    if request.method("POST"):
+
+        return controllers.user.login()
+    return render_template("login.html")
 
 @user_router.route("/logout", methods=["POST", "GET"])
 @login_required
