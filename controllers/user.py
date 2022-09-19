@@ -5,7 +5,6 @@ from models.model import db
 def register():
     pass
 
-
 def login():
     pass
 

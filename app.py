@@ -1,3 +1,4 @@
+from calendar import isleap
 from flask import Flask, render_template, request
 from dotenv import load_dotenv
 from models.model import db
@@ -23,7 +24,7 @@ app.secret_key = os.getenv('SECRET_KEY')
 #start database
 db.init_app(app)
 
-# db.create_all(app=app)    -->     create new database, don't use this if you already have db.sqlite3 database
+db.create_all(app=app)    
 
 #register blueprint
 app.register_blueprint(user_router, url_prefix="/user")
@@ -31,6 +32,7 @@ app.register_blueprint(user_router, url_prefix="/user")
 
 @app.route("/")
 def index():
-    return "Hello World!"
+    # return "Hello World!"
+    return render_template("home.html", stringName = "You are not logged in",isLogin = False)
 
 app.run("0.0.0.0", port=os.environ["port"], debug=True)
