@@ -20,8 +20,8 @@
 
             <div class="col-md-8" >
                 <h1 class="text-center" style="margin-top: 15%;"> Login </h1>
-                {%with messages = get_flashed_messages%}
-                    {%if messages%}
+                {%with messages = get_flashed_messages()%}
+                    {%if messages:%}
                         {%for m in messages%}
                             <p class="text-center text-capitalize text-danger"> {{m}}</p>
                         {%endfor%}

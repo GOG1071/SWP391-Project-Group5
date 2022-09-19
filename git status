@@ -1,0 +1,176 @@
+[33mcommit 8914f939c2929c0f975f14fb70b3e56844f5bdce[m[33m ([m[1;36mHEAD -> [m[1;32mduc[m[33m, [m[1;31morigin/duc[m[33m)[m
+Author: guyenminhDuc <113040445+guyenminhDuc@users.noreply.github.com>
+Date:   Mon Sep 19 22:53:08 2022 +0700
+
+    add backend for login, tach css and html
+
+[33mcommit 86aab4d1c62337264312d73db68b2fdfeded0c1a[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Merge: 4cf2290 a912b2d
+Author: Tùng Lâm <65458414+shine102@users.noreply.github.com>
+Date:   Mon Sep 19 08:55:36 2022 +0700
+
+    Merge pull request #6 from gog1071/forgot-pass
+    
+    Add files via upload
+
+[33mcommit a912b2d134127bdb5345e37a27b2ea402c03d0cd[m
+Author: linhnphe <113043128+linhnphe@users.noreply.github.com>
+Date:   Mon Sep 19 08:53:28 2022 +0700
+
+    Add files via upload
+
+[33mcommit 4cf2290ee3c8f59567a8dead42ca02580f1e0ef5[m
+Author: minhdlhe163242 <minhdlhe163242@fpt.edu.vn>
+Date:   Mon Sep 19 07:01:36 2022 +0700
+
+    fix home.css fix db.Boollean
+
+[33mcommit a19f5c240d5f55dded903a230ce838ff3da297e3[m
+Merge: 5fbf567 cd1ed34
+Author: Tùng Lâm <65458414+shine102@users.noreply.github.com>
+Date:   Mon Sep 19 00:42:13 2022 +0700
+
+    Merge pull request #5 from gog1071/register-normal
+    
+    modified register.html, finish front-end for register
+
+[33mcommit 5fbf56705390cda28702151b5e4c0f34673c823b[m
+Merge: f87b86b 4ab8370
+Author: shine102 <nguyenngotunglam2@gmail.com>
+Date:   Mon Sep 19 00:37:56 2022 +0700
+
+    Merge branch 'master' of https://github.com/gog1071/SWP391-Project-Group5
+
+[33mcommit f87b86b8095d45492038695fcfcba979c293f039[m
+Author: shine102 <nguyenngotunglam2@gmail.com>
+Date:   Mon Sep 19 00:37:33 2022 +0700
+
+    add frontend register_seller.html, create HomeOwner Model, Admin Model
+
+[33mcommit cd1ed3402f64c05f21b9f05d3f350153b1c11b74[m
+Author: G G O <goldendarkness1071@gmail.com>
+Date:   Mon Sep 19 00:28:38 2022 +0700
+
+    modified register.html, finish front-end for register
+
+[33mcommit 4ab83703100fb5f67231697b8a5abbaf2124aeab[m
+Merge: 4952b50 cfd1e2a
+Author: Tùng Lâm <65458414+shine102@users.noreply.github.com>
+Date:   Sun Sep 18 21:41:59 2022 +0700
+
+    Merge pull request #4 from gog1071/minh
+    
+    Minh
+
+[33mcommit cfd1e2a3ee00a387863a0b47a10f76f35ea0e91f[m
+Author: minhdlhe163242 <minhdlhe163242@fpt.edu.vn>
+Date:   Sun Sep 18 07:12:06 2022 +0700
+
+    add static folder
+
+[33mcommit d6ca8dd92be5e78ee5f487437018f65d93e41101[m
+Author: minhdlhe163242 <minhdlhe163242@fpt.edu.vn>
+Date:   Sun Sep 18 07:06:32 2022 +0700
+
+    add home.html
+
+[33mcommit 4952b50256ad2ea8bd61df636c8ace40b28ec0af[m
+Author: shine102 <nguyenngotunglam2@gmail.com>
+Date:   Sat Sep 17 22:25:22 2022 +0700
+
+    fix error when clone and run the app, fix wrong import lib
+
+[33mcommit 15c1e2325a0cd6cc512f88e8652d603372bbd293[m
+Author: Tùng Lâm <65458414+shine102@users.noreply.github.com>
+Date:   Sat Sep 17 21:18:14 2022 +0700
+
+    Update req.txt
+
+[33mcommit 1ea5e1eec483b4e6c88d419f1efd13f8fe99f2ba[m
+Merge: 3024d2f 09aa6f1
+Author: Tùng Lâm <65458414+shine102@users.noreply.github.com>
+Date:   Sat Sep 17 21:16:34 2022 +0700
+
+    Merge pull request #3 from gog1071/Minh_Duc
+    
+    them template cho login
+
+[33mcommit 09aa6f156cdbdcdc03f3e5f581c09fab56241cd1[m
+Merge: 319c86e 3024d2f
+Author: Tùng Lâm <65458414+shine102@users.noreply.github.com>
+Date:   Sat Sep 17 21:15:49 2022 +0700
+
+    Merge branch 'master' into Minh_Duc
+
+[33mcommit 319c86e6d88ab106cc0312055d10486c7e3de823[m
+Author: guyenminhDuc <ducnmhe163139@fpt.edu.vn>
+Date:   Fri Sep 16 09:19:50 2022 +0700
+
+    them template cho login
+
+[33mcommit 3024d2fc65a8f0d9900ddda191189e5df7e3ab0b[m
+Merge: 7cd8eec 06ddff4
+Author: Tùng Lâm <65458414+shine102@users.noreply.github.com>
+Date:   Thu Sep 15 23:20:34 2022 +0700
+
+    Merge pull request #2 from gog1071/register
+    
+    Add register.html
+
+[33mcommit 06ddff4a8693a123fc931258fda3e9d71e6273b8[m
+Merge: ae44811 7cd8eec
+Author: Tùng Lâm <65458414+shine102@users.noreply.github.com>
+Date:   Thu Sep 15 23:20:10 2022 +0700
+
+    Merge branch 'master' into register
+
+[33mcommit 7cd8eec5b8c6e6dce337979ae1ccbce44fd4264f[m
+Merge: 45391a2 01f79c8
+Author: Tùng Lâm <65458414+shine102@users.noreply.github.com>
+Date:   Thu Sep 15 23:19:29 2022 +0700
+
+    Merge pull request #1 from gog1071/lam15_9
+    
+    them gi day sua gi day
+
+[33mcommit 01f79c8a0529e59ed809be7984c9e02b7d6fd4e4[m
+Author: shine102 <nguyenngotunglam2@gmail.com>
+Date:   Thu Sep 15 23:18:55 2022 +0700
+
+    add comment app.py
+
+[33mcommit e2f7ef060d6b64bb5c5fbe2fecd20b44c0137411[m
+Author: shine102 <nguyenngotunglam2@gmail.com>
+Date:   Thu Sep 15 21:30:02 2022 +0700
+
+    them gi day sua gi day
+
+[33mcommit ae4481179bea3e37ad64dd9d49764f2984329928[m
+Author: G G O <goldendarkness1071@gmail.com>
+Date:   Thu Sep 15 21:22:25 2022 +0700
+
+    Add register.html
+
+[33mcommit 45391a27972df945fb97fdd771e8f261e516384f[m
+Author: shine102 <nguyenngotunglam2@gmail.com>
+Date:   Wed Sep 14 22:04:35 2022 +0700
+
+    add model user, router user, controller user
+
+[33mcommit eb2110f6b7985b8f84c7b25eccbb5f1b6754a903[m
+Author: shine102 <nguyenngotunglam2@gmail.com>
+Date:   Tue Sep 13 17:18:24 2022 +0700
+
+    initial commit, project struture
+
+[33mcommit aeea429064a574e460316004cfaa67b8fe6464a7[m
+Author: gog1071 <goldendarkness1071@gmail.com>
+Date:   Thu Sep 8 07:44:53 2022 +0700
+
+    first commit
+
+[33mcommit 76015cbe0dbe1ae1ada485066e1318388beb62cf[m
+Author: Lưu Việt Tùng HE163594 <76164212+gog1071@users.noreply.github.com>
+Date:   Wed Sep 7 21:32:33 2022 +0700
+
+    Initial commit
