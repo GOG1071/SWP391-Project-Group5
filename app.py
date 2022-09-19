@@ -33,6 +33,7 @@ app.register_blueprint(user_router, url_prefix="/user")
 @app.route("/")
 def index():
     # return "Hello World!"
+    
     return render_template("home.html", stringName = "You are not logged in",isLogin = False)
 
 app.run("0.0.0.0", port=os.environ["port"], debug=True)
