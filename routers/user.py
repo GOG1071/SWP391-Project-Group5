@@ -5,6 +5,10 @@ from flask import Blueprint, jsonify, request, render_template, session
 
 user_router = Blueprint('user_router', __name__)
 
+@user_router.route("/home", methods=["POST", "GET"])
+def home():
+    return controllers.user.home()
+
 @user_router.route("/register", methods=["POST", "GET"])
 def register():
     if request.method == "POST":
@@ -21,7 +25,7 @@ def login():
 
 
 @user_router.route("/logout", methods=["GET"])
-@login_required
+# @login_required
 def logout():
     return controllers.user.logout()
 
