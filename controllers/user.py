@@ -25,7 +25,7 @@ def login():
         session['user'] = query.username
         return redirect(url_for("home"))
     flash("Your account doesn't exist","info")
-    render_template("login.html")
+    return render_template("login.html")
 
 
 def logout():

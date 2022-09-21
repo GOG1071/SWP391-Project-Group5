@@ -17,7 +17,6 @@ def register():
 
 @user_router.route("/login", methods=["POST", "GET"])
 def login():
-   
     if request.method == "POST":
 
         return controllers.user.login()
