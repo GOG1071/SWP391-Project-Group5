@@ -33,15 +33,25 @@ def logout():
 
 def forgot_password():
     # nhan email tu form
+    email = request.form["email"]
     # kiem tra email
+    query = User.query.filter(User.email == email).first()
+    if query:
+        flash("New password has been sent to your email.","info")
+        render_template("login.html")   
+    flash("Wrong email!","info")
+    render_template("forgot_password.html")
     # gen 1 password moi
+    User.password = "1233456"
     # luu password moi vao database
+    db.session.commit()
     # gui email cho user / goi toi stmp server
-    pass
 
 def register_seller():
     # nhan du lieu tu form
     # kiem tra du lieu
     # add thong bao cho admin
     # khi admin approve thi gui email cho seller
+    pass
+def gen_new_password():
     pass
