@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from models.model import db
 from pathlib import Path
 import os
+from flask_mail import Mail, Message
 
 from routers.user import user_router
 
@@ -18,6 +19,14 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# stmp server
+app.config['MAIL_SERVER'] = 'smtp.office365.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+app.config['MAIL_USE_TLS'] = True
+
+mail = Mail(app)
 
 app.secret_key = os.getenv('SECRET_KEY')
 
