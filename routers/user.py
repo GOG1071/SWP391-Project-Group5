@@ -15,7 +15,7 @@ def register():
         return controllers.user.register(request)
 @user_router.route("/login", methods=["POST", "GET"])
 def login():
-    if request.method("POST"):
+    
     if request.method == "POST":
 
         return controllers.user.login()
