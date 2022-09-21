@@ -1,5 +1,6 @@
 
 from asyncio.windows_events import NULL
+import random
 from models.user import UserRole, User
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
@@ -33,11 +34,20 @@ def logout():
 
 def forgot_password():
     # nhan email tu form
+    email = request.form["email"]
     # kiem tra email
-    # gen 1 password moi
+    query = User.query.filter(User.email == email).first()
+    if query:
+            User.password = gen_new_password()
     # luu password moi vao database
+            db.session.commit()
+            flash("New password has been sent to your email.","info")
+            render_template("login.html")
+    flash("Wrong email!","info")
+    render_template("forgot_password.html")
+    # gen 1 password moi
+
     # gui email cho user / goi toi stmp server
-    pass
 
 def register_seller():
     # nhan du lieu tu form
@@ -45,3 +55,12 @@ def register_seller():
     # add thong bao cho admin
     # khi admin approve thi gui email cho seller
     pass
+def gen_new_password():
+
+    number = '0123456789'
+    alpha = 'abcdefghijklmnopqrstuvwxyz'
+    passwd = ''
+    for i in range(0,8,2):
+        passwd += random.choice(number)
+        passwd += random.choice(alpha)
+    return passwd
