@@ -13,9 +13,14 @@ def login():
     query = User.query.filter(User.username == user_name , User.password == pass_word).first()
     if query:
         session['user'] = query.username
+<<<<<<< Updated upstream
         return render_template("home.html")
+=======
+        return redirect(url_for("home"))
+
+>>>>>>> Stashed changes
     flash("Your account doesn't exist","info")
-    render_template("login.html")
+    return render_template("login.html")
 
 def logout():
     pass
