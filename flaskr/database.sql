@@ -1,0 +1,2 @@
+INSERT INTO user (username, email, password) VALUES ('shine', 'nguyenngotunglam2@gmail.com', '123456');
+INSERT INTO home_owner(username, email, password, house_address) VALUES ('gog', 'goldendarkness1071@gmail.com', '1234567', '12, thach hoa thach that ha noi');
