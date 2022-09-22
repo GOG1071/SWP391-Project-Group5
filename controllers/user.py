@@ -6,8 +6,6 @@ from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 
 def home():
-    # session['user'] = 'test'    #//TEST
-    # session.pop('user',None)    //TEST
     if "user" in session:
         user = session['user']
         return render_template("home.html", stringName = user, isLogin = True)
@@ -22,8 +20,9 @@ def login():
 
     query = User.query.filter(User.username == user_name , User.password == pass_word).first()
     if query:
+        session['id'] = query.id
         session['user'] = query.username
-        return redirect(url_for("home"))
+        return redirect(url_for('user_router.home'))
     flash("Your account doesn't exist","info")
     return render_template("login.html")
 
@@ -64,3 +63,9 @@ def gen_new_password():
         passwd += random.choice(number)
         passwd += random.choice(alpha)
     return passwd
+
+def profile():
+    user = User.query.filter(User.id == session['id']).first()
+    username = user.username
+    email = user.email
+    return render_template("userProfile.html",username=username,email=email)
