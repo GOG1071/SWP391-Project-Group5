@@ -48,6 +48,27 @@ def forgot_password():
 
     # gui email cho user / goi toi stmp server
 
+def register():
+    # kiem tra du lieu
+    user = User.query.filter(User.username == request.form["username"]).first()
+    if user:
+        flash("Username already exists!","info")
+        return render_template("register.html")
+    user = User.query.filter(User.email == request.form["email"]).first()
+    if user:
+        flash("Email already exists!","info")
+        return render_template("register.html")
+    # add vao database
+    user = User(
+        username=request.form["username"],
+        password=request.form["password"],
+        email=request.form["email"],
+        banned=False)
+    db.session.add(user)
+    db.session.commit()
+    # chuyen huong ve trang login
+    return redirect(url_for('user_router.login'))
+
 def register_seller():
     # nhan du lieu tu form
     # kiem tra du lieu
@@ -69,3 +90,17 @@ def profile():
     username = user.username
     email = user.email
     return render_template("userProfile.html",username=username,email=email)
+
+def edit_profile():
+    user = User.query.filter(User.id == session['id']).first()
+    checkUsername = User.query.filter(User.username == request.form["username"]).first()
+    if checkUsername:
+        flash("Username already exists!","info")
+        return render_template("editProfile.html",username=user.username,email=user.email)
+    user.username = request.form["username"]
+    checkEmail = User.query.filter(User.email == request.form["email"]).first()
+    if checkEmail:
+        flash("Email already exists!","info")
+        return render_template("editProfile.html",username=user.username,email=user.email)
+    user.email = request.form["email"]
+    return render_template("editProfile.html",username=user.username,email=user.email)

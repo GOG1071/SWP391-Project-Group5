@@ -12,7 +12,7 @@ def home():
 @user_router.route("/register", methods=["POST", "GET"])
 def register():
     if request.method == "POST":
-        return controllers.user.register(username, password, email)
+        return controllers.user.register()
     return render_template("register.html")
 
 @user_router.route("/login", methods=["POST", "GET"])
@@ -45,6 +45,12 @@ def register_seller():
 @user_router.route("/profile", methods=["POST", "GET"])
 def profile():
     return controllers.user.profile()
+
+@user_router.route("/profile/edit", methods=["POST", "GET"])
+def edit_profile():
+    if(request.method == "GET"):
+        return render_template("editProfile.html")
+    return controllers.user.edit_profile()
     
 
 
