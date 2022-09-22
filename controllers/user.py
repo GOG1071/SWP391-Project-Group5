@@ -8,7 +8,7 @@ from flask import Flask,redirect,url_for,json,render_template,request,session,fl
 def home():
     if "user" in session:
         user = session['user']
-        return render_template("home.html", stringName = user, isLogin = True)
+        return render_template("home.html", username = user, isLogin = True)
     else:
         return render_template("home.html", stringName = "you are not login", isLogin = False)
         
