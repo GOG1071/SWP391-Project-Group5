@@ -1,18 +1,15 @@
 import random
 from models.user import UserRole, User
 from models.model import db
-from flask import Flask,redirect,url_for,json,render_template,request,session,flash, Blueprint
+from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
 from controllers.mail_service import mail
 
-user_controller = Blueprint('user_controller', __name__)
 
 def home():
-    # session['user'] = 'test'    #//TEST
-    # session.pop('user',None)    //TEST
     if "user" in session:
         user = session['user']
-        return render_template("home.html", stringName = user, isLogin = True)
+        return render_template("home.html", username = user, isLogin = True)
     else:
         return render_template("home.html", stringName = "you are not login", isLogin = False)
         
@@ -55,6 +52,26 @@ def forgot_password(email):
         flash("Wrong email!","info")
         return render_template("forgot_password.html")
 
+def register():
+    # kiem tra du lieu
+    user = User.query.filter(User.username == request.form["username"]).first()
+    if user:
+        flash("Username already exists!","info")
+        return render_template("register.html")
+    user = User.query.filter(User.email == request.form["email"]).first()
+    if user:
+        flash("Email already exists!","info")
+        return render_template("register.html")
+    # add vao database
+    user = User(
+        username=request.form["username"],
+        password=request.form["password"],
+        email=request.form["email"],
+        banned=False)
+    db.session.add(user)
+    db.session.commit()
+    # chuyen huong ve trang login
+    return redirect(url_for('user_router.login'))
 
 def register_seller():
     # nhan du lieu tu form
@@ -71,3 +88,23 @@ def gen_new_password():
         passwd += random.choice(number)
         passwd += random.choice(alpha)
     return passwd
+
+def profile():
+    user = User.query.filter(User.id == session['id']).first()
+    username = user.username
+    email = user.email
+    return render_template("userProfile.html",username=username,email=email)
+
+def edit_profile():
+    user = User.query.filter(User.id == session['id']).first()
+    checkUsername = User.query.filter(User.username == request.form["username"]).first()
+    if checkUsername:
+        flash("Username already exists!","info")
+        return render_template("editProfile.html",username=user.username,email=user.email)
+    user.username = request.form["username"]
+    checkEmail = User.query.filter(User.email == request.form["email"]).first()
+    if checkEmail:
+        flash("Email already exists!","info")
+        return render_template("editProfile.html",username=user.username,email=user.email)
+    user.email = request.form["email"]
+    return render_template("editProfile.html",username=user.username,email=user.email)
