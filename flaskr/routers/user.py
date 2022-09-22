@@ -41,11 +41,6 @@ def register_seller():
         return controllers.user.register_seller(request)
     else:
         return render_template("register_seller.html")
-    
-@user_router.route("/profile", methods=["POST", "GET"])
-def profile():
-    return controllers.user.profile()
-    
 
 
 

@@ -3,11 +3,13 @@ from models.user import UserRole, User
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash, Blueprint
 from flask_mail import Message
-import controllers.mail_service
+from controllers.mail_service import mail
 
 user_controller = Blueprint('user_controller', __name__)
 
 def home():
+    # session['user'] = 'test'    #//TEST
+    # session.pop('user',None)    //TEST
     if "user" in session:
         user = session['user']
         return render_template("home.html", stringName = user, isLogin = True)
@@ -22,9 +24,8 @@ def login():
 
     query = User.query.filter(User.username == user_name , User.password == pass_word).first()
     if query:
-        session['id'] = query.id
         session['user'] = query.username
-        return redirect(url_for('user_router.home'))
+        return redirect(url_for("home"))
     flash("Your account doesn't exist","info")
     return render_template("login.html")
 
@@ -34,15 +35,13 @@ def logout():
     return redirect(url_for('user_router.home'))
 
 def forgot_password(email):
-    print(email)
     # kiem tra email
-    user = db.Query(User).filter(User.email == email)
-    print(user)
+    user = db.session.execute(db.select(User).where(User.email == email)).first()
     if user != None:
             # gen new password
             new_password = gen_new_password()
-            User.password = new_password
-            print(new_password)
+            # update password
+            user[0].password = new_password
             # luu password moi vao database
             db.session.commit()
             #send email
@@ -51,10 +50,11 @@ def forgot_password(email):
 
             #thong bao toi front end
             flash("New password has been sent to your email.","info")
-            render_template("login.html")
-    flash("Wrong email!","info")
-    render_template("forgot_password.html")
-    return "ok"
+            return render_template("login.html")
+    else:
+        flash("Wrong email!","info")
+        return render_template("forgot_password.html")
+
 
 def register_seller():
     # nhan du lieu tu form
@@ -71,9 +71,3 @@ def gen_new_password():
         passwd += random.choice(number)
         passwd += random.choice(alpha)
     return passwd
-
-def profile():
-    user = User.query.filter(User.id == session['id']).first()
-    username = user.username
-    email = user.email
-    return render_template("userProfile.html",username=username,email=email)
