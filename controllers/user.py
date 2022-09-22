@@ -1,9 +1,11 @@
-
-from asyncio.windows_events import NULL
 import random
 from models.user import UserRole, User
 from models.model import db
-from flask import Flask,redirect,url_for,json,render_template,request,session,flash
+from flask import Flask,redirect,url_for,json,render_template,request,session,flash, Blueprint
+from flask_mail import Message
+import controllers.mail_service
+
+user_controller = Blueprint('user_controller', __name__)
 
 def home():
     # session['user'] = 'test'    #//TEST
@@ -32,22 +34,28 @@ def logout():
     session.pop('user',None)
     return redirect(url_for('user_router.home'))
 
-def forgot_password():
-    # nhan email tu form
-    email = request.form["email"]
+def forgot_password(email):
+    print(email)
     # kiem tra email
-    query = User.query.filter(User.email == email).first()
-    if query:
-            User.password = gen_new_password()
-    # luu password moi vao database
+    user = db.Query(User).filter(User.email == email)
+    print(user)
+    if user != None:
+            # gen new password
+            new_password = gen_new_password()
+            User.password = new_password
+            print(new_password)
+            # luu password moi vao database
             db.session.commit()
+            #send email
+            msg = Message('Your new password is: ' + new_password, sender = 'sweethomehola@outlook.com', recipients = [email])
+            mail.send(msg)
+
+            #thong bao toi front end
             flash("New password has been sent to your email.","info")
             render_template("login.html")
     flash("Wrong email!","info")
     render_template("forgot_password.html")
-    # gen 1 password moi
-
-    # gui email cho user / goi toi stmp server
+    return "ok"
 
 def register_seller():
     # nhan du lieu tu form

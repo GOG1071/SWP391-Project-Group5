@@ -31,7 +31,7 @@ def logout():
 @user_router.route("/forgot_password", methods=["POST", "GET"])
 def forgot_password():
     if(request.method == "POST"):
-        return controllers.user.forgot_password(request)
+        return controllers.user.forgot_password(request.form.get("email"))
     else:
         return render_template("forgot_password.html")
 
