@@ -42,7 +42,17 @@ def register_seller():
     else:
         return render_template("register_seller.html")
 
+@user_router.route("/profile", methods=["POST", "GET"])
+@login_required
+def profile():
+    return controllers.user.profile()
 
+@user_router.route("/profile/edit", methods=["POST", "GET"])
+@login_required
+def edit_profile():
+    if(request.method == "GET"):
+        return render_template("editProfile.html")
+    return controllers.user.edit_profile()
 
 
 
