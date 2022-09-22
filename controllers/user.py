@@ -10,7 +10,7 @@ user_controller = Blueprint('user_controller', __name__)
 def home():
     if "user" in session:
         user = session['user']
-        return render_template("home.html", stringName = user, isLogin = True)
+        return render_template("home.html", username = user, isLogin = True)
     else:
         return render_template("home.html", stringName = "you are not login", isLogin = False)
         

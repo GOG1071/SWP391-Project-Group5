@@ -1,0 +1,30 @@
+<header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top" style="z-index: 998">
+      <div class="container">
+        <a class="navbar-brand mr-4" href="/">Sweet home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggle">
+          <div class="navbar-nav me-auto">
+            {% if session.get('user') != None %}
+            <a class="nav-item nav-link" href="{{ url_for('user_router.home') }}">Home</a>
+            <a class="nav-item nav-link" href="{{ url_for('user_router.profile') }}">New Post</a>
+            {% else %}
+            <a class="nav-item nav-link">You are not login</a>
+            {% endif %}     
+            
+          </div>
+          <div class="navbar-nav">      
+            {% if session.get('user') != None %}
+            <a class="nav-item nav-link" href="profile">{{session['user']}}</a>
+            <a class="nav-item nav-link" href="{{ url_for('user_router.logout') }}">Logout</a>
+            {% else %}
+            <a class="nav-item nav-link" href="{{ url_for('user_router.login') }}">Login</a>
+            <a class="nav-item nav-link" href="{{ url_for('user_router.register') }}">Register</a>
+            {% endif %}                            
+          </div>            
+        </div>
+      </div>
+    </nav>
+</header>
