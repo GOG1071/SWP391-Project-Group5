@@ -73,12 +73,17 @@ def register():
     # chuyen huong ve trang login
     return redirect(url_for('user_router.login'))
 
-def register_seller():
+def register_seller(form):
     # nhan du lieu tu form
+    username = form.get("username")
+    password = form.get("password")
+    email = form.get("email")
+    
     # kiem tra du lieu
-    # add thong bao cho admin
-    # khi admin approve thi gui email cho seller
+    # add thong bao cho admin (de approved = false)
+    # khi admin approve thi gui email cho seller (xu li o admin)
     pass
+
 def gen_new_password():
 
     number = '0123456789'

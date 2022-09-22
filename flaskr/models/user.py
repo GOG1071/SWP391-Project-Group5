@@ -12,6 +12,8 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=False, nullable=False)
     password = db.Column(db.String(120), nullable=False)
     banned = db.Column(db.Boolean, nullable=True, default=False)
+    posts = db.relationship('Post', backref='author', lazy=True)
+
 
 class HomeOwner(db.Model):
     id = db.Column(db.Integer, primary_key=True)
