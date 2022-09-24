@@ -1,6 +1,5 @@
 import random
-from sys import ps1
-from turtle import pos
+
 from models.post import  Post
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
