@@ -6,6 +6,7 @@ import os
 from controllers.mail_service import mail
 from flask_mail import Mail 
 from routers.user import user_router
+from routers.post import post_router
 
 #load environment variables
 env_path = Path('.') / '../.env'
@@ -38,7 +39,7 @@ mail = Mail(app)
 #register blueprint
 app.register_blueprint(user_router, url_prefix="/user")
 
-
+app.register_blueprint(post_router, url_prefix="/post")
 @app.route("/")
 def index():
     return render_template("home.html", stringName = "You are not logged in",isLogin = False)
