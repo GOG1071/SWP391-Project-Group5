@@ -1,3 +1,6 @@
+function myFunction(x) {
+  x.classList.toggle("fa-thumbs-down");
+}
 var main = function () {
   $(".btn").click(function () {
     var post = $(".status-box").val();
