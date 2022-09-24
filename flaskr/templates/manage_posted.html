@@ -17,6 +17,13 @@
         <div class="text-center text-uppercase header">
             <h1>Manage Posted</h1>
         </div>
+        {%with messages = get_flashed_messages()%}
+            {%if messages:%}
+                {%for m in messages%}
+                    <p class="text-center text-capitalize text-danger"> {{m}}</p>
+                {%endfor%}
+            {%endif%}        
+        {%endwith%}
         
         
         <div class="row">
@@ -28,23 +35,36 @@
                                 <th scope="col"> id </th>
                                 <th scope="col">image</th>
                                 <th scope="col">Title</th>
-                                <th scope="col">Description</th>
+                                
                                 
                                 <th> </th>
                             </tr>
                         </thead>
                         <tbody>
-                                
+                        {%for l in list%}
                             <tr>
-                                <td>  </td>
-                                <td><img src="" style="width: 100%;height: 230px" /> </td>
-                                <td></td>
-                                <td></td>
+                                <td> {{l.id}}  </td>
+                                <td><img src="{{l.image}}" style="width: 100%;height: 230px" /> </td>
+                                <td> {{l.caption}} </td>
                               
-                                <td class="text-right"> <a href=""> <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>  Delete </button></a> </td>
-                                <td class="text-right"> <a href=""> <button class="btn btn-sm btn-danger"><i class="fa fa-pencil"></i> update  </button></a> </td>
+                                <td class="text-right"> 
+                                    <form action="./delete_post" method="POST">
+                                     <input type="text" value="{{l.id}}" name="id" hidden>
+                                     <input type="text" value="{{l.author_id}}" name="author_id" hidden>
+                                     <button class="btn btn-sm btn-danger" type="submit"  ><i class="fa fa-trash"></i>  Delete </button>
+                                    </form> 
+                                </td>
+
+
+                                <td class="text-right"> 
+                                    <form action="./load_for_update" method="POST">
+                                        <input type="text" name="id" value="{{l.id}}" hidden>
+                                        <input type="text" value="{{l.author_id}}" name="author_id" hidden>
+                                    <button class="btn btn-sm btn-danger" type="submit"><i class="fa fa-pencil"></i> update  </button>
+                                    </form>
+                                </td>
                             </tr>
-                            
+                        {%endfor%}    
                                                    
                            
                             

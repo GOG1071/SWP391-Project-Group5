@@ -1,16 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="/post/create" method="post">
-        <input type="text" name="content" id="content">
-        <input type="text" name="image" id="image">
-        <input type="submit" value="submit">
-    </form>
-</body>
+
+<html>
+  <head>
+    <link
+      href="https://s3.amazonaws.com/codecademy-content/courses/ltp2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="..\static\css\create_post.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <form method="p">
+        <div class="form-group">
+          <textarea
+            class="form-control status-box"
+            rows="2"
+            placeholder="What's on your mind?"
+          ></textarea>
+        </div>
+        <div>
+          <label for="myfile">Select a file:</label>
+          <input type="file" id="myfile" name="myfile" />
+        </div>
+        <div class="button-group pull-right">
+          <p class="counter">1000</p>
+          <button class="btn btn-primary" type="submit">Post</button>
+        </div>
+      </form>
+      <ul class="posts"></ul>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="..\static\js\create_post.js"></script>
+  </body>
 </html>
