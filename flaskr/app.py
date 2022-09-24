@@ -38,7 +38,6 @@ mail = Mail(app)
 app.register_blueprint(user_router, url_prefix="/user")
 app.register_blueprint(post_router, url_prefix="/post")
 
-app.register_blueprint(post_router, url_prefix="/post")
 @app.route("/")
 def index():
     return render_template("home.html", stringName = "You are not logged in",isLogin = False)
