@@ -1,4 +1,4 @@
-import random
+
 
 from models.post import  Post
 from models.model import db

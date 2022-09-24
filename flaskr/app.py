@@ -25,8 +25,6 @@ app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 app.config['MAIL_USE_TLS'] = True
 
-# stmp server
-
 app.secret_key = os.getenv('SECRET_KEY')
 
 #start database
@@ -38,6 +36,7 @@ mail = Mail(app)
 
 #register blueprint
 app.register_blueprint(user_router, url_prefix="/user")
+app.register_blueprint(post_router, url_prefix="/post")
 
 app.register_blueprint(post_router, url_prefix="/post")
 @app.route("/")
