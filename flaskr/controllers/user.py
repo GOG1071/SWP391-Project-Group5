@@ -22,6 +22,8 @@ def login():
     query = User.query.filter(User.username == user_name , User.password == pass_word).first()
     if query:
         session['user'] = query.username
+        session['id'] = query.id
+        
         return redirect(url_for("home"))
     flash("Your account doesn't exist","info")
     return render_template("login.html")
