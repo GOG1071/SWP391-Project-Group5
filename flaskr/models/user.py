@@ -1,4 +1,5 @@
 from models.model import db
+from models.home import Home
 
 class UserRole():
     MEMBER = "MEMBER"
@@ -13,19 +14,26 @@ class User(db.Model):
     password = db.Column(db.String(120), nullable=False)
     banned = db.Column(db.Boolean, nullable=True, default=False)
     posts = db.relationship('Post')
+    role = db.Column(db.String(80), nullable=False, default=UserRole.MEMBER)
+    comments = db.relationship('Comment')
+    messages = db.relationship('Message')
+    reports = db.relationship('ReportUser')
+    advertisements = db.relationship('Advertisement')
+    messages = db.relationship('Chat')
 
-
-
-class HomeOwner(db.Model):
+class Bookmark(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(120), nullable=False)
-    house_address = db.Column(db.String(120), nullable=False)
-    approved = db.Column(db.Boolean, nullable=True, default=False)
-    banned = db.Column(db.Boolean, nullable=True, default=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    home_id = db.Column(db.Integer, db.ForeignKey('home.id'), nullable=False)
 
-class Admin(db.Model):
+class RoomRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(120), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    status = db.Column(db.String(80), nullable=False, default="PENDING")
+    timestamp = db.Column(db.DateTime, nullable=False)
+
+class WebsiteFeedback(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    feedback = db.Column(db.String(1000), nullable=False)
+    timestamp = db.Column(db.DateTime, nullable=False)
