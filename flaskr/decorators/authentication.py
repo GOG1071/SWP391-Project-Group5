@@ -6,7 +6,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         try:
-            user = session["user"]
+            user = session["role"]
             return f(*args, **kwargs)
         except:
             return jsonify(error="Please login"), 401
@@ -15,9 +15,9 @@ def login_required(f):
 def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if session["user"] == None:
+        if session["role"] == None:
             return jsonify(error="Please login"), 401
-        if session["user"].role != UserRole.ADMIN:
+        if session["role"] != UserRole.ADMIN:
             return jsonify(error="Admin access required"), 403
         return f(*args, **kwargs)
     return decorated_function
@@ -25,9 +25,9 @@ def admin_required(f):
 def seller_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if session["user"] == None:
+        if session["role"] == None:
             return jsonify(error="Please login"), 401
-        if session["user"].role != UserRole.SELLER:
+        if session["role"].role != UserRole.SELLER:
             return jsonify(error="Seller access required"), 403
         return f(*args, **kwargs)
     return decorated_function
