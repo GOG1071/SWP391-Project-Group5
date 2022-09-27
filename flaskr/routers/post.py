@@ -1,5 +1,4 @@
 
-
 from decorators.authentication import login_required,admin_required
 from flask import Blueprint, jsonify, request, render_template, session,url_for,flash
 from controllers import post
@@ -30,7 +29,7 @@ def delete_post():
 @login_required
 def load_for_update():
     if request.method == "POST":
-         return controllers.post.load_for_update()
+        return controllers.post.load_for_update()
     flash("can't update","info")
     return render_template("manage_posted.html")
 
