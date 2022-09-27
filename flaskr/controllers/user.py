@@ -24,7 +24,7 @@ def login():
         session['user'] = query.username
         session['id'] = query.id
         
-        return redirect(url_for("home"))
+        return redirect(url_for("user_router.home"))
     flash("Your account doesn't exist","info")
     return render_template("login.html")
 

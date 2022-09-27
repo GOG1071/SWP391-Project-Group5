@@ -7,7 +7,7 @@ from flask_mail import Message
 from controllers.mail_service import mail
 
 def load_post():
-    author_id = request.args.get("author_id")
+    author_id = session['id']
     list_post = Post.query.filter_by(author_id = author_id)
     if list_post:
         return render_template('manage_posted.html', list = list_post)
@@ -22,8 +22,8 @@ def delete_post():
     if post:
         db.session.delete(post)
         db.session.commit()
-        return url_for('load_post',author_id = author_id)
-    return url_for('load_post',author_id = author_id)
+        return url_for('post_router.load_post',author_id = author_id)
+    return url_for('post_router.load_post',author_id = author_id)
 
 def load_for_update():
     id  = request.form['id']
@@ -42,5 +42,5 @@ def update_post():
         db.session.add(post)
         db.session.commit()
     
-    return url_for('load_post',author_id = request.form["author_id"])
+    return url_for('post_router.load_post',author_id = request.form["author_id"])
 
