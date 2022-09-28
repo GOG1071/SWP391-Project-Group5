@@ -1,5 +1,6 @@
 
 
+from importlib.resources import contents
 from models.post import  Post
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
@@ -38,7 +39,7 @@ def update_post():
         db.session.delete(post)
         db.session.commit()
 
-        post = Post(id = request.form['id'],caption = request.form['caption'],image = request.form['image'],author_id = request.form['author_id'])
+        post = Post(id = request.form['id'],content = request.form['caption'],author_id = request.form['author_id'])
         db.session.add(post)
         db.session.commit()
     

@@ -23,6 +23,7 @@ def login():
     if query:
         session['user'] = query.username
         session['id'] = query.id
+        session['role'] = query.role
         
         return redirect(url_for("user_router.home"))
     flash("Your account doesn't exist","info")
