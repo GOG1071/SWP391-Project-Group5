@@ -16,7 +16,6 @@ class User(db.Model):
     posts = db.relationship('Post')
     role = db.Column(db.String(80), nullable=False, default=UserRole.MEMBER)
     comments = db.relationship('Comment')
-    messages = db.relationship('Message')
     reports = db.relationship('ReportUser')
     advertisements = db.relationship('Advertisement')
     messages = db.relationship('Chat')

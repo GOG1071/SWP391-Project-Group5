@@ -4,6 +4,7 @@ class Advertisement(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     home_id = db.Column(db.Integer, db.ForeignKey('home.id'), nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
+    ad_detail = db.relationship("AdvertisementDetail", back_populates="advertisement")
 
 class AdvertisementDetail(db.Model):
     id = db.Column(db.Integer, primary_key = True)
