@@ -1,12 +1,13 @@
 
-import datetime
+from datetime import datetime
+from tkinter.messagebox import NO
 from models.post import  Post
 from models.user import  User
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
 from controllers.mail_service import mail
-
+import cloudinary.uploader 
 def load_post():
     author_id = request.args.get("author_id")
     list_post = Post.query.filter_by(author_id = author_id)
@@ -46,13 +47,23 @@ def update_post():
     return url_for('load_post',author_id = request.form["author_id"])
 
 def create_post():
+    file = request.form.get('file')
+    file_path = None
+    if file:
+        response = cloudinary.uploader.upload(file)
+        file_path = response['secure_url']
     post = Post(
-        content=request.form['content'],
+        content=request.form.get('content'),
         author_id= session['id'],
-        timestamp= datetime.datetime.now(),
-        comments = 0,
-        reports = 0,
+        timestamp= datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
         )
     db.session.add(post)
     db.session.commit()
-    return render_template('manage_posted.html')
+    return render_template('post_detail.html')
+def post_detail():
+    id = session['post_id']
+    post = Post.query.filter_by(id=id).first()
+    db.session.commit()
+    return render_template('post_detail.html')
+    
+

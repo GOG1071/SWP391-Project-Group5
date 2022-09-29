@@ -7,7 +7,11 @@ from controllers.mail_service import mail
 from flask_mail import Mail 
 from routers.user import user_router
 from routers.post import post_router
+import cloudinary
 
+cloudinary.config['cloud_name']=os.getenv('CLOUDINARY_CLOUD_NAME')
+cloudinary.config['api_key']=os.getenv('CLOUDINARY_API_KEY')
+cloudinary.config['api_secret']=os.getenv('CLOUDINARY_API_SECRET')
 #load environment variables
 env_path = Path('.') / '../.env'
 load_dotenv(dotenv_path=env_path)
