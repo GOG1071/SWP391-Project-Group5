@@ -36,7 +36,7 @@ app.secret_key = os.getenv('SECRET_KEY')
 
 #start database
 db.init_app(app)
-db.drop_all(app=app)
+db.create_all(app=app)
 
 #start mail service
 mail = Mail(app)

@@ -22,6 +22,8 @@ def delete_post():
     if request.method == "POST":
         return controllers.post.delete_post()
 
+
+
 @post_router.route('/load_for_update',methods=["POST", "GET"])
 @login_required
 def load_for_update():
@@ -29,6 +31,8 @@ def load_for_update():
         return controllers.post.load_for_update()
     flash("can't update","info")
     return render_template("manage_posted.html")
+
+
 
 @post_router.route('/update_post',methods=["POST", "GET"])
 @login_required
