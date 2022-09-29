@@ -1,5 +1,6 @@
 
 
+from importlib.resources import contents
 from models.post import  Post
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
@@ -7,7 +8,7 @@ from flask_mail import Message
 from controllers.mail_service import mail
 
 def load_post():
-    author_id = request.args.get("author_id")
+    author_id = session['id']
     list_post = Post.query.filter_by(author_id = author_id)
     if list_post:
         return render_template('manage_posted.html', list = list_post)
@@ -22,8 +23,8 @@ def delete_post():
     if post:
         db.session.delete(post)
         db.session.commit()
-        return url_for('load_post',author_id = author_id)
-    return url_for('load_post',author_id = author_id)
+        return url_for('post_router.load_post',author_id = author_id)
+    return url_for('post_router.load_post',author_id = author_id)
 
 def load_for_update():
     id  = request.form['id']
@@ -38,9 +39,9 @@ def update_post():
         db.session.delete(post)
         db.session.commit()
 
-        post = Post(id = request.form['id'],caption = request.form['caption'],image = request.form['image'],author_id = request.form['author_id'])
+        post = Post(id = request.form['id'],content = request.form['caption'],author_id = request.form['author_id'])
         db.session.add(post)
         db.session.commit()
     
-    return url_for('load_post',author_id = request.form["author_id"])
+    return url_for('post_router.load_post',author_id = request.form["author_id"])
 
