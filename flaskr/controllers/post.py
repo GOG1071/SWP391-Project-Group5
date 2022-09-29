@@ -1,6 +1,7 @@
 
-
+import datetime
 from models.post import  Post
+from models.user import  User
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
@@ -44,3 +45,14 @@ def update_post():
     
     return url_for('load_post',author_id = request.form["author_id"])
 
+def create_post():
+    post = Post(
+        content=request.form['content'],
+        author_id= session['id'],
+        timestamp= datetime.datetime.now(),
+        comments = 0,
+        reports = 0,
+        )
+    db.session.add(post)
+    db.session.commit()
+    return render_template('manage_posted.html')

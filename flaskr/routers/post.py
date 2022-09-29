@@ -37,4 +37,10 @@ def load_for_update():
 def update_post():
     if request.method == "POST":
         return controllers.post.update_post()
-    
+
+@post_router.route('/create_post',methods=["POST", "GET"])
+@login_required
+def create_post():
+    if request.method == "POST":
+        return controllers.post.create_post()
+    return render_template("manage_posted.html")
