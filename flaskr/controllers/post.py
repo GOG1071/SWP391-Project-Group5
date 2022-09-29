@@ -1,12 +1,7 @@
-
 from datetime import datetime
-from tkinter.messagebox import NO
 from models.post import  Post
-from models.user import  User
 from models.model import db
-from flask import Flask,redirect,url_for,json,render_template,request,session,flash
-from flask_mail import Message
-from controllers.mail_service import mail
+from flask import url_for,render_template,request,session,flash
 import cloudinary.uploader 
 def load_post():
     author_id = request.args.get("author_id")
