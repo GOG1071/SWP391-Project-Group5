@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -37,5 +37,69 @@
       integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
       crossorigin="anonymous"
     ></script>
+  </body>
+</html-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Post Box</title>
+    <link rel="stylesheet" href="..\..\static\css\post_detail.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- FontAweome CDN Link for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <section class="post">
+          <header>Post</header>
+          <form method="post">
+            <div class="content">
+              <img src="..\..\static\assets\img\logo.png" alt="logo" />
+              <div class="details">
+                <p>Post</p>
+              </div>
+            </div>
+            <textarea
+              id="cotent"
+              name="content"
+              placeholder="What's on your mind?"
+            ></textarea>
+
+            <div class="options">
+              <div>
+                <label for="myfile">Add to Your Post:</label>
+                <input type="file" id="file" name="file" />
+              </div>
+            </div>
+            <button type="submit">Post</button>
+          </form>
+        </section>
+        <section class="audience">
+          <header>
+            <div class="arrow-back"><i class="fas fa-arrow-left"></i></div>
+            <p>Select Audience</p>
+          </header>
+        </section>
+      </div>
+    </div>
+
+    <script>
+      const container = document.querySelector(".container"),
+        privacy = container.querySelector(".post .privacy"),
+        arrowBack = container.querySelector(".audience .arrow-back");
+
+      privacy.addEventListener("click", () => {
+        container.classList.add("active");
+      });
+
+      arrowBack.addEventListener("click", () => {
+        container.classList.remove("active");
+      });
+    </script>
   </body>
 </html>

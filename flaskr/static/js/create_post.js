@@ -1,29 +1,11 @@
-function myFunction(x) {
-  x.classList.toggle("fa-thumbs-down");
-}
-var main = function () {
-  $(".btn").click(function () {
-    var post = $(".status-box").val();
-    $("<li> </li>").text(post).prependTo(".posts");
-    $(".status-box").val("");
-    $(".counter").text(1000);
-    $(".btn").addClass("disabled");
-  });
+const container = document.querySelector(".container"),
+  privacy = container.querySelector(".post .privacy"),
+  arrowBack = container.querySelector(".audience .arrow-back");
 
-  $(".status-box").keyup(function () {
-    var postLength = $(this).val().length;
-    var charactersLeft = 1000 - postLength;
-    $(".counter").text(charactersLeft);
-    if (charactersLeft < 0) {
-      $(".btn").addClass("disabled");
-    } else if (charactersLeft === 1000) {
-      $(".btn").addClass("disabled");
-    } else {
-      $(".btn").removeClass("disabled");
-    }
-  });
+privacy.addEventListener("click", () => {
+  container.classList.add("active");
+});
 
-  $(".btn").addClass("disabled");
-};
-
-$(document).ready(main);
+arrowBack.addEventListener("click", () => {
+  container.classList.remove("active");
+});

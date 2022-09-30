@@ -55,6 +55,7 @@ def create_post():
         author_id= session['id'],
         timestamp= datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
         )
+    post = Post.query.filter_by()
     db.session.add(post)
     db.session.commit()
     return render_template('post_detail.html')

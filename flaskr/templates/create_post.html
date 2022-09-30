@@ -1,46 +1,45 @@
-<html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
   <head>
+    <meta charset="utf-8" />
+    <title>Post Box</title>
+    <link rel="stylesheet" href="..\static\css\post_detail.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- FontAweome CDN Link for Icons -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
-    <link
-      href="https://s3.amazonaws.com/codecademy-content/courses/ltp2/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link href="..\static\css\create_post.css" rel="stylesheet" />
   </head>
   <body>
     <div class="container">
-      <form method="post">
-        <div class="form-group">
-          <input
-            class="form-control status-box"
-            rows="2"
-            placeholder="What's on your mind?"
-            id="content"
-            name="content"
-          ></input>
-        </div>
-        <div>
-          <label for="myfile">Select a file:</label>
-          <input type="file" id="file" name="file" />
-        </div>
-        <div class="button-group pull-right">
-          <p class="counter">1000</p>
-          <button class="btn btn-primary" type="submit">Post</button>
-          <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i>
-        </div>
-      </form>
-      <ul class="posts"></ul>
-    </div>
+      <div class="wrapper">
+        <section class="post">
+          <header>Post</header>
+          <form method="post">
+            <div class="content">
+              <img src="..\static\assets\img\logo.png" alt="logo" />
+              <div class="details">
+                <p>Post</p>
+              </div>
+            </div>
+            <textarea
+              id="cotent"
+              name="content"
+              placeholder="What's on your mind?"
+            ></textarea>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="..\static\js\create_post.js"></script>
+            <div class="options">
+              <div>
+                <label for="myfile">Add to Your Post:</label>
+                <input type="file" id="file" name="file" />
+              </div>
+            </div>
+            <button type="submit">Post</button>
+          </form>
+        </section>
+      </div>
+    </div>
+    <script src="../static/js/create_post.js"></script>
   </body>
 </html>
