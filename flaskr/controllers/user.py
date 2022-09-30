@@ -20,11 +20,12 @@ def login():
     pass_word = request.form["pass"]
 
     query = User.query.filter(User.username == user_name , User.password == pass_word).first()
+   
     if query:
         session['user'] = query.username
         session['id'] = query.id
         session['role'] = query.role
-        
+    
         return redirect(url_for("user_router.home"))
     flash("Your account doesn't exist","info")
     return render_template("login.html")
