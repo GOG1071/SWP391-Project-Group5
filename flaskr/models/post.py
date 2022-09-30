@@ -8,7 +8,6 @@ class Post(db.Model):
     comments = db.relationship('Comment', backref='post', lazy=True)
     reports = db.relationship('ReportPost')
 
-
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
