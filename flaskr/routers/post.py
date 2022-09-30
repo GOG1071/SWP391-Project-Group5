@@ -1,8 +1,7 @@
-
-
 from decorators.authentication import login_required,admin_required
 from flask import Blueprint, jsonify, request, render_template, session,url_for,flash
 from controllers import post
+
 import controllers.post
 
 
@@ -50,3 +49,17 @@ def report_post():
     if request.method == 'POST':
         return controllers.post.report_post()
     return render_template('report_post.html')
+
+
+@post_router.route('/create_post',methods=["POST", "GET"])
+@login_required
+def create_post():
+    if request.method == "POST":
+        return controllers.post.create_post()
+    return render_template("manage_posted.html")
+@post_router.route('/post_detail',methods=["POST", "GET"])
+@login_required
+def post_detail():
+    if request.method == "POST":
+        return controllers.post.post_detail()
+    return render_template("post_detail.html")

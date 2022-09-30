@@ -1,5 +1,4 @@
-
-
+from datetime import datetime
 from importlib.resources import contents
 from models.post import  Post
 from models.report import ReportPost
@@ -8,6 +7,7 @@ from flask import Flask,redirect,url_for,json,render_template,request,session,fl
 from flask_mail import Message
 from controllers.mail_service import mail
 import datetime
+import cloudinary.uploader 
 
 def load_post():
     author_id = session['id']
@@ -58,4 +58,25 @@ def report_post():
     return redirect(url_for("user_router.home"))
 
 
+
+def create_post():
+    file = request.form.get('file')
+    file_path = None
+    if file:
+        response = cloudinary.uploader.upload(file)
+        file_path = response['secure_url']
+    post = Post(
+        content=request.form.get('content'),
+        author_id= session['id'],
+        timestamp= datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        )
+    db.session.add(post)
+    db.session.commit()
+    return render_template('post_detail.html')
+def post_detail():
+    id = session['post_id']
+    post = Post.query.filter_by(id=id).first()
+    db.session.commit()
+    return render_template('post_detail.html')
+    
 
