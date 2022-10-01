@@ -1,4 +1,5 @@
 import random
+import string
 from sqlite3 import Timestamp
 from models.user import UserRole, User
 from models.model import db
@@ -87,14 +88,10 @@ def register_seller(username, password, address, email):
     pass
 
 def gen_new_password():
-
-    number = '0123456789'
-    alpha = 'abcdefghijklmnopqrstuvwxyz'
-    passwd = ''
-    for i in range(0,8,2):
-        passwd += random.choice(number)
-        passwd += random.choice(alpha)
-    return passwd
+    password = ''
+    for i in range(8):
+        password += random.choice(string.ascii_letters + string.digits + string.punctuation)
+    return password
 
 def profile():
     user = User.query.filter(User.id == session['id']).first()
