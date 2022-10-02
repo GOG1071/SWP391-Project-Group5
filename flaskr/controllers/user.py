@@ -58,22 +58,21 @@ def forgot_password(email):
         flash("Wrong email!","info")
         return render_template("forgot_password.html")
 
-def register():
+def register(form):
     # kiem tra du lieu
-    user = User.query.filter(User.username == request.form["username"]).first()
+    user = db.session.execute(db.select(User).where(User.email == form.get('username'))).first()
     if user:
         flash("Username already exists!","info")
         return render_template("register.html")
-    user = User.query.filter(User.email == request.form["email"]).first()
+    user = db.session.execute(db.select(User).where(User.email == form.get('email'))).first()
     if user:
         flash("Email already exists!","info")
         return render_template("register.html")
     # add vao database
     user = User(
-        username=request.form["username"],
-        password=request.form["password"],
-        email=request.form["email"],
-        banned=False)
+        username=form.get('username'),
+        password=form.get('password'),
+        email=form.get('email'))
     db.session.add(user)
     db.session.commit()
     # chuyen huong ve trang login
