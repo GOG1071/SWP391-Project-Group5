@@ -80,4 +80,12 @@ def post_detail():
     db.session.commit()
     return render_template('post_detail.html')
     
+    
+def search_post():
+    content = request.form["content"]
+    searchBy = request.form["searchBy"]
+    if searchBy == "Content":
+        return "aaa"
+    else:
+        return "bbb"
 

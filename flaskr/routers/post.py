@@ -63,3 +63,10 @@ def post_detail():
     if request.method == "POST":
         return controllers.post.post_detail()
     return render_template("post_detail.html")
+
+@post_router.route('/search_post',methods=["POST", "GET"]) 
+def search_post():
+    if request.method == "POST":
+        return controllers.post.search_post()
+    return render_template("searchPost.html")
+    

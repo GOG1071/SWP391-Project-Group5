@@ -12,7 +12,7 @@ def home():
 @user_router.route("/register", methods=["POST", "GET"])
 def register():
     if request.method == "POST":
-        return controllers.user.register(username, password, email)
+        return controllers.user.register()
     return render_template("register.html")
 
 @user_router.route("/login", methods=["POST", "GET"])
