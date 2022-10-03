@@ -1,17 +1,25 @@
 from datetime import datetime
+from hashlib import new
 from importlib.resources import contents
+
+from models.post import PostImage
 from models.post import  Post
 from models.report import ReportPost
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
 from controllers.mail_service import mail
-import datetime
 import cloudinary.uploader 
 
 def load_post():
     author_id = session['id']
     list_post = Post.query.filter_by(author_id = author_id)
+    list_img = []
+    for i in list_post: 
+        img = PostImage.query.filter_by(post_id = i.id).first()
+        list_img.append(img)
+    if list_img:
+        return render_template('manage_posted.html', list = list_post,list_img = list_img)
     if list_post:
         return render_template('manage_posted.html', list = list_post)
     flash("you haven't posted anything yet","info")
@@ -21,27 +29,53 @@ def load_post():
 def delete_post():
     id = request.form.get("id")
     author_id = request.form.get("author_id")
+    post_img = PostImage.query.filter_by(post_id = id).first()
+    if post_img:
+        db.session.delete(post_img)
+        db.session.commit()
     post = Post.query.filter_by(id = id).first()
     if post:
         db.session.delete(post)
         db.session.commit()
+        
         return redirect( url_for('post_router.load_post',author_id = author_id) )
     return redirect( url_for('post_router.load_post',author_id = author_id) )
 
 def load_for_update():
     id  = request.form['id']
     post = Post.query.filter_by(id = id).first()
-    return render_template('update.html',post = post)
+    post_img = PostImage.query.filter_by(post_id = id)
+    return render_template('update.html',post = post,post_img = post_img)
 
 
 def update_post():
     id  = request.form['id']
     post = Post.query.filter_by(id=id).first()
+    timestamp = datetime.now()
+    post_image = PostImage.query.filter_by(post_id = id)
+    image_link = request.form["img_link"]
+    file_path = None
+    if image_link:
+        response = cloudinary.uploader.upload(image_link)
+        file_path = response['secure_url']
+ 
+    
+    if post_image:
+        for i in post_image:
+
+            img_id = i.id
+            db.session.delete(i)
+            db.session.commit()
+
+            post_img = PostImage( id = img_id ,post_id = id, image_link = file_path )
+            db.session.add(post_img)
+            db.session.commit()
+
     if post:
         db.session.delete(post)
         db.session.commit()
 
-        post = Post(id = request.form['id'],content = request.form['caption'],author_id = request.form['author_id'])
+        post = Post(id = request.form['id'],content = request.form['caption'],author_id = request.form['author_id'],timestamp = timestamp)
         db.session.add(post)
         db.session.commit()
     
@@ -50,7 +84,7 @@ def update_post():
 def report_post():
     author_id = session["id"]
     post_id = request.form["post_id"]
-    timestamp = datetime.datetime.now().timestamp()
+    timestamp = datetime.now()
     reason = request.form['reason']
     report_post = ReportPost(post_id = post_id, user_id = author_id, timestamp = timestamp, reason = reason)
     db.session.add(report_post)

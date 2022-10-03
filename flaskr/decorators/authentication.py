@@ -6,7 +6,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         try:
-            user = session["role"]
+            user = session['role']
             return f(*args, **kwargs)
         except:
             return jsonify(error="Please login"), 401
