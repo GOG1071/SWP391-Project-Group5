@@ -1,41 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
+    <title>Post</title>
+    <link rel="stylesheet" href="..\..\static\css\post_detail.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
-      crossorigin="anonymous"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
-    <link rel="stylesheet" href="../../static/css/post_detail.css" />
   </head>
   <body>
-    <div id="username" name="user">Thanh Nguyen</div>
-    <div id="timestamp" name="time">29/9/2022</div>
-    <div id="content" name="content">
-      Do mình bị mất mũ bảo hiểm và phải mua mũ mới, nhưng khi đặt mình lỡ lấy
-      nhầm 2 cái như hình nên mình muốn bán lại 1 cái. Giá mk mua 120k -> pass:
-      99k cho bạn nào lấy luôn nhá. (Đã bán)
+    <div class="wrapper">
+      <div class="center">
+        <div class="post">
+          <div class="info">
+            <div class="user">
+              <div class="profile-pic">
+                <img src="..\..\static\assets\img\avatar.png" alt="" />
+              </div>
+              <p class="username">username</p>
+            </div>
+          </div>
+          <img
+            src="..\..\static\assets\img\cat.jpg"
+            class="post-image"
+            alt=""
+          />
+          <div class="post-content">
+            <div class="reaction-wrapper">
+              <img src="..\..\static\assets\img\like.png" class="icon" alt="" />
+              <img
+                src="..\..\static\assets\img\comments.png"
+                class="icon"
+                alt=""
+              />
+            </div>
+            <p class="likes">1,012 likes</p>
+            <p class="description"><span>username </span> Hi</p>
+            <p class="post-time">2 minutes ago</p>
+          </div>
+          <div class="comment-wrapper">
+            <img src="img/smile.PNG" class="icon" alt="" />
+            <input
+              type="text"
+              class="comment-box"
+              placeholder="Add a comment"
+            />
+            <button class="comment-btn">
+              <img src="..\..\static\assets\img\sent.png" class="icon" alt="" />
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div></div>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-      integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
-      crossorigin="anonymous"
-    ></script>
   </body>
 </html>

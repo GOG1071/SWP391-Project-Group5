@@ -16,8 +16,11 @@ class ReportHome(db.Model):
 
 class ReportUser(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
+    reporter_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
+    report_detail = db.relationship("ReportUserDetail")
+class ReportUserDetail(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    reported_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
     timestamp = db.Column(db.DateTime, nullable = False)
     reason = db.Column(db.String(1000), nullable = False)
-    reporter_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
-
+    report_id = db.Column(db.Integer, db.ForeignKey('report_user.id'), nullable = False)

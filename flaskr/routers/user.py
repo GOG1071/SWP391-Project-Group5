@@ -12,7 +12,8 @@ def home():
 @user_router.route("/register", methods=["POST", "GET"])
 def register():
     if request.method == "POST":
-        return controllers.user.register(username, password, email)
+        return controllers.user.register(request.form)
+
     return render_template("register.html")
 
 @user_router.route("/login", methods=["POST", "GET"])
@@ -38,7 +39,8 @@ def forgot_password():
 @user_router.route("/register_seller", methods=["POST", "GET"])
 def register_seller():
     if(request.method == "POST"):
-        return controllers.user.register_seller(request.form)
+        controllers.user.register_seller()
+        return 
     else:
         return render_template("register_seller.html")
 
