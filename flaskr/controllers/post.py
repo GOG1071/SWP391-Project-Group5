@@ -1,6 +1,7 @@
 from datetime import datetime
 from importlib.resources import contents
 from models.post import  Post
+from models.user import User
 from models.report import ReportPost
 from models.model import db
 from models.post import PostImage
@@ -86,9 +87,29 @@ def post_detail():
     
     
 def search_post():
-    content = request.form["content"]
-    searchBy = request.form["searchBy"]
+    value = request.form.get('content')
+    searchBy = request.form.get('searchBy')
     if searchBy == "Content":
-        return "aaa"
+        page = request.args.get('page', 1, type=int)
+        posts = Post.query.filter(Post.content.contains(value))\
+        .order_by(Post.timestamp.desc())\
+        .paginate(page=page, per_page=5)
+        return render_template('postSearch.html', posts=posts)   
     else:
-        return "bbb"
+        page = request.args.get('page', 1, type=int)
+        user = User.query.filter(User.username==value).first()
+        posts = Post.query.filter(Post.author_id==user.id)\
+        .order_by(Post.timestamp.desc())\
+        .paginate(page=page, per_page=5)
+        return render_template('postSearch.html', posts=posts)   
+    
+    
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template('post.html', title=post.title, post=post)
+
+# def newfeed():
+#     page = request.args.get('page', 1, type=int)
+#     posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=5)
+#     return render_template('postTest.html', posts=posts)
+

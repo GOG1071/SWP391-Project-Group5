@@ -1,7 +1,7 @@
 from decorators.authentication import login_required,admin_required
 from flask import Blueprint, jsonify, request, render_template, session,url_for,flash
 from controllers import post
-
+from models.post import Post
 import controllers.post
 
 
@@ -56,7 +56,8 @@ def report_post():
 def create_post():
     if request.method == "POST":
         return controllers.post.create_post()
-    return render_template("manage_posted.html")
+    return render_template("create_post.html")
+
 @post_router.route('/post_detail',methods=["POST", "GET"])
 @login_required
 def post_detail():
@@ -65,8 +66,19 @@ def post_detail():
     return render_template("post_detail.html")
 
 @post_router.route('/search_post',methods=["POST", "GET"]) 
+# @login_required
 def search_post():
     if request.method == "POST":
         return controllers.post.search_post()
     return render_template("searchPost.html")
-    
+
+@post_router.route("/post/<int:post_id>")
+@login_required
+def post(post_id):
+    return controllers.post.post(post_id)
+
+  
+# @post_router.route("/newfeed")
+# def newfeed():
+#     return controllers.post.newfeed()
+

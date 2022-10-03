@@ -6,6 +6,7 @@ from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
 from controllers.mail_service import mail
+from models.post import  Post
 
 
 def home():
@@ -111,3 +112,11 @@ def edit_profile():
         return render_template("editProfile.html",username=user.username,email=user.email)
     user.email = request.form["email"]
     return render_template("editProfile.html",username=user.username,email=user.email)
+
+def user_posts(username):
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = Post.query.filter_by(author_id=user.id)\
+        .order_by(Post.timestamp.desc())\
+        .paginate(page=page, per_page=5)
+    return render_template('user_posts.html', posts=posts, user=user)
