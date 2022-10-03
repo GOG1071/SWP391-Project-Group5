@@ -62,11 +62,9 @@ def update_post():
     
     if post_image:
         for i in post_image:
-
             img_id = i.id
             db.session.delete(i)
             db.session.commit()
-
             post_img = PostImage( id = img_id ,post_id = id, image_link = file_path )
             db.session.add(post_img)
             db.session.commit()
