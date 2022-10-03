@@ -59,7 +59,7 @@ def edit_profile():
     return controllers.user.edit_profile()
 
 
-@user_router.route("/<string:username>")
+@user_router.route("/post/<string:username>")
 @login_required
 def user_posts(username):
     return controllers.user.user_posts(username)
