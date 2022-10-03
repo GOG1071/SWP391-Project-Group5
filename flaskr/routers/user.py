@@ -1,6 +1,8 @@
 import controllers.user
 from decorators.authentication import login_required
 from flask import Blueprint, jsonify, request, render_template, session
+from models.user import UserRole, User
+from models.post import  Post
 
 
 user_router = Blueprint('user_router', __name__)
@@ -57,5 +59,9 @@ def edit_profile():
     return controllers.user.edit_profile()
 
 
+@user_router.route("/<string:username>")
+@login_required
+def user_posts(username):
+    return controllers.user.user_posts(username)
 
 
