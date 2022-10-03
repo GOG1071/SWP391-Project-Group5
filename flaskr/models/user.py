@@ -14,7 +14,7 @@ class User(db.Model):
     password = db.Column(db.String(120), nullable=False)
     banned = db.Column(db.Boolean, nullable=True, default=False)
     role = db.Column(db.String(80), nullable=False, default=UserRole.MEMBER)
-    posts = db.relationship('Post', backref='author', lazy=True)
+    posts = db.relationship('Post')
     comments = db.relationship('Comment')
     advertisements = db.relationship('Advertisement')
     messages = db.relationship('Chat')
