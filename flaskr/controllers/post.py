@@ -1,5 +1,4 @@
 from datetime import datetime
-from hashlib import new
 from importlib.resources import contents
 
 from models.post import PostImage
