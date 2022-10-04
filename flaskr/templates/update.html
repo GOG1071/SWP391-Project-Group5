@@ -12,18 +12,26 @@
 <body >
 
 <h1 class="text-center text-capitalize"> Update post </h1>
-<div class="container">
+<div class="container" style="margin-bottom: 50px;">
     <form action="./update_post" method="POST">
         id: <input type="text" class="form-control" value="{{post.id}}" name="id" readonly>
         <br>
-        caption: <input type="text" class="form-control" value="{{post.content}}" name="caption">
+        Content: <textarea rows="5" type="text" class="form-control" value="{{post.content}}" name="caption"> </textarea>
         <br>
         author id: <input type="text" class="form-control" value="{{post.author_id}}" name="author_id" readonly>
         <br>
-        <button type="submit" class="btn btn-success"> update </button>
+        {%for i in post_img%}
+            image: <input type="file" class="form-control" value="{{i.image_link}}" name="img_link" >
+            <br>
+        {%endfor%}
         <br>
-        <a href="{{url_for('load_post',author_id = post.author_id)}}" > <button class="btn btn-success"> Cannel </button></a>
+        Time Stamp: <input type="text" class="form-control" value="{{post.timestamp}}" name="time" readonly>
+        <br>
+        <button type="submit" class="btn btn-success"> update </button>
+     
     </form>
+    <a href="{{url_for('post_router.load_post',author_id = post.author_id)}}" > <button class="btn btn-success"> Cannel </button></a>
+
 </div>
 </body>
 </html>

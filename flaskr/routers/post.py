@@ -8,9 +8,7 @@ import controllers.post
 post_router = Blueprint('post_router', __name__)
 
 @post_router.route('/load_post',methods=["POST", "GET"])
-
 @login_required
-
 def load_post():
 
     return controllers.post.load_post()
@@ -18,7 +16,6 @@ def load_post():
 
 @post_router.route('/delete_post',methods=["POST", "GET"])
 @login_required
-
 def delete_post():
     if request.method == "POST":
         return controllers.post.delete_post()
