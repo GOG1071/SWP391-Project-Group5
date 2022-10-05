@@ -9,7 +9,6 @@ class Home(db.Model):
     timestamp = db.Column(db.DateTime, nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
     reports = db.relationship('ReportHome')
-    advertisements = db.relationship('Advertisement')
 
 class RoomDetail(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -18,7 +17,6 @@ class RoomDetail(db.Model):
     amount = db.Column(db.Integer, unique = False, nullable = False)
     price = db.Column(db.Float, nullable = False)
     description = db.Column(db.String(1000), unique = False, nullable = False)
-
 
 class RoomImage(db.Model):
     id = db.Column(db.Integer, primary_key = True)

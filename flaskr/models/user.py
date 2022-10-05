@@ -16,7 +16,6 @@ class User(db.Model):
     role = db.Column(db.String(80), nullable=False, default=UserRole.MEMBER)
     posts = db.relationship('Post')
     comments = db.relationship('Comment')
-    advertisements = db.relationship('Advertisement')
     messages = db.relationship('Chat')
 
 class Bookmark(db.Model):
@@ -35,3 +34,10 @@ class WebsiteFeedback(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     feedback = db.Column(db.String(1000), nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False)
+
+class HomeOwnerRequest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    home_id = db.Column(db.Integer, db.ForeignKey('home.id'), nullable=False)
+    status = db.Column(db.Boolean, nullable=False, default=False)
+
