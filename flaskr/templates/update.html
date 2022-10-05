@@ -13,20 +13,18 @@
 
 <h1 class="text-center text-capitalize"> Update post </h1>
 <div class="container" style="margin-bottom: 50px;">
-    <form action="./update_post" method="POST">
+    <form action="./update_post" method="POST" enctype="multipart/form-data">
         id: <input type="text" class="form-control" value="{{post.id}}" name="id" readonly>
         <br>
         Content: <textarea rows="5" type="text" class="form-control" value="{{post.content}}" name="caption"> </textarea>
         <br>
         author id: <input type="text" class="form-control" value="{{post.author_id}}" name="author_id" readonly>
         <br>
-        {%for i in post_img%}
-            image: <input type="file" class="form-control" value="{{i.image_link}}" name="img_link" >
-            <br>
-        {%endfor%}
-        <br>
+        image: <input type="file" class="form-control"  name="files[]"  multiple="true">
+       
+        
         Time Stamp: <input type="text" class="form-control" value="{{post.timestamp}}" name="time" readonly>
-        <br>
+        <br>    
         <button type="submit" class="btn btn-success"> update </button>
      
     </form>

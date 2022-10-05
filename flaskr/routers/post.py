@@ -7,6 +7,8 @@ import controllers.post
 
 post_router = Blueprint('post_router', __name__)
 
+
+
 @post_router.route('/load_post',methods=["POST", "GET"])
 @login_required
 def load_post():
@@ -33,7 +35,6 @@ def load_for_update():
 
 
 @post_router.route('/update_post',methods=["POST", "GET"])
-@login_required
 
 def update_post():
     if request.method == "POST":
@@ -49,11 +50,10 @@ def report_post():
 
 
 @post_router.route('/create_post',methods=["POST", "GET"])
-@login_required
 def create_post():
     if request.method == "POST":
         return controllers.post.create_post()
-    return render_template("manage_posted.html")
+    return render_template("create_post.html")
 @post_router.route('/post_detail',methods=["POST", "GET"])
 @login_required
 def post_detail():

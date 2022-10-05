@@ -29,10 +29,12 @@ def load_post():
 def delete_post():
     id = request.form.get("id")
     author_id = request.form.get("author_id")
-    post_img = PostImage.query.filter_by(post_id = id).first()
+    post_img = PostImage.query.filter_by(post_id = id)
     if post_img:
-        db.session.delete(post_img)
-        db.session.commit()
+        for img in post_img:
+            db.session.delete(img)
+            db.session.commit()
+
     post = Post.query.filter_by(id = id).first()
     if post:
         db.session.delete(post)
@@ -53,21 +55,30 @@ def update_post():
     post = Post.query.filter_by(id=id).first()
     timestamp = datetime.now()
     post_image = PostImage.query.filter_by(post_id = id)
-    image_link = request.form["img_link"]
+    image_link = request.files.getlist('files[]')
     file_path = None
+    list_file_path = []
+    # lấy 1 list link img rồi đẩy hết lên cloudinary rồi lấy link sau khi đẩy add vào list_file_path
     if image_link:
-        response = cloudinary.uploader.upload(image_link)
-        file_path = response['secure_url']
- 
-    
+        for img in image_link:
+            response = cloudinary.uploader.upload(img)
+            file_path = response['secure_url']
+            list_file_path.append(file_path)
+
     if post_image:
         for i in post_image:
-            img_id = i.id
+            
             db.session.delete(i)
             db.session.commit()
-            post_img = PostImage( id = img_id ,post_id = id, image_link = file_path )
-            db.session.add(post_img)
-            db.session.commit()
+            
+
+   
+    for file in list_file_path:
+        post_img = PostImage( post_id = id, image_link = file )
+        db.session.add(post_img)
+        db.session.commit()
+
+
 
     if post:
         db.session.delete(post)
@@ -77,7 +88,7 @@ def update_post():
         db.session.add(post)
         db.session.commit()
     
-    return redirect( url_for('post_router.load_post',author_id = request.form["author_id"]) )
+    return redirect( url_for('post_router.load_post',author_id = request.form["author_id"], img_link = image_link) )
 
 def report_post():
     author_id = session["id"]
