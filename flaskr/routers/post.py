@@ -75,7 +75,7 @@ def post(post_id):
     return controllers.post.post(post_id)
 
   
-# @post_router.route("/newfeed")
-# def newfeed():
-#     return controllers.post.newfeed()
+@post_router.route("/newfeed")
+def newfeed():
+    return controllers.post.newfeed()
 

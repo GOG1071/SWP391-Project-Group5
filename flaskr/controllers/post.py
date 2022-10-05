@@ -139,8 +139,8 @@ def post(post_id):
     post = Post.query.get_or_404(post_id)
     return render_template('post.html', title=post.title, post=post)
 
-# def newfeed():
-#     page = request.args.get('page', 1, type=int)
-#     posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=5)
-#     return render_template('postTest.html', posts=posts)
+def newfeed():
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=5)
+    return render_template('postTest.html', posts=posts)
 
