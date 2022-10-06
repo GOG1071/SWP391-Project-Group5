@@ -1,11 +1,11 @@
 import random
 import string
-from sqlite3 import Timestamp
-from models.user import UserRole, User
+from models.user import UserRole, User, HomeOwnerRequest
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
 from controllers.mail_service import mail
+from models.post import Post
 
 
 def home():
@@ -14,15 +14,11 @@ def home():
         return render_template("home.html", username = user, isLogin = True)
     else:
         return render_template("home.html", stringName = "you are not login", isLogin = False)
-        
-        
-def login():
 
+def login():
     user_name = request.form["user"]
     pass_word = request.form["pass"]
-
     query = User.query.filter(User.username == user_name , User.password == pass_word).first()
-   
     if query:
         session['user'] = query.username
         session['id'] = query.id
@@ -41,50 +37,63 @@ def forgot_password(email):
     # kiem tra email
     user = db.session.execute(db.select(User).where(User.email == email)).first()
     if user != None:
-            # gen new password
-            new_password = gen_new_password()
-            # update password
-            user[0].password = new_password
-            # luu password moi vao database
-            db.session.commit()
-            #send email
-            msg = Message('Your new password is: ' + new_password, sender = 'sweethomehola@outlook.com', recipients = [email])
-            mail.send(msg)
+        # gen new password
+        new_password = gen_new_password()
+        # update password
+        user[0].password = new_password
+        # luu password moi vao database
+        db.session.commit()
+        #send email
+        msg = Message('Your new password is: ' + new_password, sender = 'sweethomehola@outlook.com', recipients = [email])
+        mail.send(msg)
 
-            #thong bao toi front end
-            flash("New password has been sent to your email.","info")
-            return render_template("login.html")
+        #thong bao toi front end
+        flash("New password has been sent to your email.","info")
+        return render_template("login.html")
     else:
         flash("Wrong email!","info")
         return render_template("forgot_password.html")
 
-def register(form):
-    # kiem tra du lieu
-    user = db.session.execute(db.select(User).where(User.email == form.get('username'))).first()
+def check_exist_user(username, email):
+    user = db.session.execute(db.select(User).where(User.email == username)).first()
     if user:
-        flash("Username already exists!","info")
-        return render_template("register.html")
-    user = db.session.execute(db.select(User).where(User.email == form.get('email'))).first()
+        return True
+    user = db.session.execute(db.select(User).where(User.email == email)).first()
     if user:
-        flash("Email already exists!","info")
-        return render_template("register.html")
-    # add vao database
-    user = User(
-        username=form.get('username'),
-        password=form.get('password'),
-        email=form.get('email'))
-    db.session.add(user)
-    db.session.commit()
-    # chuyen huong ve trang login
-    return redirect(url_for('user_router.login'))
+        return True
+    return False
 
-def register_seller(username, password, address, email):
-    # nhan du lieu tu form
-    
+def register(username, password, email):
     # kiem tra du lieu
-    # add thong bao cho admin (de approved = false)
-    # khi admin approve thi gui email cho seller (xu li o admin)
-    pass
+    if not check_exist_user(username, email):
+    # add vao database
+        user = User(username=username, password=password, email=email)
+        db.session.add(user)
+        db.session.commit()
+        session['user'] = user
+        return redirect(url_for('user_router.home'))
+    else:
+        flash("duplicate email or username", "info")
+        return render_template("register.html")
+
+def register_seller(username, email):
+    # kiem tra du lieu
+    if not check_exist_user(username, email):
+        password = gen_new_password()
+        # add vao database
+        user = User(username=username, password=password, email=email, role=UserRole.SELLER, banned=True)
+        db.session.add(user)
+        user = User.query.filter(User.username == username).first()
+
+        user_request = HomeOwnerRequest(user_id=user.id, home_id = 1)
+        db.session.add(user_request)
+        db.session.commit()
+        
+        flash("Your request has been sent to admin. Please wait for approval, we will send password in your email.","info")
+        return render_template("register_seller.html")
+    else:
+        flash("duplicate email or username", "info")
+        return render_template("register_seller.html")
 
 def gen_new_password():
     password = ''
@@ -111,3 +120,11 @@ def edit_profile():
         return render_template("editProfile.html",username=user.username,email=user.email)
     user.email = request.form["email"]
     return render_template("editProfile.html",username=user.username,email=user.email)
+
+def user_posts(username):
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = Post.query.filter_by(author_id=user.id)\
+        .order_by(Post.timestamp.desc())\
+        .paginate(page=page, per_page=5)
+    return render_template('user_posts.html', posts=posts, user=user)

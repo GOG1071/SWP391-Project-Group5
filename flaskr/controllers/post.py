@@ -1,11 +1,12 @@
 from datetime import datetime
-from hashlib import new
 from importlib.resources import contents
 
 from models.post import PostImage
 from models.post import  Post
+from models.user import User
 from models.report import ReportPost
 from models.model import db
+from models.post import PostImage
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
 from controllers.mail_service import mail
@@ -87,8 +88,8 @@ def update_post():
         post = Post(id = request.form['id'],content = request.form['caption'],author_id = request.form['author_id'],timestamp = timestamp)
         db.session.add(post)
         db.session.commit()
-    
     return redirect( url_for('post_router.load_post',author_id = request.form["author_id"], img_link = image_link) )
+
 
 def report_post():
     author_id = session["id"]
@@ -99,9 +100,7 @@ def report_post():
     db.session.add(report_post)
     db.session.commit()
     return redirect(url_for("user_router.home"))
-
-
-
+    
 def create_post():
     file = request.form.get('file')
     file_path = None
@@ -116,19 +115,44 @@ def create_post():
     post = Post.query.filter_by()
     db.session.add(post)
     db.session.commit()
-    return render_template('post_detail.html')
-def post_detail():
-    id = session['post_id']
-    post = Post.query.filter_by(id=id).first()
+
+    post_image = PostImage(
+        post_id = post.id,
+        image_link = file_path,
+    )
+    db.session.add(post_image)
     db.session.commit()
     return render_template('post_detail.html')
+def post_detail():
+    post = Post.query.filter_by(id=id).first()
+    return render_template('post_detail.html')
+
     
     
 def search_post():
-    content = request.form["content"]
-    searchBy = request.form["searchBy"]
+    value = request.form.get('content')
+    searchBy = request.form.get('searchBy')
     if searchBy == "Content":
-        return "aaa"
+        page = request.args.get('page', 1, type=int)
+        posts = Post.query.filter(Post.content.contains(value))\
+        .order_by(Post.timestamp.desc())\
+        .paginate(page=page, per_page=5)
+        return render_template('postSearch.html', posts=posts)   
     else:
-        return "bbb"
+        page = request.args.get('page', 1, type=int)
+        user = User.query.filter(User.username==value).first()
+        posts = Post.query.filter(Post.author_id==user.id)\
+        .order_by(Post.timestamp.desc())\
+        .paginate(page=page, per_page=5)
+        return render_template('postSearch.html', posts=posts)   
+    
+    
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template('post.html', title=post.title, post=post)
+
+# def newfeed():
+#     page = request.args.get('page', 1, type=int)
+#     posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=5)
+#     return render_template('postTest.html', posts=posts)
 
