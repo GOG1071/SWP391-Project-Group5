@@ -16,6 +16,9 @@
     
         <div class="text-center text-uppercase header">
             <h1>Manage Posted</h1>
+            {% for i in img_link: %}
+                <h1> {{i}} </h1>
+            {%endfor%}
         </div>
         {%with messages = get_flashed_messages()%}
             {%if messages:%}
