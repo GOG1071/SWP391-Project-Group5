@@ -74,7 +74,6 @@ def update_post():
             db.session.commit()
             
 
-   
     for file in list_file_path:
         post_img = PostImage( post_id = id, image_link = file )
         db.session.add(post_img)
@@ -148,7 +147,7 @@ def search_post():
         .paginate(page=page, per_page=5)
         return render_template('postSearch.html', posts=posts)   
     
-    
+
 def post(post_id):
     post = Post.query.get_or_404(post_id)
     return render_template('post.html', title=post.title, post=post)

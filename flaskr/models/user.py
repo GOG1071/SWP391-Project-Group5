@@ -26,7 +26,7 @@ class Bookmark(db.Model):
 class RoomRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    status = db.Column(db.String(80), nullable=False, default="PENDING")
+    content = db.Column(db.String(500), nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False)
 
 class WebsiteFeedback(db.Model):

@@ -50,6 +50,7 @@ def report_post():
 
 
 @post_router.route('/create_post',methods=["POST", "GET"])
+@login_required
 def create_post():
     if request.method == "POST":
         return controllers.post.create_post()
