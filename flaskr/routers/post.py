@@ -34,7 +34,6 @@ def load_for_update():
 
 @post_router.route('/update_post',methods=["POST", "GET"])
 @login_required
-
 def update_post():
     if request.method == "POST":
         return controllers.post.update_post()
@@ -74,8 +73,8 @@ def search_post():
 def post(post_id):
     return controllers.post.post(post_id)
 
-  
-# @post_router.route("/newfeed")
-# def newfeed():
-#     return controllers.post.newfeed()
+@post_router.route("/newsfeed")
+@login_required
+def newfeed():
+    return controllers.post.newsfeed()
 

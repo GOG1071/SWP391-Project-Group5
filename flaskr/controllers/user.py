@@ -9,8 +9,8 @@ from models.post import Post
 
 
 def home():
-    if "user" in session:
-        user = session['user']
+    if "username" in session:
+        user = session['username']
         return render_template("home.html", username = user, isLogin = True)
     else:
         return render_template("home.html", stringName = "you are not login", isLogin = False)
@@ -20,17 +20,18 @@ def login():
     pass_word = request.form["pass"]
     query = User.query.filter(User.username == user_name , User.password == pass_word).first()
     if query:
-        session['user'] = query.username
+        session['username'] = query.username
         session['id'] = query.id
         session['role'] = query.role
-    
+        session['banned'] = query.banned
+        session['email'] = query.email
         return redirect(url_for("user_router.home"))
     flash("Your account doesn't exist","info")
     return render_template("login.html")
 
 
 def logout():
-    session.pop('user',None)
+    session.clear()
     return redirect(url_for('user_router.home'))
 
 def forgot_password(email):
@@ -70,7 +71,11 @@ def register(username, password, email):
         user = User(username=username, password=password, email=email)
         db.session.add(user)
         db.session.commit()
-        session['user'] = user
+        session['username'] = user.username
+        session['id'] = user.id
+        session['role'] = user.role
+        session['banned'] = user.banned
+        session['email'] = user.email
         return redirect(url_for('user_router.home'))
     else:
         flash("duplicate email or username", "info")

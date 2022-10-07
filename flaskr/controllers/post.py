@@ -59,7 +59,6 @@ def update_post():
     if image_link:
         response = cloudinary.uploader.upload(image_link)
         file_path = response['secure_url']
- 
     
     if post_image:
         for i in post_image:
@@ -111,6 +110,7 @@ def create_post():
     db.session.add(post_image)
     db.session.commit()
     return render_template('post_detail.html')
+
 def post_detail():
     post = Post.query.filter_by(id=id).first()
     return render_template('post_detail.html')
@@ -139,8 +139,8 @@ def post(post_id):
     post = Post.query.get_or_404(post_id)
     return render_template('post.html', title=post.title, post=post)
 
-# def newfeed():
-#     page = request.args.get('page', 1, type=int)
-#     posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=5)
-#     return render_template('postTest.html', posts=posts)
+def newsfeed():
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=5)
+    return render_template('newsfeed.html', posts=posts)
 

@@ -7,7 +7,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarToggle">
           <div class="navbar-nav me-auto">
-            {% if session.get('user') != None %}
+            {% if session.get('username') != None %}
             <a class="nav-item nav-link" href="{{ url_for('user_router.home') }}">Home</a>
             <a class="nav-item nav-link" href="{{ url_for('user_router.profile') }}">New Post</a>
             {% else %}
@@ -16,8 +16,8 @@
             
           </div>
           <div class="navbar-nav">      
-            {% if session.get('user') != None %}
-            <a class="nav-item nav-link" href="{{ url_for('user_router.profile') }}">{{session['user']}}</a>
+            {% if session.get('username') != None %}
+            <a class="nav-item nav-link" href="{{ url_for('user_router.profile') }}">{{session['username']}}</a>
             <a class="nav-item nav-link" href="{{ url_for('user_router.logout') }}">Logout</a>
             {% else %}
             <a class="nav-item nav-link" href="{{ url_for('user_router.login') }}">Login</a>
