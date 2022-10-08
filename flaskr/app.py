@@ -7,6 +7,7 @@ from controllers.mail_service import mail
 from flask_mail import Mail 
 from routers.user import user_router
 from routers.post import post_router
+from routers.home import home_router
 import cloudinary
 from flask_wtf.csrf import CSRFProtect
 
@@ -49,6 +50,7 @@ csrf.init_app(app)
 #register blueprint
 app.register_blueprint(user_router, url_prefix="/user")
 app.register_blueprint(post_router, url_prefix="/post")
+app.register_blueprint(home_router,url_prefix="/home")
 
 @app.route("/")
 def index():
