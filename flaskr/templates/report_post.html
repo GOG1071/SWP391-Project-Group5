@@ -16,15 +16,15 @@
         <h1 class="text-center text-capitalize" style="color: #028174;"> Report post </h1>
        
        
-        <form action="" class="text-center">
+        <form action="./report_post" class="text-center">
             
             
            <label for="reason" class="text-capitalize"> reason why you report this post:</label> 
            <textarea rows="5" type="text" name="reason" id="reason" class="form-control reason" style="background-color: #D9D9D9;" placeholder="why you want to report"></textarea>
             <br>
-            <input type="text" name="post_id" value="" hidden>
+            <input type="text" name="post_id" value="{{id}}" hidden>
             <button type="submit" class="btn btn-success text-uppercase" > submit </button>
-            <a href="" class="" > <button type="button" class="btn btn-danger text-uppercase" > cancel  </button></a>
+            <a href="/" class="" > <button type="button" class="btn btn-danger text-uppercase" > cancel  </button></a>
         </form>
         </div>
     </div>

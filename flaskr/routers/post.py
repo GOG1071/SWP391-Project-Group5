@@ -46,7 +46,8 @@ def update_post():
 def report_post():
     if request.method == 'POST':
         return controllers.post.report_post()
-    return render_template('report_post.html')
+    id = request.args.get("id")
+    return render_template('report_post.html',id = id)
 
 
 @post_router.route('/create_post',methods=["POST", "GET"])
