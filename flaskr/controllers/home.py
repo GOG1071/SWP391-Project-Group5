@@ -1,6 +1,4 @@
 from datetime import datetime
-from hashlib import new
-from importlib.resources import contents
 from models.home import Home
 from models.home import RoomDetail
 from models.home import RoomImage
