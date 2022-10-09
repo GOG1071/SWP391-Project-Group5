@@ -16,8 +16,8 @@
     <div class="" id="greensquare">
 
         <div id="whitesquare">
-
             <form class="container" method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <div class="row">
                     <h1 style="text-align: center;margin-bottom: 10vh;">Register</h1>
                 </div>
