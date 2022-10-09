@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <p>
-                                        {% for home in homes %}
+                                        {% for home in bookmarks %}
                                         <a
                                             href="{{ url_for('home_router.info', home_id=home['id']) }}">{{home['title']}}</a>
                                         <br>
