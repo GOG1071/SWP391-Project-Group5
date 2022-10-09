@@ -27,7 +27,7 @@
                     {%endif%}        
                 {%endwith%}
                 <form action="./login" method="POST">
-                    
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <div style="padding-top: 10px;">
                     <label for="username" class="text-capitalize fw-bolder"> username </label>
                     <input type="text" id="username" name="user" class="form-control" style="margin-top: 10px ;background-color:#D9D9D9;" >
