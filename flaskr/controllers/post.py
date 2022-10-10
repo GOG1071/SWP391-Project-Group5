@@ -10,7 +10,7 @@ from models.post import PostImage
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
 from controllers.mail_service import mail
-import cloudinary.uploader 
+import cloudinary.uploader  
 
 def load_post():
     author_id = session['id']
@@ -157,3 +157,6 @@ def newsfeed():
     posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=5)
     return render_template('newsfeed.html', posts=posts)
 
+def postpage_detail():
+    post = Post.query.filter_by(id=id).first()
+    return render_template('postpage_detail.html')
