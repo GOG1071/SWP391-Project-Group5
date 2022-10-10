@@ -20,3 +20,7 @@ def add_home():
     db.session.add(home)
     db.session.commit()
     return render_template("add_home_for_owner.html")
+
+def info(id):
+    home = Home.query.filter_by(id = id).first()
+    return render_template("home_info.html",home = home)
