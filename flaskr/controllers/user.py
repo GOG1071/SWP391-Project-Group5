@@ -1,6 +1,6 @@
 import random
 import string
-from flaskr.models.user import Bookmark
+from models.user import Bookmark
 from models.user import UserRole, User, HomeOwnerRequest
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash

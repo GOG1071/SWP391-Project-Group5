@@ -62,4 +62,9 @@ def edit_profile():
 def user_posts(username):
     return controllers.user.user_posts(username)
 
+@user_router.route("/bookmark")
+@login_required
+def bookmark():
+    return controllers.user.bookmark()
+
 
