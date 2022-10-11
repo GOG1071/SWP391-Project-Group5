@@ -21,8 +21,9 @@
         <br>
         author id: <input type="text" class="form-control" value="{{post.author_id}}" name="author_id" readonly>
         <br>
-        image: <input type="file" class="form-control"  name="files[]"  multiple="true">
-       
+        image: <input type="file" class="form-control"  name="files[]"  multiple="true" accept=".png, .jpg, .jpeg">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
         
         Time Stamp: <input type="text" class="form-control" value="{{post.timestamp}}" name="time" readonly>
         <br>    
