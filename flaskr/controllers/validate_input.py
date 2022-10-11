@@ -2,6 +2,7 @@
 
 
 class Validation:
-    pass
+    def valid_file(file):
+        pass
     
 
