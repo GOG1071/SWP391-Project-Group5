@@ -67,4 +67,10 @@ def user_posts(username):
 def bookmark():
     return controllers.user.bookmark()
 
+@user_router.route('/newRoomRequest',methods=["GET","POST"])
+def postRoomRequest():
+    if request.method == "POST":
+        return controllers.user.add_room_request()
+    return render_template("roomRequest.html")
+
 
