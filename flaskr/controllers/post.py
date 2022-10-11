@@ -1,6 +1,8 @@
 from datetime import datetime
 from importlib.resources import contents
 
+
+
 from models.post import PostImage
 from models.post import  Post
 from models.user import User
@@ -57,14 +59,19 @@ def update_post():
     timestamp = datetime.now()
     post_image = PostImage.query.filter_by(post_id = id)
     image_link = request.files.getlist('files[]')
+    
+    
+
     file_path = None
     list_file_path = []
     # lấy 1 list link img rồi đẩy hết lên cloudinary rồi lấy link sau khi đẩy add vào list_file_path
     if image_link:
         for img in image_link:
-            response = cloudinary.uploader.upload(img)
-            file_path = response['secure_url']
-            list_file_path.append(file_path)
+            
+                response = cloudinary.uploader.upload(img)
+                file_path = response['secure_url']
+                list_file_path.append(file_path)
+           
 
 
     if post_image:

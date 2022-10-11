@@ -71,6 +71,8 @@
                                 <td class="text-right"> 
                                     <form action="./load_for_update" method="POST">
                                         <input type="text" name="id" value="{{l.id}}" hidden>
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
                                     <button class="btn btn-sm btn-danger" type="submit"><i class="fa fa-pencil"></i> update  </button>
                                     </form>
                                 </td>

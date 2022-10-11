@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from models.home import Home
 from models.home import RoomDetail
 from models.home import RoomImage
@@ -20,3 +21,54 @@ def add_home():
     db.session.add(home)
     db.session.commit()
     return render_template("add_home_for_owner.html")
+
+
+
+def load_home():
+    user_id = session['id']
+    list_home = Home.query.filter_by(user_id = user_id)
+    return render_template("load_home.html",list_home = list_home)
+
+def load_room():
+    home_id = request.args.get("home_id")
+    list_room = RoomDetail.query.filter_by(home_id = home_id)
+    list_room_img = []
+    for i in list_room:
+        room_img = RoomImage.query.filter_by(room_id = i.id)
+        list_room_img+=room_img
+    if list_room_img:
+        return render_template("load_room.html",list_room = list_room,list_room_img = list_room_img,home_id = home_id)
+        
+    return render_template("load_room.html",list_room = list_room,home_id = home_id)
+
+
+def add_room():
+    room_type = request.form['type_room']
+    home_id = request.form['home_id']
+    des = request.form['des']
+    price = request.form['price']
+    amount = request.form['num_room']
+    image_link =  request.files.getlist('img')
+    
+    room_detail = RoomDetail(home_id = home_id,room_type = room_type,amount = amount,price = price,description = des)
+    db.session.add(room_detail)
+    db.session.commit()
+
+    room_all = RoomDetail.query.all()
+    room = room_all[len(room_all)-1]
+
+    file_path = None
+    list_file_path = []
+    # lấy 1 list link img rồi đẩy hết lên cloudinary rồi lấy link sau khi đẩy add vào list_file_path
+    if image_link:
+        for img in image_link:
+            
+                response = cloudinary.uploader.upload(img)
+                file_path = response['secure_url']
+                list_file_path.append(file_path)
+    
+    for file in list_file_path:
+        room_img = RoomImage(room_id = room.id, image_link = file)
+        db.session.add(room_img)
+        db.session.commit() 
+    return redirect( url_for('home_router.load_room',home_id = home_id))

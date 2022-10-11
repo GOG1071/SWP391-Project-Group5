@@ -35,7 +35,6 @@ def load_for_update():
 
 
 @post_router.route('/update_post',methods=["POST", "GET"])
-@login_required
 def update_post():
     if request.method == "POST":
         return controllers.post.update_post()
