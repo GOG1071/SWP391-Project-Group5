@@ -77,7 +77,7 @@ def post(post_id):
     return controllers.post.post(post_id)
 
 @post_router.route("/newsfeed")
-@login_required
+# @login_required
 def newfeed():
     return controllers.post.newsfeed()
 
