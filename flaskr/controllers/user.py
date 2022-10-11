@@ -1,5 +1,6 @@
 import random
 import string
+from flaskr.models.user import Bookmark
 from models.user import UserRole, User, HomeOwnerRequest
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
@@ -133,3 +134,11 @@ def user_posts(username):
         .order_by(Post.timestamp.desc())\
         .paginate(page=page, per_page=5)
     return render_template('user_posts.html', posts=posts, user=user)
+
+def bookmark(userid):
+    bookmarks = Bookmark.query.filter(User.id == userid).all()
+    # missing liked posts
+    if bookmarks:
+        return render_template("bookmark.html",bookmarks=bookmarks)
+    flash("You don't have any bookmark yet!","info")
+    return render_template("bookmark.html")

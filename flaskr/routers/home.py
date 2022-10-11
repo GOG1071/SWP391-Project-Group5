@@ -15,6 +15,7 @@ def add_home():
         return controllers.home.add_home()
     return render_template("add_home_for_owner.html")
 
+
 @home_router.route('/load_home',methods=["POST","GET"])
 
 def load_home():
@@ -31,3 +32,8 @@ def add_room():
         return controllers.home.add_room()
     home_id = request.args.get('home_id')
     return render_template("add_room.html",home_id = home_id)
+
+@home_router.route('/info/<int:id>',methods=["GET"])
+def info(id):
+    return controllers.home.info(id)
+

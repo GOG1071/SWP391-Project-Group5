@@ -14,6 +14,7 @@
 <h1 class="text-center text-capitalize"> Update post </h1>
 <div class="container" style="margin-bottom: 50px;">
     <form action="./update_post" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         id: <input type="text" class="form-control" value="{{post.id}}" name="id" readonly>
         <br>
         Content: <textarea rows="5" type="text" class="form-control" value="{{post.content}}" name="caption"> </textarea>

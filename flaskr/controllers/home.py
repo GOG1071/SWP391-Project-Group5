@@ -23,7 +23,6 @@ def add_home():
     return render_template("add_home_for_owner.html")
 
 
-
 def load_home():
     user_id = session['id']
     list_home = Home.query.filter_by(user_id = user_id)
@@ -72,3 +71,8 @@ def add_room():
         db.session.add(room_img)
         db.session.commit() 
     return redirect( url_for('home_router.load_room',home_id = home_id))
+
+def info(id):
+    home = Home.query.filter_by(id = id).first()
+    return render_template("home_info.html",home = home)
+
