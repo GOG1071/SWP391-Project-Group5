@@ -11,7 +11,7 @@ def login_required(f):
             else:
                 return jsonify(error="You are banned"), 403
         except:
-            return jsonify(error="Please login"), 401
+            return jsonify(error="Please login!"), 401
     return decorated_function
 
 def admin_required(f):

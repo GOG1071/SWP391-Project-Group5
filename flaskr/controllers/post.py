@@ -12,7 +12,7 @@ from models.post import PostImage
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
 from controllers.mail_service import mail
-import cloudinary.uploader  
+from controllers.upload_image import upload as upload
 
 def load_post():
     author_id = session['id']
@@ -109,17 +109,16 @@ def report_post():
     return redirect(url_for("user_router.home"))
     
 def create_post():
-    file = request.form.get('file')
+    file = request.files['file']
     file_path = None
     if file:
-        response = cloudinary.uploader.upload(file)
+        response = upload(file)
         file_path = response['secure_url']
     post = Post(
         content=request.form.get('content'),
         author_id= session['id'],
-        timestamp= datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        timestamp= datetime.now(),
         )
-    post = Post.query.filter_by()
     db.session.add(post)
     db.session.commit()
 
@@ -129,11 +128,11 @@ def create_post():
     )
     db.session.add(post_image)
     db.session.commit()
-    return render_template('post_detail.html')
+    return render_template('components/post_detail.html')
 
 def post_detail():
     post = Post.query.filter_by(id=id).first()
-    return render_template('post_detail.html')
+    return render_template('components/post_detail.html')
 
     
     
