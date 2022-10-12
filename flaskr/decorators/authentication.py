@@ -5,12 +5,12 @@ from models.user import UserRole
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        try:
-            if session['banned'] != True:
+        if "username" in session:
+            if session['banned'] == False:
                 return f(*args, **kwargs)
             else:
                 return jsonify(error="You are banned"), 403
-        except:
+        else:
             return jsonify(error="Please login!"), 401
     return decorated_function
 

@@ -1,8 +1,4 @@
 from datetime import datetime
-from importlib.resources import contents
-
-
-
 from models.post import PostImage
 from models.post import  Post
 from models.user import User
@@ -110,7 +106,6 @@ def report_post():
     
 def create_post():
     file = request.files['file']
-    file_path = None
     if file:
         response = upload(file)
         file_path = response['secure_url']
@@ -128,14 +123,12 @@ def create_post():
     )
     db.session.add(post_image)
     db.session.commit()
-    return render_template('components/post_detail.html')
+    return render_template('components/post_detail.html', post = post)
 
 def post_detail():
     post = Post.query.filter_by(id=id).first()
     return render_template('components/post_detail.html')
 
-    
-    
 def search_post():
     value = request.form.get('content')
     searchBy = request.form.get('searchBy')
