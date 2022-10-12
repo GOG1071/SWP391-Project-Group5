@@ -1,12 +1,13 @@
 import random
 import string
-from models.user import Bookmark
+from models.user import Bookmark ,RoomRequest
 from models.user import UserRole, User, HomeOwnerRequest
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
 from controllers.mail_service import mail
 from models.post import Post
+from datetime import datetime
 
 
 def home():
@@ -142,3 +143,15 @@ def bookmark(userid):
         return render_template("bookmark.html",bookmarks=bookmarks)
     flash("You don't have any bookmark yet!","info")
     return render_template("bookmark.html")
+
+def add_room_request():
+    name = request.form['name']
+    phone = request.form['phone']
+    timeVisit = request.form['timeVisit']
+    user_id = session["id"]
+    timestamp = datetime.now()
+    content = "Name: " + name + " Phone: " + phone + " Time visit: " + timeVisit
+    room_reqest = RoomRequest(user_id = user_id, content = content, timestamp = timestamp)
+    db.session.add(room_reqest)
+    db.session.commit()
+    return render_template("roomRequest.html", done = True, name = name, phone = phone, timeVisit = timeVisit)

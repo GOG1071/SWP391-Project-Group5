@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from models.home import Home
 from models.home import RoomDetail
 from models.home import RoomImage

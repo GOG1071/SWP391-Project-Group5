@@ -37,3 +37,4 @@ def add_room():
 def info(id):
     return controllers.home.info(id)
 
+
