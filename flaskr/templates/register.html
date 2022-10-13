@@ -17,9 +17,16 @@
 
         <div id="whitesquare">
             <form class="container" method="post">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                 <div class="row">
                     <h1 style="text-align: center;margin-bottom: 10vh;">Register</h1>
+                    {%with messages = get_flashed_messages()%}
+                    {%if messages:%}
+                    {%for m in messages%}
+                    <p class="text-center text-capitalize text-danger"> {{m}}</p>
+                    {%endfor%}
+                    {%endif%}
+                    {%endwith%}
                 </div>
 
                 <div class="row">
@@ -30,7 +37,7 @@
                 <div class="row">
 
                     <label>Email</label><br>
-                    <input type="email" name="email"  required><br>
+                    <input type="email" name="email" required><br>
                 </div>
                 <div class="row input-icon">
                     <div class=""></div>
@@ -41,12 +48,15 @@
                 <div class="row input-icon">
 
                     <label>Confirm Password</label><br>
-                    <input class="password" type="password" name="cfpassword" required>
+                    <input class="password" type="password" name="cf_password" required>
                     <i class="bi bi-eye-slash" onclick="showPassword()"></i>
                 </div>
                 <div class="row">
-                    <button type="submit" class=" btn btn-success btn-block text-uppercase" style="width: 30%;margin: auto; margin-top: 5vh;">Register</button>
-                    <button onclick="window.location.href='/user/register_seller'" class=" btn btn-success btn-block text-uppercase" style="width: 30%;margin: auto; margin-top: 5vh;">Register for homeowner</button>
+                    <button type="submit" class=" btn btn-success btn-block text-uppercase"
+                        style="width: 30%;margin: auto; margin-top: 5vh;">Register</button>
+                    <button onclick="window.location.href='/user/register_seller'"
+                        class=" btn btn-success btn-block text-uppercase"
+                        style="width: 30%;margin: auto; margin-top: 5vh;">Register for homeowner</button>
                 </div>
             </form>
         </div>

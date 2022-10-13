@@ -58,7 +58,7 @@ def forgot_password(email):
         return render_template("forgot_password.html")
 
 def check_exist_user(username, email):
-    user = db.session.execute(db.select(User).where(User.email == username)).first()
+    user = db.session.execute(db.select(User).where(User.username == username)).first()
     if user:
         return True
     user = db.session.execute(db.select(User).where(User.email == email)).first()

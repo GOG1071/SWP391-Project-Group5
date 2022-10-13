@@ -15,7 +15,6 @@ def home():
 def register():
     if request.method == "POST" and request.form.get("password") == request.form.get("cf_password"):
         return controllers.user.register(request.form.get("username"), request.form.get("password"), request.form.get("email"))
-
     return render_template("register.html")
 
 @user_router.route("/login", methods=["POST", "GET"])
