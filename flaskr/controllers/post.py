@@ -18,11 +18,11 @@ def load_post():
         img = PostImage.query.filter_by(post_id = i.id).first()
         list_img.append(img)
     if list_img:
-        return render_template('manage_posted.html', list = list_post,list_img = list_img)
+        return render_template('post/manage_posted.html', list = list_post,list_img = list_img)
     if list_post:
-        return render_template('manage_posted.html', list = list_post)
+        return render_template('post/manage_posted.html', list = list_post)
     flash("you haven't posted anything yet","info")
-    return render_template('manage_posted.html')
+    return render_template('post/manage_posted.html')
 
 
 def delete_post():
@@ -46,7 +46,7 @@ def load_for_update():
     id  = request.form['id']
     post = Post.query.filter_by(id = id).first()
     post_img = PostImage.query.filter_by(post_id = id)
-    return render_template('update.html',post = post,post_img = post_img)
+    return render_template('post/update.html',post = post,post_img = post_img)
 
 
 def update_post():
@@ -55,8 +55,6 @@ def update_post():
     timestamp = datetime.now()
     post_image = PostImage.query.filter_by(post_id = id)
     image_link = request.files.getlist('files[]')
-    
-    
 
     file_path = None
     list_file_path = []
@@ -67,9 +65,6 @@ def update_post():
                 response = cloudinary.uploader.upload(img)
                 file_path = response['secure_url']
                 list_file_path.append(file_path)
-           
-
-
     if post_image:
         for i in post_image:
             
@@ -125,9 +120,9 @@ def create_post():
     db.session.commit()
     return render_template('components/post_detail.html', post = post)
 
-def post_detail():
+def post_detail(id):
     post = Post.query.filter_by(id=id).first()
-    return render_template('components/post_detail.html')
+    return render_template('components/post_detail.html', post=post)
 
 def search_post():
     value = request.form.get('content')
@@ -137,25 +132,25 @@ def search_post():
         posts = Post.query.filter(Post.content.contains(value))\
         .order_by(Post.timestamp.desc())\
         .paginate(page=page, per_page=5)
-        return render_template('postSearch.html', posts=posts)   
+        return render_template('post/postSearch.html', posts=posts)   
     else:
         page = request.args.get('page', 1, type=int)
         user = User.query.filter(User.username==value).first()
         posts = Post.query.filter(Post.author_id==user.id)\
         .order_by(Post.timestamp.desc())\
         .paginate(page=page, per_page=5)
-        return render_template('postSearch.html', posts=posts)   
+        return render_template('post/postSearch.html', posts=posts)   
     
 
 def post(post_id):
     post = Post.query.get_or_404(post_id)
-    return render_template('post.html', title=post.title, post=post)
+    return render_template('post/post.html', title=post.title, post=post)
 
 def newsfeed():
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=5)
-    return render_template('newsfeed.html', posts=posts)
+    return render_template('post/newsfeed.html', posts=posts)
 
 def postpage_detail():
     post = Post.query.filter_by(id=id).first()
-    return render_template('postpage_detail.html')
+    return render_template('post/postpage_detail.html')

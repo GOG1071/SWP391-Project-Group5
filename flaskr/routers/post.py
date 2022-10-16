@@ -54,12 +54,10 @@ def create_post():
         return controllers.post.create_post()
     return render_template("create_post.html")
 
-@post_router.route('/post_detail',methods=["POST", "GET"])
+@post_router.route('/post_detail',methods=["GET"])
 @login_required
 def post_detail():
-    if request.method == "POST":
-        return controllers.post.post_detail()
-    return render_template("post_detail.html")
+    return controllers.post.post_detail(request.args.get("id"))
 
 @post_router.route('/search_post',methods=["POST", "GET"]) 
 # @login_required

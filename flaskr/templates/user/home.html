@@ -22,59 +22,7 @@
 </head>
 
 <body id="page-top">
-
-    <!-- <header class="site-header">
-        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top" style="z-index: 998">
-          <div class="container">
-            <a class="navbar-brand mr-4" href="/">Sweet home</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarToggle">
-              <div class="navbar-nav me-auto">
-                {% if isLogin == True %}
-                <a class="nav-item nav-link" href="{{ url_for('user_router.home') }}">Home</a>
-                <a class="nav-item nav-link" href="{{ url_for('user_router.profile') }}">New Post</a>
-                {% else %}
-                <a class="nav-item nav-link">You are not login</a>
-                {% endif %}     
-                
-              </div>
-              <div class="navbar-nav">      
-                {% if isLogin == True %}
-                <a class="nav-item nav-link" href="profile">{{username}}</a>
-                <a class="nav-item nav-link" href="{{ url_for('user_router.logout') }}">Logout</a>
-                {% else %}
-                <a class="nav-item nav-link" href="{{ url_for('user_router.login') }}">Login</a>
-                <a class="nav-item nav-link" href="{{ url_for('user_router.register') }}">Register</a>
-                {% endif %}                            
-              </div>            
-            </div>
-          </div>
-        </nav>
-    </header> -->
-
     {% include 'components/navbar.html' %}
-
-    <!-- Navigation
-    <a class="menu-toggle rounded" href="#" style="z-index: 999"><i class="fas fa-bars"></i></a>
-    <nav id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            {% if isLogin == False %}
-                <li class="sidebar-brand"><a href="#page-top">{{ stringName }}</a></li>
-                <li class="sidebar-nav-item"><a href="/user/login">Login</a></li>
-                <li class="sidebar-nav-item"><a href="/user/register">Register</a></li>
-            {% else %}
-                <li class="sidebar-brand"><a href="#page-top">{{ stringName }}</a></li>
-                <li class="sidebar-nav-item"><a href="/user/profile">Profile</a></li>
-                <li class="sidebar-nav-item"><a href="#about">blah blah balh</a></li>
-                <li class="sidebar-nav-item"><a href="/store">blah blah blah</a></li>
-                <li class="sidebar-nav-item"><a href="/user/logout">Log Out</a></li>
-            {% endif %}
-
-        </ul>
-    </nav> -->
-
     <!-- Header-->
     <header class="masthead d-flex align-items-center">
         <div class="container px-4 px-lg-5 text-center">
