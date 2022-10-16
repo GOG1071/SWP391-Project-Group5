@@ -21,13 +21,13 @@ def add_home():
     home = Home(address = address,description = des, total_rooms = num_room, available_rooms = room_not,timestamp = timestamp,user_id = user_id)
     db.session.add(home)
     db.session.commit()
-    return render_template("add_home_for_owner.html")
+    return render_template("home/add_home_for_owner.html")
 
 
 def load_home():
     user_id = session['id']
     list_home = Home.query.filter_by(user_id = user_id)
-    return render_template("load_home.html",list_home = list_home)
+    return render_template("home/load_home.html",list_home = list_home)
 
 def load_room():
     home_id = request.args.get("home_id")
@@ -37,9 +37,9 @@ def load_room():
         room_img = RoomImage.query.filter_by(room_id = i.id)
         list_room_img+=room_img
     if list_room_img:
-        return render_template("load_room.html",list_room = list_room,list_room_img = list_room_img,home_id = home_id)
+        return render_template("home/load_room.html",list_room = list_room,list_room_img = list_room_img,home_id = home_id)
         
-    return render_template("load_room.html",list_room = list_room,home_id = home_id)
+    return render_template("home/load_room.html",list_room = list_room,home_id = home_id)
 
 
 def add_room():
@@ -71,11 +71,11 @@ def add_room():
         room_img = RoomImage(room_id = room.id, image_link = file)
         db.session.add(room_img)
         db.session.commit() 
-    return redirect( url_for('home_router.load_room',home_id = home_id))
+    return redirect( url_for('home/home_router.load_room',home_id = home_id))
 
 def info(id):
     home = Home.query.filter_by(id = id).first()
-    return render_template("home_info.html",home = home)
+    return render_template("home/home_info.html",home = home)
 
 def report_home(id, reason, reporter_id):
     home = Home.query.filter_by(id = id).first()

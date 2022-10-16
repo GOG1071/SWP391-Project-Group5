@@ -13,6 +13,7 @@
 </head>
 
 <body>
+
     <div id="greensquare">
 
         <div id="whitesquare">
@@ -27,6 +28,7 @@
                     {%endfor%}
                     {%endif%}
                     {%endwith%}
+
                 </div>
 
                 <div class="row">
@@ -37,7 +39,9 @@
                 <div class="row">
 
                     <label>Email</label><br>
+
                     <input type="email" name="email" required><br>
+
                 </div>
                 <div class="row input-icon">
                     <div class=""></div>
@@ -48,6 +52,7 @@
                 <div class="row input-icon">
 
                     <label>Confirm Password</label><br>
+
                     <input class="password" type="password" name="cf_password" required>
                     <i class="bi bi-eye-slash" onclick="showPassword()"></i>
                 </div>
@@ -64,6 +69,7 @@
             <p> <a href="{{url_for('user_router.register_seller')}}" class="text-decoration-none text-capitalize"
                     style="color: black; font-size: larger;">Register for homeowner</a></p>
         </div>
+
     </div>
 </body>
 

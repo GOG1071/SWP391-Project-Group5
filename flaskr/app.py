@@ -49,7 +49,7 @@ app.register_blueprint(home_router,url_prefix="/home")
 
 @app.route("/")
 def index():
-    return render_template("home.html", stringName = "You are not logged in",isLogin = False)
+    return render_template("user/home.html", stringName = "You are not logged in",isLogin = False)
   
 @app.after_request
 def apply_caching(response):
@@ -57,10 +57,5 @@ def apply_caching(response):
     response.headers["HTTP-HEADER"] = "VALUE"
     return response
 
-# @app.route("/test")
-# def home():
-#     page = request.args.get('page', 1, type=int)
-#     posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=5)
-#     return render_template('postTest.html', posts=posts)
 
 app.run("0.0.0.0", port=os.environ["port"], debug=True)
