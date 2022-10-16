@@ -49,7 +49,7 @@ app.register_blueprint(home_router,url_prefix="/home")
 
 @app.route("/")
 def index():
-    return render_template("home.html", stringName = "You are not logged in",isLogin = False)
+    return render_template("user/home.html", stringName = "You are not logged in",isLogin = False)
   
 @app.after_request
 def apply_caching(response):
