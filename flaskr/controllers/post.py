@@ -168,3 +168,24 @@ def delete_report():
         db.session.commit()
         return redirect( url_for('post_router.reportedPosts') )
     return redirect( url_for('post_router.reportedPosts') )
+
+def accept_report():
+    report_id = request.form.get("id")
+    report = ReportPost.query.filter_by(id = report_id).first()
+    if report:
+        db.session.delete(report)
+        db.session.commit()
+        
+    postID = report.post_id
+    post_img = PostImage.query.filter_by(post_id = postID).first()
+    if post_img:
+        for img in post_img:
+            db.session.delete(img)
+            db.session.commit()
+            
+    post = Post.query.filter_by(id = postID).first()
+    if report:
+        db.session.delete(post)
+        db.session.commit()
+        return redirect( url_for('post_router.reportedPosts') )
+    return redirect( url_for('post_router.reportedPosts') )

@@ -86,3 +86,9 @@ def reportedPosts():
 def delete_report():
     if request.method == "POST":
         return controllers.post.delete_report()
+    
+@post_router.route('/accept_report',methods=["POST", "GET"])
+@admin_required
+def accept_report():
+    if request.method == "POST":
+        return controllers.post.accept_report()
