@@ -10,7 +10,7 @@ class Post(db.Model):
     image = db.relationship('PostImage', back_populates='post', uselist=False)
     upvotes = db.relationship('Upvote', back_populates="post")
     comments = db.relationship('Comment', backref='post', lazy=True)
-    reports = db.relationship('ReportPost')   
+    reports = db.relationship('ReportPost', backref='post', lazy=True)   
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
