@@ -58,7 +58,7 @@ def forgot_password(email):
         return render_template("user/forgot_password.html")
 
 def check_exist_user(username, email):
-    user = db.session.execute(db.select(User).where(User.email == username)).first()
+    user = db.session.execute(db.select(User).where(User.username == username)).first()
     if user:
         return True
     user = db.session.execute(db.select(User).where(User.email == email)).first()
@@ -119,14 +119,17 @@ def edit_profile():
     checkUsername = User.query.filter(User.username == request.form["username"]).first()
     if checkUsername:
         flash("Username already exists!","info")
-        return render_template("user/editProfile.html",username=user.username,email=user.email)
-    user.username = request.form["username"]
+        return render_template("editProfile.html",username=user.username,email=user.email)
     checkEmail = User.query.filter(User.email == request.form["email"]).first()
     if checkEmail:
         flash("Email already exists!","info")
-        return render_template("user/editProfile.html",username=user.username,email=user.email)
-    user.email = request.form["email"]
-    return render_template("user/editProfile.html",username=user.username,email=user.email)
+        return render_template("editProfile.html",username=user.username,email=user.email)
+    user.username = request.form["username"] if request.form["username"] != "" else user.username
+    session['username'] = user.username
+    user.email = request.form["email"] if request.form["email"] != "" else user.email
+    db.session.commit()
+    # return render_template("userProfile.html",username=user.username,email=user.email)
+    return redirect(url_for('user_router.profile'))
 
 def user_posts(username):
     page = request.args.get('page', 1, type=int)

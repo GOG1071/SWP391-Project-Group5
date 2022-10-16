@@ -15,7 +15,6 @@ def home():
 def register():
     if request.method == "POST" and request.form.get("password") == request.form.get("cf_password"):
         return controllers.user.register(request.form.get("username"), request.form.get("password"), request.form.get("email"))
-
     return render_template("user/register.html")
 
 @user_router.route("/login", methods=["POST", "GET"])
@@ -65,7 +64,7 @@ def user_posts(username):
 @user_router.route("/bookmark")
 @login_required
 def bookmark():
-    return controllers.user.bookmark()
+    return controllers.user.bookmark(session['id'])
 
 @user_router.route('/newRoomRequest',methods=["GET","POST"])
 def postRoomRequest():

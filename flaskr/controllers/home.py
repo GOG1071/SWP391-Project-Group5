@@ -1,4 +1,6 @@
 from datetime import datetime
+from email import message
+from flaskr.models.report import ReportHome
 from models.home import Home
 from models.home import RoomDetail
 from models.home import RoomImage
@@ -75,3 +77,14 @@ def info(id):
     home = Home.query.filter_by(id = id).first()
     return render_template("home/home_info.html",home = home)
 
+def report_home(id, reason, reporter_id):
+    home = Home.query.filter_by(id = id).first()
+    home.reported = True
+    report_home = ReportHome(\
+        home_id = id, \
+        user_id = reporter_id, \
+        timestamp = datetime.now(), \
+        reason = reason)
+    db.session.add(report_home)
+    db.session.commit()
+    return redirect(url_for('home_router.info', message = "Reported successfully", id = id))
