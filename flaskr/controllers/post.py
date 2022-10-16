@@ -160,7 +160,7 @@ def reported_Posts():
     reported_posts = ReportPost.query.order_by(ReportPost.timestamp.desc()).paginate(page=page, per_page=2)
     return render_template('post/reported_post.html', posts=reported_posts)
 
-def delete_report():
+def accept_report():
     report_id = request.form.get("id")
     report = ReportPost.query.filter_by(id = report_id).first()
     if report:
