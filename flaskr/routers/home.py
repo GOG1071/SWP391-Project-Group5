@@ -10,7 +10,7 @@ home_router = Blueprint('home_router', __name__)
 def add_home():
     if request.method == "POST":
         return controllers.home.add_home()
-    return render_template("add_home_for_owner.html")
+    return render_template("home/add_home_for_owner.html")
 
 
 @home_router.route('/load_home',methods=["POST","GET"])
@@ -24,7 +24,7 @@ def add_room():
     if request.method == "POST":
         return controllers.home.add_room()
     home_id = request.args.get('home_id')
-    return render_template("add_room.html",home_id = home_id)
+    return render_template("home/add_room.html",home_id = home_id)
 
 @home_router.route('/info/<int:id>',methods=["GET"])
 def info(id):
