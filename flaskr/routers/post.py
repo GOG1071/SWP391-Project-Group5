@@ -80,3 +80,9 @@ def newfeed():
 @admin_required
 def reportedPosts():
     return controllers.post.reported_Posts()
+
+@post_router.route('/delete_report',methods=["POST", "GET"])
+@admin_required
+def delete_report():
+    if request.method == "POST":
+        return controllers.post.delete_report()

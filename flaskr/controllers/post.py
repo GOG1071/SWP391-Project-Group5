@@ -159,3 +159,12 @@ def reported_Posts():
     page = request.args.get('page', 1, type=int)
     reported_posts = ReportPost.query.order_by(ReportPost.timestamp.desc()).paginate(page=page, per_page=2)
     return render_template('post/reported_post.html', posts=reported_posts)
+
+def delete_report():
+    report_id = request.form.get("id")
+    report = ReportPost.query.filter_by(id = report_id).first()
+    if report:
+        db.session.delete(report)
+        db.session.commit()
+        return redirect( url_for('post_router.reportedPosts') )
+    return redirect( url_for('post_router.reportedPosts') )
