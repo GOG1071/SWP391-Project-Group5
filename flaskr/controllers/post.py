@@ -157,7 +157,7 @@ def postpage_detail():
 
 def reported_Posts():
     page = request.args.get('page', 1, type=int)
-    reported_posts = ReportPost.query.order_by(ReportPost.timestamp.desc()).paginate(page=page, per_page=2)
+    reported_posts = ReportPost.query.order_by(ReportPost.timestamp.desc()).paginate(page=page, per_page=10)
     return render_template('post/reported_post.html', posts=reported_posts)
 
 def delete_report():
