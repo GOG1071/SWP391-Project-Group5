@@ -57,10 +57,5 @@ def apply_caching(response):
     response.headers["HTTP-HEADER"] = "VALUE"
     return response
 
-# @app.route("/test")
-# def home():
-#     page = request.args.get('page', 1, type=int)
-#     posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=5)
-#     return render_template('postTest.html', posts=posts)
 
 app.run("0.0.0.0", port=os.environ["port"], debug=True)

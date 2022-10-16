@@ -1,6 +1,3 @@
-
-
-
 from decorators.authentication import login_required,admin_required,seller_required
 from flask import Blueprint, jsonify, request, render_template, session,url_for,flash
 from controllers import home
@@ -21,10 +18,6 @@ def add_home():
 def load_home():
     return controllers.home.load_home()
 
-@home_router.route('/load_room',methods=["POST","GET"])
-def load_room():
-    return controllers.home.load_room()
-
 
 @home_router.route('/add_room',methods=["Get","POST"])
 def add_room():
@@ -36,5 +29,4 @@ def add_room():
 @home_router.route('/info/<int:id>',methods=["GET"])
 def info(id):
     return controllers.home.info(id)
-
 
