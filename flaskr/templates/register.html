@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <div class="" id="greensquare">
+    <div id="greensquare">
 
         <div id="whitesquare">
             <form class="container" method="post">
@@ -54,11 +54,15 @@
                 <div class="row">
                     <button type="submit" class=" btn btn-success btn-block text-uppercase"
                         style="width: 30%;margin: auto; margin-top: 5vh;">Register</button>
-                    <button onclick="window.location.href='/user/register_seller'"
-                        class=" btn btn-success btn-block text-uppercase"
-                        style="width: 30%;margin: auto; margin-top: 5vh;">Register for homeowner</button>
-                </div>
+                    </div>
             </form>
+        </div>
+        <div class="text-center" style="margin-left: 62vw; padding-top: 35vh;">
+            <p> <a href="{{url_for('user_router.login')}}" class="text-decoration-none text-capitalize"
+                    style="color: black; font-size: larger;">Have an
+                    Account ? </a></p>
+            <p> <a href="{{url_for('user_router.register_seller')}}" class="text-decoration-none text-capitalize"
+                    style="color: black; font-size: larger;">Register for homeowner</a></p>
         </div>
     </div>
 </body>
