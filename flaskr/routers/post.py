@@ -76,3 +76,7 @@ def post(post_id):
 def newfeed():
     return controllers.post.newsfeed()
 
+@post_router.route("/reportedPosts")
+@admin_required
+def reportedPosts():
+    return controllers.post.reported_Posts()

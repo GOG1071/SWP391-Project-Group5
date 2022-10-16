@@ -154,3 +154,8 @@ def newsfeed():
 def postpage_detail():
     post = Post.query.filter_by(id=id).first()
     return render_template('post/postpage_detail.html')
+
+def reported_Posts():
+    page = request.args.get('page', 1, type=int)
+    reported_posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=2)
+    return render_template('post/reported_post.html', posts=reported_posts)
