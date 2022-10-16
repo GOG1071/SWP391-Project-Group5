@@ -64,7 +64,7 @@ def user_posts(username):
 @user_router.route("/bookmark")
 @login_required
 def bookmark():
-    return controllers.user.bookmark()
+    return controllers.user.bookmark(session['id'])
 
 @user_router.route('/newRoomRequest',methods=["GET","POST"])
 def postRoomRequest():

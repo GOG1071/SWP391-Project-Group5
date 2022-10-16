@@ -120,13 +120,16 @@ def edit_profile():
     if checkUsername:
         flash("Username already exists!","info")
         return render_template("editProfile.html",username=user.username,email=user.email)
-    user.username = request.form["username"]
     checkEmail = User.query.filter(User.email == request.form["email"]).first()
     if checkEmail:
         flash("Email already exists!","info")
         return render_template("editProfile.html",username=user.username,email=user.email)
-    user.email = request.form["email"]
-    return render_template("editProfile.html",username=user.username,email=user.email)
+    user.username = request.form["username"] if request.form["username"] != "" else user.username
+    session['username'] = user.username
+    user.email = request.form["email"] if request.form["email"] != "" else user.email
+    db.session.commit()
+    # return render_template("userProfile.html",username=user.username,email=user.email)
+    return redirect(url_for('user_router.profile'))
 
 def user_posts(username):
     page = request.args.get('page', 1, type=int)
