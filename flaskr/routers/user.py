@@ -25,7 +25,7 @@ def login():
 
 
 @user_router.route("/logout", methods=["GET"])
-@login_required
+# @login_required
 def logout():
     return controllers.user.logout()
 

@@ -154,3 +154,38 @@ def newsfeed():
 def postpage_detail():
     post = Post.query.filter_by(id=id).first()
     return render_template('post/postpage_detail.html')
+
+def reported_Posts():
+    page = request.args.get('page', 1, type=int)
+    reported_posts = ReportPost.query.order_by(ReportPost.timestamp.desc()).paginate(page=page, per_page=10)
+    return render_template('post/reported_post.html', posts=reported_posts)
+
+def delete_report():
+    report_id = request.form.get("id")
+    report = ReportPost.query.filter_by(id = report_id).first()
+    if report:
+        db.session.delete(report)
+        db.session.commit()
+        return redirect( url_for('post_router.reportedPosts') )
+    return redirect( url_for('post_router.reportedPosts') )
+
+def accept_report():
+    report_id = request.form.get("id")
+    report = ReportPost.query.filter_by(id = report_id).first()
+    if report:
+        db.session.delete(report)
+        db.session.commit()
+        
+    postID = report.post_id
+    post_img = PostImage.query.filter_by(post_id = postID).first()
+    if post_img:
+        for img in post_img:
+            db.session.delete(img)
+            db.session.commit()
+            
+    post = Post.query.filter_by(id = postID).first()
+    if report:
+        db.session.delete(post)
+        db.session.commit()
+        return redirect( url_for('post_router.reportedPosts') )
+    return redirect( url_for('post_router.reportedPosts') )
