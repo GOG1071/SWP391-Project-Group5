@@ -77,10 +77,6 @@ def update_post():
             db.session.delete(i)
             db.session.commit()
             
-    
-
-
-
     if post:
         db.session.delete(post)
         db.session.commit()
