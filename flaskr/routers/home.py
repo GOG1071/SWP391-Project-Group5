@@ -18,6 +18,10 @@ def add_home():
 def load_home():
     return controllers.home.load_home()
 
+@home_router.route('/load_room',methods=["POST","GET"])
+def load_room():
+    return controllers.home.load_room()
+
 
 @home_router.route('/add_room',methods=["Get","POST"])
 def add_room():

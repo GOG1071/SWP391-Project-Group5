@@ -21,7 +21,7 @@ def add_home():
     home = Home(address = address,description = des, total_rooms = num_room, available_rooms = room_not,timestamp = timestamp,user_id = user_id)
     db.session.add(home)
     db.session.commit()
-    return render_template("home/add_home_for_owner.html")
+    return redirect( url_for('home_router.load_home'))
 
 
 def load_home():
@@ -71,7 +71,7 @@ def add_room():
         room_img = RoomImage(room_id = room.id, image_link = file)
         db.session.add(room_img)
         db.session.commit() 
-    return redirect( url_for('home/home_router.load_room',home_id = home_id))
+    return redirect( url_for('home_router.load_room',home_id = home_id))
 
 def info(id):
     home = Home.query.filter_by(id = id).first()
