@@ -1,39 +1,45 @@
-<html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
   <head>
+    <meta charset="utf-8" />
+    <title>Post Box</title>
+    <link rel="stylesheet" href="..\static\css\create_post.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- FontAweome CDN Link for Icons -->
     <link
-      href="https://s3.amazonaws.com/codecademy-content/courses/ltp2/css/bootstrap.min.css"
       rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link href="../static/css/create_post.css" rel="stylesheet" />
   </head>
   <body>
     <div class="container">
-      <form method="post">
-        <div class="form-group">
-          <textarea
-            class="form-control status-box"
-            rows="2"
-            placeholder="What's on your mind?"
-          ></textarea>
-        </div>
-        <div class="button-group pull-left">
-          <input type="file" id="myFile" name="filename" />
-        </div>
-        <div class="button-group pull-right">
-          <p class="counter">1000</p>
-          <a href="#" class="btn btn-primary">Post</a>
-        </div>
-      </form>
+      <div class="wrapper">
+        <section class="post">
+        </br><header>Post</header>
+          <form method="post" enctype="multipart/form-data">
+            <div class="content">
+              <img src="..\static\assets\img\logo.png" alt="logo" />
+              <div class="details">
+                <p>Post</p>
+              </div>
+            </div>
+            <textarea
+              id="cotent"
+              name="content"
+              placeholder="What's on your mind?"
+            ></textarea>
 
-      <ul class="posts"></ul>
+            <div class="options">
+              <div class="button-group pull-left">
+                <input type="file" id="file" name="file" />
+              </div>
+            </div>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <button type="submit">Post</button>
+          </form>
+        </section>
+      </div>
     </div>
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="../static/js/create_post.js"></script>
   </body>
 </html>
