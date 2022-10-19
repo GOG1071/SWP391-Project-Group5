@@ -9,7 +9,7 @@
           <div class="navbar-nav me-auto">
             {% if session.get('username') != None %}
             <a class="nav-item nav-link" href="{{ url_for('user_router.home') }}">Home</a>
-            <a class="nav-item nav-link" href="{{ url_for('user_router.profile') }}">New Post</a>
+            <a class="nav-item nav-link" href="{{ url_for('post_router.create_post') }}">New Post</a>
             {% else %}
             <a class="nav-item nav-link">You are not login</a>
             {% endif %}     

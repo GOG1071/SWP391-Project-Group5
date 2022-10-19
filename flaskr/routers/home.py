@@ -31,11 +31,11 @@ def info(id):
     return controllers.home.info(id)
 
 @home_router.route('/report/<int:id>',methods=["GET","POST"])
-def report(home_id, home_name):
+def report(id, home_name):
     if request.method == "POST":
         return controllers.home.report(\
-            home_id,\
+            id,\
             request.form.get("reason"),\
             session.get("user_id"),\
             )
-    return render_template("report.html",home_id = home_id, home_name = home_name, reasons = reasons)
+    return render_template("report.html",home_id = id, home_name = home_name, reasons = reasons)
