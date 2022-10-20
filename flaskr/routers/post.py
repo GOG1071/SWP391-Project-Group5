@@ -8,7 +8,7 @@ import controllers.post
 post_router = Blueprint('post_router', __name__)
 
 @post_router.route('/load_post',methods=["POST", "GET"])
-@login_required
+#@login_required
 def load_post():
     return controllers.post.load_post()
 
@@ -39,23 +39,22 @@ def update_post():
     
 
 @post_router.route('/report_post', methods=['POST','GET'])
-@login_required
 def report_post():
     if request.method == 'POST':
         return controllers.post.report_post()
     id = request.args.get("id")
-    return render_template('report_post.html',id = id)
+    return render_template('post/report_post.html',id = id)
 
 
 @post_router.route('/create_post',methods=["POST", "GET"])
-@login_required
+#@login_required
 def create_post():
     if request.method == "POST":
         return controllers.post.create_post()
     return render_template("post/create_post.html")
 
 @post_router.route('/post_detail',methods=["GET"])
-@login_required
+#@login_required
 def post_detail():
     return controllers.post.post_detail(request.args.get("id"))
 
@@ -77,7 +76,6 @@ def newfeed():
     return controllers.post.newsfeed()
 
 @post_router.route("/reportedPosts")
-@admin_required
 def reportedPosts():
     return controllers.post.reported_Posts()
 
