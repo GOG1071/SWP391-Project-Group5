@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Reported Posts</title>
+  <link rel="stylesheet" href="..\..\static\css\post_detail.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="center">
+      <div class="post">
+        <div class="info">
+          <div class="user">
+            <p class="username">Report by: {{ post.user.username }}</p>
+          </div>
+        </div>
+        <img src="{{post.post.image.image_link}}" class="post-image" alt="" />
+        <div class="post-content">
+          <div class="reaction-wrapper">
+          </div>
+          <p class="likes">{{ post.post.upvotes | length }} upvotes</p>
+          <p class="description"><span>{{ post.post.author.username }}</span> {{ post.content }}</p>
+          <p class="post-time">post time: {{ post.post.timestamp.strftime('%Y-%m-%d') }}</p>
+          <p class="post-time">post report: {{ post.timestamp.strftime('%Y-%m-%d') }}</p>
+          <p>Reason: {{ post.reason}}</p>
+        </div>
+        <div class="report-wrapper">
+            <div class="text-right"> 
+                <form onSubmit="if(!confirm('Refuse this report?')){return false;}" action="./delete_report" method="POST">
+                  <input type="text" value="{{post.id}}" name="id" hidden>
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                  <button class="btn btn-sm btn-danger" type="submit"  ><i class="fa fa-trash"></i>  Refuse </button>
+                </form> 
+            </div>
+            <div class="text-right"> 
+                <form onSubmit="if(!confirm('Accept this report and delete this post?')){return false;}" action="./delete_report" method="POST">
+                  <input type="text" value="{{post.id}}" name="id" hidden>
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                  <button class="btn btn-sm btn-danger" type="submit"><i class="fa fa-pencil"></i> Accept  </button>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</html>
