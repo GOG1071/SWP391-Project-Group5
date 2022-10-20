@@ -1,3 +1,4 @@
+
 import controllers.user
 import controllers.admin
 from decorators.authentication import login_required
@@ -16,3 +17,4 @@ def view_request_register():
 @admin_router.route("/refuse_access",methods=['POST','GET'])
 def refuse_access():
     return controllers.admin.refuse_access();
+
