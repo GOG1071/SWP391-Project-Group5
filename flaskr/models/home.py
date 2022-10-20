@@ -2,6 +2,7 @@ from models.model import db
 
 class Home(db.Model):
     id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(100), unique=False, nullable=False)
     address = db.Column(db.String(100), unique = False, nullable = False)
     description = db.Column(db.String(1000), unique = False, nullable = False)
     total_rooms = db.Column(db.Integer, unique = False, nullable = False)

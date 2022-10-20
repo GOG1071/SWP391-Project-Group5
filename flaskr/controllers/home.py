@@ -12,13 +12,14 @@ import cloudinary.uploader
 
 
 def add_home():
+    name = request.form['name']
     address = request.form["address"]
     des = request.form["des"]
     num_room = request.form["num_room"]
     room_not = request.form["room_no"]
     user_id = session["id"]
     timestamp = datetime.now()
-    home = Home(address = address,description = des, total_rooms = num_room, available_rooms = room_not,timestamp = timestamp,user_id = user_id)
+    home = Home(name = name, address = address,description = des, total_rooms = num_room, available_rooms = room_not,timestamp = timestamp,user_id = user_id)
     db.session.add(home)
     db.session.commit()
     return redirect( url_for('home_router.load_home'))
@@ -88,3 +89,7 @@ def report_home(id, reason, reporter_id):
     db.session.add(report_home)
     db.session.commit()
     return redirect(url_for('home_router.info', message = "Reported successfully", id = id))
+
+def list_home():
+    list_home = Home.query.all()
+    return render_template("home/list_home.html",list_home = list_home)
