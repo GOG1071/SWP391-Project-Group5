@@ -113,9 +113,7 @@ def gen_new_password():
 
 def profile():
     user = User.query.filter(User.id == session['id']).first()
-    username = user.username
-    email = user.email
-    return render_template("user/userProfile.html",username=username,email=email)
+    return render_template("user/userProfile.html",user=user)
 
 def edit_profile():
     user = User.query.filter(User.id == session['id']).first()
