@@ -14,7 +14,7 @@ def load_post():
 
 
 @post_router.route('/delete_post',methods=["POST", "GET"])
-@login_required
+#@login_required
 def delete_post():
     if request.method == "POST":
         return controllers.post.delete_post()
@@ -22,7 +22,7 @@ def delete_post():
 
 
 @post_router.route('/load_for_update',methods=["POST", "GET"])
-@login_required
+#@login_required
 def load_for_update():
     if request.method == "POST":
         return controllers.post.load_for_update()
@@ -32,7 +32,7 @@ def load_for_update():
 
 
 @post_router.route('/update_post',methods=["POST", "GET"])
-@login_required
+#@login_required
 def update_post():
     if request.method == "POST":
         return controllers.post.update_post()
@@ -66,12 +66,12 @@ def search_post():
     return render_template("post/searchPost.html")
 
 @post_router.route("/post/<int:post_id>")
-@login_required
+#@login_required
 def post(post_id):
     return controllers.post.post(post_id)
 
 @post_router.route("/newsfeed")
-@login_required
+#@login_required
 def newfeed():
     return controllers.post.newsfeed()
 
@@ -80,13 +80,13 @@ def reportedPosts():
     return controllers.post.reported_Posts()
 
 @post_router.route('/delete_report',methods=["POST", "GET"])
-@admin_required
+#@admin_required
 def delete_report():
     if request.method == "POST":
         return controllers.post.delete_report()
     
 @post_router.route('/accept_report',methods=["POST", "GET"])
-@admin_required
+#@admin_required
 def accept_report():
     if request.method == "POST":
         return controllers.post.accept_report()
