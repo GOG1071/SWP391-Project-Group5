@@ -27,7 +27,6 @@
             <td>Address</td>
             <td>status</td>
             <td></td>
-            <td></td>
          </tr>
 {%for i in request_register%}
         <tr class="text-lowercase">
@@ -39,8 +38,7 @@
             <td> {{i.user.role}} </td>
             <td> {{i.home.address}} </td>
             <td> {{"not allow to access" if i.status == false else "allowed"}} </td>
-            <td> <a href=""> <button class="btn btn-success"> Send email </button> </a> </td>
-            <td> <a href="{{url_for('admin_router.refuse_access',id = i.id)}}"> <button class="btn btn-danger"> Refuse Access </button> </a> </td>
+            <td> <a href="{{url_for('admin_router.allow_access',id = i.id)}}"> <button class="btn btn-success"> Allow Access </button> </a> </td>
         
 
         </tr>
