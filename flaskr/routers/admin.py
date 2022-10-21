@@ -16,5 +16,20 @@ def view_request_register():
 
 @admin_router.route("/refuse_access",methods=['POST','GET'])
 def refuse_access():
-    return controllers.admin.refuse_access();
+    return controllers.admin.refuse_access()
 
+@admin_router.route("/reportedPosts")
+def reportedPosts():
+    return controllers.admin.reported_Posts()
+
+@admin_router.route('/delete_report',methods=["POST", "GET"])
+#@admin_required
+def delete_report():
+    if request.method == "POST":
+        return controllers.admin.delete_report()
+    
+@admin_router.route('/accept_report',methods=["POST", "GET"])
+#@admin_required
+def accept_report():
+    if request.method == "POST":
+        return controllers.admin.accept_report()

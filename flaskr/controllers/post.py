@@ -148,7 +148,7 @@ def search_post():
 
 def post(post_id):
     post = Post.query.get_or_404(post_id)
-    return render_template('post/post.html', title=post.title, post=post)
+    return render_template('post/post_detail.html', title=post.content, post=post)
 
 def newsfeed():
     page = request.args.get('page', 1, type=int)
@@ -159,38 +159,3 @@ def postpage_detail():
     post = Post.query.filter_by(id=id).first()
     return render_template('post/postpage_detail.html')
 
-def reported_Posts():
-    page = request.args.get('page', 1, type=int)
-    number = ReportPost.query.count()
-    reported_posts = ReportPost.query.order_by(ReportPost.timestamp.desc()).paginate(page=page, per_page=5)
-    return render_template('post/reported_post.html', posts=reported_posts, counter=number)
-
-def delete_report():
-    report_id = request.form.get("id")
-    report = ReportPost.query.filter_by(id = report_id).first()
-    if report:
-        db.session.delete(report)
-        db.session.commit()
-        return redirect( url_for('post_router.reportedPosts') )
-    return redirect( url_for('post_router.reportedPosts') )
-
-def accept_report():
-    report_id = request.form.get("id")
-    report = ReportPost.query.filter_by(id = report_id).first()
-    if report:
-        db.session.delete(report)
-        db.session.commit()
-        
-    postID = report.post_id
-    post_img = PostImage.query.filter_by(post_id = postID).first()
-    if post_img:
-        for img in post_img:
-            db.session.delete(img)
-            db.session.commit()
-            
-    post = Post.query.filter_by(id = postID).first()
-    if report:
-        db.session.delete(post)
-        db.session.commit()
-        return redirect( url_for('post_router.reportedPosts') )
-    return redirect( url_for('post_router.reportedPosts') )
