@@ -24,7 +24,6 @@ def load_home():
 def load_room():
     return controllers.home.load_room()
 
-
 @home_router.route('/add_room',methods=["Get","POST"])
 def add_room():
     home_id = request.args.get('home_id')
@@ -51,3 +50,18 @@ def report(home_id, home_name):
             session.get("user_id"),\
             )
     return render_template("report.html",home_id = home_id, home_name = home_name, reasons = reasons)
+
+@home_router.route('/search',methods=["GET", "POST"])
+def search():
+    if request.method == "POST" and request.form.get("home_name") != None:
+        return controllers.home.search(request.form.get("home_name"))
+    return render_template("home/search_home.html")
+
+@home_router.route('/compare',methods=["GET", "POST"])
+def compare():
+    if request.method == "POST":
+        if request.form.get("home1") != None and request.form.get("home2") != None:
+            return controllers.home.compare(request.form.get("home1"),request.form.get("home2"))
+        else:
+            return redirect(url_for('home_router.list_home'))
+    return render_template("compare_home.html")
