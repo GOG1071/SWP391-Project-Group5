@@ -4,6 +4,7 @@ from models.report import ReportHome
 from models.home import Home
 from models.home import RoomDetail
 from models.home import RoomImage
+from models.user import User
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
@@ -76,7 +77,13 @@ def add_room():
 
 def info(id):
     home = Home.query.filter_by(id = id).first()
-    return render_template("home/home_info.html",home = home)
+    user = User.query.filter_by(id = home.user_id).first()
+    list_room = RoomDetail.query.filter_by(home_id = id)
+    list_img = []
+
+    for room in list_room:
+        list_img += RoomImage.query.filter_by(room_id = room.id)
+    return render_template("home/home_info.html",home = home, owner = user.username, list_room = list_room, list_img = list_img)
 
 def report_home(id, reason, reporter_id):
     home = Home.query.filter_by(id = id).first()
@@ -93,3 +100,8 @@ def report_home(id, reason, reporter_id):
 def list_home():
     list_home = Home.query.all()
     return render_template("home/list_home.html",list_home = list_home)
+
+def search(home_name):
+    list_home = Home.query.filter(Home.name.like("%"+home_name+"%"))
+    print(list_home[0].name)
+    return render_template("home/search_home.html",list_home = list_home)

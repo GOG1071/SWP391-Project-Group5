@@ -7,12 +7,21 @@
     <title>{{home.name}} Info</title>
 </head>
 <body>
-    <h1>Basic info of tro 39</h1>
+    <h1>Basic info of {{home.name}}</h1>
     <h3>Address: {{home.address}}</h3>
-    <h3>Number of room: {{home.num_room}}</h3>
-    <h3>Number of available room: {{home.room_no}}</h3>
-    <h3>Description: {{home.des}}</h3>
-    <h3>Owner: {{home.owner}}</h3>
-    
+    <h3>Number of room: {{home.total_rooms}}</h3>
+    <h3>Number of available room: {{home.available_rooms}}</h3>
+    <h3>Description: {{home.description}}</h3>
+    <h3>Owner: {{owner}}</h3>
+    {% for room in list_room %}
+        <h3>Room {{room.room_type}}: {{room.description}}</h3>
+        <h3>Room amount: {{room.amount}}</h3>
+        <h4>Room price: {{room.price}}đ</h4>
+        {% for image in list_img %}
+            {% if image.room_id == room.id %}
+                <img src={{image.image_link}} alt="image_{{room.room_type}}">
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
 </body>
 </html>
