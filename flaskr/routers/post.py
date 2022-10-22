@@ -63,18 +63,3 @@ def search_post():
 def newfeed():
     return controllers.post.newsfeed()
 
-@post_router.route("/reportedPosts")
-def reportedPosts():
-    return controllers.post.reported_Posts()
-
-@post_router.route('/delete_report',methods=["POST", "GET"])
-#@admin_required
-def delete_report():
-    if request.method == "POST":
-        return controllers.post.delete_report()
-    
-@post_router.route('/accept_report',methods=["POST", "GET"])
-#@admin_required
-def accept_report():
-    if request.method == "POST":
-        return controllers.post.accept_report()

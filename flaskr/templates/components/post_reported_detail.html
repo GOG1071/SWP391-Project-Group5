@@ -5,45 +5,14 @@
                 <img src="../../static/assets/img/avatar.png" alt="">
             </figure>
             <div class="friend-name">
-                <ins><a href="time-line.html" title="">{{post.post.author.username}}</a></ins>
-                <span>{{ post.post.timestamp.strftime('%Y-%m-%d') }}</span>
+                <ins><a href="time-line.html" title="">{{post.user.username}}</a></ins>
+                <ins><a href="/post/post_detail?id={{post.post.id}}" title="">see post</a></ins>
+                <span>reported time: {{ post.timestamp.strftime('%Y-%m-%d') }}</span>
             </div>
             <div class="post-meta">
-                <img src="../../static/assets/img/cat.jpg" alt="">
-                <div class="we-video-info">
-                    <ul>
-                        <li>
-                            <span class="views" data-toggle="tooltip" title="views">
-                                <i class="fa fa-eye"></i>
-                                <ins>1.2k</ins>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="like" data-toggle="tooltip" title="like">
-                                <i class="ti-heart"></i>
-                                <ins>{{ post.post.upvotes | length }}</ins>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="dislike" data-toggle="tooltip" title="dislike">
-                                <i class="ti-heart-broken"></i>
-                                <ins>200</ins>
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="description">
-                    <p>
-                        {{ post.post.content }}
-                    </p>
-                </div>
-                <div class="description">
                     <p style="font-weight: bold;">
-                        Reported by: {{post.user.username}}
-                        <p style="font-weight: bold;"style="font-weight: bold;">Time report: {{post.timestamp.strftime('%Y-%m-%d')}}</p>
                         <p style="font-weight: bold;">Reason: {{ post.reason}}</p>
                     </p>
-                </div>
                 <div class="we-video-info">
                     <ul>
                         <li>
