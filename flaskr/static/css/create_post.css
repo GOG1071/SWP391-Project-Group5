@@ -17,15 +17,11 @@ img {
   width: 40px;
   margin-left: 5px;
 }
-p {
-  
-}
-
 .container {
   width: 620px;
-  background-color: #92DE8B;
+  background-color: #92de8b;
   padding-left: 0px;
-  margin-left: auto; 
+  margin-left: auto;
   margin-right: auto;
   margin-top: 10%;
   display: flexbox;
@@ -37,7 +33,7 @@ p {
 .button-group {
   margin-bottom: 20px;
   padding-left: 0px;
-  margin-left: auto; 
+  margin-left: auto;
   margin-right: auto;
   display: flexbox;
   align-items: center;
@@ -56,7 +52,6 @@ p {
   list-style: none;
   padding-left: 0;
   width: 100%;
-
 }
 
 .posts li {
