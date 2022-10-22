@@ -4,6 +4,7 @@ from models.report import ReportHome
 from models.home import Home
 from models.home import RoomDetail
 from models.home import RoomImage
+from models.user import User
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
@@ -12,16 +13,17 @@ import cloudinary.uploader
 
 
 def add_home():
+    name = request.form['name']
     address = request.form["address"]
     des = request.form["des"]
     num_room = request.form["num_room"]
     room_not = request.form["room_no"]
     user_id = session["id"]
     timestamp = datetime.now()
-    home = Home(address = address,description = des, total_rooms = num_room, available_rooms = room_not,timestamp = timestamp,user_id = user_id)
+    home = Home(name = name, address = address,description = des, total_rooms = num_room, available_rooms = room_not,timestamp = timestamp,user_id = user_id)
     db.session.add(home)
     db.session.commit()
-    return render_template("home/add_home_for_owner.html")
+    return redirect( url_for('home_router.load_home'))
 
 
 def load_home():
@@ -71,11 +73,17 @@ def add_room():
         room_img = RoomImage(room_id = room.id, image_link = file)
         db.session.add(room_img)
         db.session.commit() 
-    return redirect( url_for('home/home_router.load_room',home_id = home_id))
+    return redirect( url_for('home_router.load_room',home_id = home_id))
 
 def info(id):
     home = Home.query.filter_by(id = id).first()
-    return render_template("home/home_info.html",home = home)
+    user = User.query.filter_by(id = home.user_id).first()
+    list_room = RoomDetail.query.filter_by(home_id = id)
+    list_img = []
+
+    for room in list_room:
+        list_img += RoomImage.query.filter_by(room_id = room.id)
+    return render_template("home/home_info.html",home = home, owner = user.username, list_room = list_room, list_img = list_img)
 
 def report_home(id, reason, reporter_id):
     home = Home.query.filter_by(id = id).first()
@@ -88,3 +96,12 @@ def report_home(id, reason, reporter_id):
     db.session.add(report_home)
     db.session.commit()
     return redirect(url_for('home_router.info', message = "Reported successfully", id = id))
+
+def list_home():
+    list_home = Home.query.all()
+    return render_template("home/list_home.html",list_home = list_home)
+
+def search(home_name):
+    list_home = Home.query.filter(Home.name.like("%"+home_name+"%"))
+    print(list_home[0].name)
+    return render_template("home/search_home.html",list_home = list_home)

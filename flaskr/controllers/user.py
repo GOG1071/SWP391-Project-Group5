@@ -21,6 +21,9 @@ def login():
     user_name = request.form["user"]
     pass_word = request.form["pass"]
     query = User.query.filter(User.username == user_name , User.password == pass_word).first()
+    if query.banned == True:
+        flash("You are banned!","info")
+        return render_template("user/login.html")
     if query:
         session['username'] = query.username
         session['id'] = query.id
@@ -110,9 +113,7 @@ def gen_new_password():
 
 def profile():
     user = User.query.filter(User.id == session['id']).first()
-    username = user.username
-    email = user.email
-    return render_template("user/userProfile.html",username=username,email=email)
+    return render_template("user/userProfile.html",user=user)
 
 def edit_profile():
     user = User.query.filter(User.id == session['id']).first()

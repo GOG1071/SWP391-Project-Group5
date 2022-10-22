@@ -43,3 +43,4 @@ class HomeOwnerRequest(db.Model):
     status = db.Column(db.Boolean, nullable=False, default=False)
     user = db.relationship('User')
     home = db.relationship('Home')
+

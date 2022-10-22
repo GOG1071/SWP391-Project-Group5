@@ -8,6 +8,7 @@ from models.post import PostImage
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
 from controllers.mail_service import mail
+import cloudinary.uploader 
 from controllers.upload_image import upload as upload
 
 def load_post():
@@ -55,6 +56,8 @@ def update_post():
     timestamp = datetime.now()
     post_image = PostImage.query.filter_by(post_id = id)
     image_link = request.files.getlist('files[]')
+    
+    
 
     file_path = None
     list_file_path = []
@@ -65,20 +68,15 @@ def update_post():
                 response = cloudinary.uploader.upload(img)
                 file_path = response['secure_url']
                 list_file_path.append(file_path)
+           
+
+
     if post_image:
         for i in post_image:
             
             db.session.delete(i)
             db.session.commit()
             
-
-    for file in list_file_path:
-        post_img = PostImage( post_id = id, image_link = file )
-        db.session.add(post_img)
-        db.session.commit()
-
-
-
     if post:
         db.session.delete(post)
         db.session.commit()
@@ -86,6 +84,12 @@ def update_post():
         post = Post(id = request.form['id'],content = request.form['caption'],author_id = request.form['author_id'],timestamp = timestamp)
         db.session.add(post)
         db.session.commit()
+    
+    if list_file_path:
+        for file in list_file_path:
+            post_img = PostImage( post_id = id, image_link = file )
+            db.session.add(post_img)
+            db.session.commit()
     return redirect( url_for('post_router.load_post',author_id = request.form["author_id"], img_link = image_link) )
 
 
@@ -144,7 +148,7 @@ def search_post():
 
 def post(post_id):
     post = Post.query.get_or_404(post_id)
-    return render_template('post/post.html', title=post.title, post=post)
+    return render_template('post/post_detail.html', title=post.content, post=post)
 
 def newsfeed():
     page = request.args.get('page', 1, type=int)
@@ -155,37 +159,3 @@ def postpage_detail():
     post = Post.query.filter_by(id=id).first()
     return render_template('post/postpage_detail.html')
 
-def reported_Posts():
-    page = request.args.get('page', 1, type=int)
-    reported_posts = ReportPost.query.order_by(ReportPost.timestamp.desc()).paginate(page=page, per_page=10)
-    return render_template('post/reported_post.html', posts=reported_posts)
-
-def delete_report():
-    report_id = request.form.get("id")
-    report = ReportPost.query.filter_by(id = report_id).first()
-    if report:
-        db.session.delete(report)
-        db.session.commit()
-        return redirect( url_for('post_router.reportedPosts') )
-    return redirect( url_for('post_router.reportedPosts') )
-
-def accept_report():
-    report_id = request.form.get("id")
-    report = ReportPost.query.filter_by(id = report_id).first()
-    if report:
-        db.session.delete(report)
-        db.session.commit()
-        
-    postID = report.post_id
-    post_img = PostImage.query.filter_by(post_id = postID).first()
-    if post_img:
-        for img in post_img:
-            db.session.delete(img)
-            db.session.commit()
-            
-    post = Post.query.filter_by(id = postID).first()
-    if report:
-        db.session.delete(post)
-        db.session.commit()
-        return redirect( url_for('post_router.reportedPosts') )
-    return redirect( url_for('post_router.reportedPosts') )
