@@ -1,7 +1,6 @@
 import random
 import string
 
-from sqlalchemy import true
 from models.user import Bookmark ,RoomRequest
 from models.user import UserRole, User, HomeOwnerRequest
 from models.model import db
