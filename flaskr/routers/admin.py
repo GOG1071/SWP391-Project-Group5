@@ -14,6 +14,11 @@ def view_request_register():
     return controllers.admin.view_request_register()
 
 
+
+@admin_router.route('/allow_access',methods=["Post","get"])
+def allow_access():
+    return controllers.admin.allow_access()
+
 @admin_router.route("/refuse_access",methods=['POST','GET'])
 def refuse_access():
     return controllers.admin.refuse_access()
@@ -33,3 +38,4 @@ def delete_report():
 def accept_report():
     if request.method == "POST":
         return controllers.admin.accept_report()
+
