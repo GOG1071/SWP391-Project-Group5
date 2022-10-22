@@ -15,7 +15,7 @@
     {% if list_home %}
         <ul>
             {% for home in list_home %}
-                <li>{{ home.name }}</li>
+                <li>Link: <a href="/home/info/{{home.id}}">{{ home.name }}</a></li>
             {% endfor %}
         </ul>
     {% endif %}

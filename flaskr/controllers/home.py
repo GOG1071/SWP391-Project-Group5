@@ -103,5 +103,4 @@ def list_home():
 
 def search(home_name):
     list_home = Home.query.filter(Home.name.like("%"+home_name+"%"))
-    print(list_home[0].name)
     return render_template("home/search_home.html",list_home = list_home)
