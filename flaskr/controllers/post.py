@@ -49,7 +49,6 @@ def load_for_update():
     post_img = PostImage.query.filter_by(post_id = id)
     return render_template('post/update.html',post = post,post_img = post_img)
 
-
 def update_post():
     id  = request.form['id']
     post = Post.query.filter_by(id=id).first()
@@ -57,8 +56,6 @@ def update_post():
     post_image = PostImage.query.filter_by(post_id = id)
     image_link = request.files.getlist('files[]')
     
-    
-
     file_path = None
     list_file_path = []
     # lấy 1 list link img rồi đẩy hết lên cloudinary rồi lấy link sau khi đẩy add vào list_file_path
@@ -68,8 +65,6 @@ def update_post():
                 response = cloudinary.uploader.upload(img)
                 file_path = response['secure_url']
                 list_file_path.append(file_path)
-           
-
 
     if post_image:
         for i in post_image:
@@ -144,11 +139,6 @@ def search_post():
         .order_by(Post.timestamp.desc())\
         .paginate(page=page, per_page=5)
         return render_template('post/postSearch.html', posts=posts)   
-    
-
-def post(post_id):
-    post = Post.query.get_or_404(post_id)
-    return render_template('post/post.html', title=post.title, post=post)
 
 def newsfeed():
     page = request.args.get('page', 1, type=int)
