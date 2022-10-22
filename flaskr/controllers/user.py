@@ -13,14 +13,17 @@ from datetime import datetime
 def home():
     if "username" in session:
         user = session['username']
-        return render_template("home.html", username = user, isLogin = True)
+        return render_template("user/home.html", username = user, isLogin = True)
     else:
-        return render_template("home.html", stringName = "you are not login", isLogin = False)
+        return render_template("user/home.html", stringName = "you are not login", isLogin = False)
 
 def login():
     user_name = request.form["user"]
     pass_word = request.form["pass"]
     query = User.query.filter(User.username == user_name , User.password == pass_word).first()
+    if query.banned == True:
+        flash("You are banned!","info")
+        return render_template("user/login.html")
     if query:
         session['username'] = query.username
         session['id'] = query.id
@@ -29,7 +32,7 @@ def login():
         session['email'] = query.email
         return redirect(url_for("user_router.home"))
     flash("Your account doesn't exist","info")
-    return render_template("login.html")
+    return render_template("user/login.html")
 
 
 def logout():
@@ -52,13 +55,13 @@ def forgot_password(email):
 
         #thong bao toi front end
         flash("New password has been sent to your email.","info")
-        return render_template("login.html")
+        return render_template("user/login.html")
     else:
         flash("Wrong email!","info")
-        return render_template("forgot_password.html")
+        return render_template("user/forgot_password.html")
 
 def check_exist_user(username, email):
-    user = db.session.execute(db.select(User).where(User.email == username)).first()
+    user = db.session.execute(db.select(User).where(User.username == username)).first()
     if user:
         return True
     user = db.session.execute(db.select(User).where(User.email == email)).first()
@@ -81,7 +84,7 @@ def register(username, password, email):
         return redirect(url_for('user_router.home'))
     else:
         flash("duplicate email or username", "info")
-        return render_template("register.html")
+        return render_template("user/register.html")
 
 def register_seller(username, email):
     # kiem tra du lieu
@@ -97,10 +100,10 @@ def register_seller(username, email):
         db.session.commit()
         
         flash("Your request has been sent to admin. Please wait for approval, we will send password in your email.","info")
-        return render_template("register_seller.html")
+        return render_template("user/register_seller.html")
     else:
         flash("duplicate email or username", "info")
-        return render_template("register_seller.html")
+        return render_template("user/register_seller.html")
 
 def gen_new_password():
     password = ''
@@ -110,9 +113,7 @@ def gen_new_password():
 
 def profile():
     user = User.query.filter(User.id == session['id']).first()
-    username = user.username
-    email = user.email
-    return render_template("userProfile.html",username=username,email=email)
+    return render_template("user/userProfile.html",user=user)
 
 def edit_profile():
     user = User.query.filter(User.id == session['id']).first()
@@ -120,13 +121,16 @@ def edit_profile():
     if checkUsername:
         flash("Username already exists!","info")
         return render_template("editProfile.html",username=user.username,email=user.email)
-    user.username = request.form["username"]
     checkEmail = User.query.filter(User.email == request.form["email"]).first()
     if checkEmail:
         flash("Email already exists!","info")
         return render_template("editProfile.html",username=user.username,email=user.email)
-    user.email = request.form["email"]
-    return render_template("editProfile.html",username=user.username,email=user.email)
+    user.username = request.form["username"] if request.form["username"] != "" else user.username
+    session['username'] = user.username
+    user.email = request.form["email"] if request.form["email"] != "" else user.email
+    db.session.commit()
+    # return render_template("userProfile.html",username=user.username,email=user.email)
+    return redirect(url_for('user_router.profile'))
 
 def user_posts(username):
     page = request.args.get('page', 1, type=int)
@@ -140,9 +144,9 @@ def bookmark(userid):
     bookmarks = Bookmark.query.filter(User.id == userid).all()
     # missing liked posts
     if bookmarks:
-        return render_template("bookmark.html",bookmarks=bookmarks)
+        return render_template("user/bookmark.html",bookmarks=bookmarks)
     flash("You don't have any bookmark yet!","info")
-    return render_template("bookmark.html")
+    return render_template("user/bookmark.html")
 
 def add_room_request():
     name = request.form['name']
@@ -154,4 +158,4 @@ def add_room_request():
     room_reqest = RoomRequest(user_id = user_id, content = content, timestamp = timestamp)
     db.session.add(room_reqest)
     db.session.commit()
-    return render_template("roomRequest.html", done = True, name = name, phone = phone, timeVisit = timeVisit)
+    return render_template("user/roomRequest.html", done = True, name = name, phone = phone, timeVisit = timeVisit)

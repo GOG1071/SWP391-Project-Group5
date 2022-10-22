@@ -8,6 +8,7 @@ from flask_mail import Mail
 from routers.user import user_router
 from routers.post import post_router
 from routers.home import home_router
+from routers.admin import admin_router
 import cloudinary
 from flask_wtf.csrf import CSRFProtect
 
@@ -46,10 +47,11 @@ csrf.init_app(app)
 app.register_blueprint(user_router, url_prefix="/user")
 app.register_blueprint(post_router, url_prefix="/post")
 app.register_blueprint(home_router,url_prefix="/home")
+app.register_blueprint(admin_router,url_prefix="/admin")
 
 @app.route("/")
 def index():
-    return render_template("home.html", stringName = "You are not logged in",isLogin = False)
+    return render_template("user/home.html", stringName = "You are not logged in",isLogin = False)
   
 @app.after_request
 def apply_caching(response):
@@ -57,10 +59,5 @@ def apply_caching(response):
     response.headers["HTTP-HEADER"] = "VALUE"
     return response
 
-# @app.route("/test")
-# def home():
-#     page = request.args.get('page', 1, type=int)
-#     posts = Post.query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=5)
-#     return render_template('postTest.html', posts=posts)
 
 app.run("0.0.0.0", port=os.environ["port"], debug=True)
