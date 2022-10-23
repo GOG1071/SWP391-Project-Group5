@@ -53,3 +53,9 @@ def reportedHomes():
 def delete_home_report():
     if request.method == "POST":
         return controllers.admin.delete_home_report()
+    
+@admin_router.route('/accept_home_report',methods=["POST", "GET"])
+@admin_required
+def accept_home_report():
+    if request.method == "POST":
+        return controllers.admin.accept_home_report()

@@ -9,9 +9,9 @@ from flask_mail import Message
 from controllers.mail_service import mail
 from models.user import HomeOwnerRequest,User
 from datetime import datetime
-from models.post import  Post
+from models.post import  Post, PostImage
 from models.report import ReportPost, ReportHome
-from models.post import PostImage
+from models.home import Home
 
 def view_request_register():
 
@@ -37,8 +37,8 @@ def delete_report():
     if report:
         db.session.delete(report)
         db.session.commit()
-        return redirect( url_for('post_router.reportedPosts') )
-    return redirect( url_for('post_router.reportedPosts') )
+        return redirect( url_for('admin_router.reportedPosts') )
+    return redirect( url_for('admin_router.reportedPosts') )
 
 def accept_report():
     report_id = request.form.get("id")
@@ -50,16 +50,16 @@ def accept_report():
     postID = report.post_id
     post_img = PostImage.query.filter_by(post_id = postID).first()
     if post_img:
-        for img in post_img:
-            db.session.delete(img)
+        # for img in post_img:
+            db.session.delete(post_img)
             db.session.commit()
             
     post = Post.query.filter_by(id = postID).first()
-    if report:
+    if post:
         db.session.delete(post)
         db.session.commit()
-        return redirect( url_for('post_router.reportedPosts') )
-    return redirect( url_for('post_router.reportedPosts') )
+        return redirect( url_for('admin_router.reportedPosts') )
+    return redirect( url_for('admin_router.reportedPosts') )
 
 def view_feedback():
     feedback_list = WebsiteFeedback.query.all()
@@ -79,5 +79,7 @@ def delete_home_report():
     if report:
         db.session.delete(report)
         db.session.commit()
-        return redirect( url_for('post_router.reported_Homes') )
-    return redirect( url_for('post_router.reported_Homes') )
+        return redirect( url_for('admin_router.reportedHomes') )
+    return redirect( url_for('admin_router.reportedHomes') )
+
+    
