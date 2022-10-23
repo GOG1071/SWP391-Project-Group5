@@ -1,5 +1,6 @@
 import random
 import string
+from models.home import RoomDetail , RoomImage
 
 from models.user import Bookmark ,RoomRequest
 from models.user import UserRole, User, HomeOwnerRequest, WebsiteFeedback
@@ -82,4 +83,28 @@ def delete_home_report():
         return redirect( url_for('admin_router.reportedHomes') )
     return redirect( url_for('admin_router.reportedHomes') )
 
+def accept_home_report():
+    report_id = request.form.get("id")
+    report = ReportHome.query.filter_by(id = report_id).first()
+    if report:
+        db.session.delete(report)
+        db.session.commit()
+        
+    homeID = report.home_id
+    rooms = RoomDetail.query.filter_by(home_id = homeID).all()
+    if rooms:
+        for room in rooms:
+            image = RoomImage.query.filter_by(room_id = room.id).first()
+            if image:
+                db.session.delete(image)
+                db.session.commit()      
+            db.session.delete(room)
+            db.session.commit()
+        
+    home = Home.query.filter_by(id = homeID).first()
+    if home:
+        db.session.delete(home)
+        db.session.commit()
+        return redirect( url_for('admin_router.reportedHomes') )
+    return redirect( url_for('admin_router.reportedHomes') )
     
