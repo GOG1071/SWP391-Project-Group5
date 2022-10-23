@@ -22,17 +22,18 @@ def refuse_access():
     return controllers.admin.refuse_access()
 
 @admin_router.route("/reportedPosts")
+@admin_required
 def reportedPosts():
     return controllers.admin.reported_Posts()
 
 @admin_router.route('/delete_report',methods=["POST", "GET"])
-#@admin_required
+@admin_required
 def delete_report():
     if request.method == "POST":
         return controllers.admin.delete_report()
     
 @admin_router.route('/accept_report',methods=["POST", "GET"])
-#@admin_required
+@admin_required
 def accept_report():
     if request.method == "POST":
         return controllers.admin.accept_report()
@@ -41,3 +42,14 @@ def accept_report():
 @admin_required
 def view_feedback():
     return controllers.admin.view_feedback()
+
+@admin_router.route("/reportedHomes")
+@admin_required
+def reportedHomes():
+    return controllers.admin.reported_Homes()
+
+@admin_router.route('/delete_home_report',methods=["POST", "GET"])
+@admin_required
+def delete_home_report():
+    if request.method == "POST":
+        return controllers.admin.delete_home_report()

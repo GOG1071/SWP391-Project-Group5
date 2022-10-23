@@ -10,7 +10,7 @@ from controllers.mail_service import mail
 from models.user import HomeOwnerRequest,User
 from datetime import datetime
 from models.post import  Post
-from models.report import ReportPost
+from models.report import ReportPost, ReportHome
 from models.post import PostImage
 
 def view_request_register():
@@ -66,3 +66,18 @@ def view_feedback():
     for feedback in feedback_list:
         feedback.username = User.query.filter_by(id = feedback.user_id).first().username
     return render_template("admin/view_feedback.html",feedback_list = feedback_list)
+
+def reported_Homes():
+    page = request.args.get('page', 1, type=int)
+    number = ReportHome.query.count()
+    homes = ReportHome.query.order_by(ReportHome.timestamp.desc()).paginate(page=page, per_page=5)
+    return render_template('admin/reported_home.html', homes=homes, counter=number)
+
+def delete_home_report():
+    report_id = request.form.get("id")
+    report = ReportHome.query.filter_by(id = report_id).first()
+    if report:
+        db.session.delete(report)
+        db.session.commit()
+        return redirect( url_for('post_router.reported_Homes') )
+    return redirect( url_for('post_router.reported_Homes') )
