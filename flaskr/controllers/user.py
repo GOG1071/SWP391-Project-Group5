@@ -86,7 +86,7 @@ def register(username, password, email):
         flash("duplicate email or username", "info")
         return render_template("user/register.html")
 
-def register_seller(username, email):
+def register_seller(username, email, address, home_name):
     # kiem tra du lieu
     if not check_exist_user(username, email):
         password = gen_new_password()
@@ -99,8 +99,13 @@ def register_seller(username, email):
         db.session.add(user_request)
         db.session.commit()
         
-        flash("Your request has been sent to admin. Please wait for approval, we will send password in your email.","info")
-        return render_template("user/register_seller.html")
+        session['username'] = user.username
+        session['id'] = user.id
+        session['role'] = user.role
+        session['banned'] = False
+        session['clear'] = True
+        flash("Your request has been sent to admin. Please wait for approval, we will send password in your email. Now please add home!","info")
+        return render_template("home/add_home_for_owner.html", address=address, home_name = home_name)
     else:
         flash("duplicate email or username", "info")
         return render_template("user/register_seller.html")
