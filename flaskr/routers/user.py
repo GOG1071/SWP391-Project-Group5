@@ -72,4 +72,11 @@ def postRoomRequest():
         return controllers.user.add_room_request()
     return render_template("user/roomRequest.html")
 
+@user_router.route('/feedback', methods=["GET","POST"])
+@login_required
+def feedback():
+    if request.method == "POST":
+        return controllers.user.add_feedback(session['id'], request.form.get("content"))
+    return render_template("user/feedback.html")
+
 

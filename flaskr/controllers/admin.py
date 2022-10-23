@@ -2,7 +2,7 @@ import random
 import string
 
 from models.user import Bookmark ,RoomRequest
-from models.user import UserRole, User, HomeOwnerRequest
+from models.user import UserRole, User, HomeOwnerRequest, WebsiteFeedback
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
@@ -60,3 +60,9 @@ def accept_report():
         db.session.commit()
         return redirect( url_for('post_router.reportedPosts') )
     return redirect( url_for('post_router.reportedPosts') )
+
+def view_feedback():
+    feedback_list = WebsiteFeedback.query.all()
+    for feedback in feedback_list:
+        feedback.username = User.query.filter_by(id = feedback.user_id).first().username
+    return render_template("admin/view_feedback.html",feedback_list = feedback_list)

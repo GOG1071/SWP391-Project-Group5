@@ -1,7 +1,7 @@
 import random
 import string
 from models.user import Bookmark ,RoomRequest
-from models.user import UserRole, User, HomeOwnerRequest
+from models.user import UserRole, User, HomeOwnerRequest, WebsiteFeedback
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
@@ -164,3 +164,9 @@ def add_room_request():
     db.session.add(room_reqest)
     db.session.commit()
     return render_template("user/roomRequest.html", done = True, name = name, phone = phone, timeVisit = timeVisit)
+
+def add_feedback(id, content):
+    feedback = WebsiteFeedback(user_id = id, timestamp=datetime.now(), feedback = content)
+    db.session.add(feedback)
+    db.session.commit()
+    return redirect(url_for('user_router.home'))
