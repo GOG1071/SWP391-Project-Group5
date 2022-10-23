@@ -81,12 +81,10 @@ def add_room():
 def info(id):
     home = Home.query.filter_by(id = id).first()
     user = User.query.filter_by(id = home.user_id).first()
-    list_room = RoomDetail.query.filter_by(home_id = id)
-    list_img = []
-
+    list_room = RoomDetail.query.filter_by(home_id = id).all()
     for room in list_room:
-        list_img += RoomImage.query.filter_by(room_id = room.id)
-    return render_template("home/home_info.html",home = home, owner = user.username, list_room = list_room, list_img = list_img)
+        room.img = RoomImage.query.filter_by(room_id = room.id).all()
+    return render_template("home/home_info.html",home = home, owner = user.username, list_room = list_room)
 
 def report_home(id, reason, reporter_id):
     home = Home.query.filter_by(id = id).first()
