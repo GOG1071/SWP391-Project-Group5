@@ -39,7 +39,7 @@ def forgot_password():
 @user_router.route("/register_seller", methods=["POST", "GET"])
 def register_seller():
     if(request.method == "POST"):
-        return controllers.user.register_seller(request.form.get("username"), request.form.get("email"))
+        return controllers.user.register_seller(request.form.get("username"), request.form.get("email"), request.form.get("address"), request.form.get("home_name"))
     else:
         return render_template("user/register_seller.html")
 

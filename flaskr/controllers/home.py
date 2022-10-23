@@ -13,7 +13,7 @@ import cloudinary.uploader
 
 
 def add_home():
-    name = request.form['name']
+    name = request.form['home_name']
     address = request.form["address"]
     des = request.form["des"]
     num_room = request.form["num_room"]
@@ -23,6 +23,9 @@ def add_home():
     home = Home(name = name, address = address,description = des, total_rooms = num_room, available_rooms = room_not,timestamp = timestamp,user_id = user_id)
     db.session.add(home)
     db.session.commit()
+    if session.get('clear') != None:
+        session.clear()
+        return redirect(url_for('user_router.home'))
     return redirect( url_for('home_router.load_home'))
 
 
