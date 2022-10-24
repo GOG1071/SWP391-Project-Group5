@@ -18,7 +18,6 @@ def add_home():
 def load_home():
     return controllers.home.load_home()
 
-    
 @home_router.route('/load_room',methods=["POST","GET"])
 @seller_required
 def load_room():
@@ -65,3 +64,9 @@ def compare():
         else:
             return redirect(url_for('home_router.list_home'))
     return render_template("compare_home.html")
+
+@home_router.route('/view_room_detail', methods=["GET"])
+@login_required
+def view_rooms_detail():
+    home_id = request.args.get('home_id')
+    return controllers.home.view_rooms_detail(home_id)
