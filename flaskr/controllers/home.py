@@ -105,3 +105,9 @@ def list_home():
 def search(home_name):
     list_home = Home.query.filter(Home.name.like("%"+home_name+"%"))
     return render_template("home/search_home.html",list_home = list_home)
+
+def view_rooms_detail(home_id):
+    list_room = RoomDetail.query.filter_by(home_id = home_id).all()
+    for room in list_room:
+        room.image_link = RoomImage.query.filter_by(room_id = room.id).all()
+    return render_template("home/room_detail_for_user.html",list_room = list_room)
