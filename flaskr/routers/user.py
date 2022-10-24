@@ -43,10 +43,10 @@ def register_seller():
     else:
         return render_template("user/register_seller.html")
 
-@user_router.route("/profile", methods=["POST", "GET"])
+@user_router.route("/profile/<string:username>", methods=["POST", "GET"])
 @login_required
-def profile():
-    return controllers.user.profile()
+def profile(username):
+    return controllers.user.profile(username)
 
 @user_router.route("/profile/edit", methods=["POST", "GET"])
 @login_required
@@ -72,4 +72,12 @@ def postRoomRequest():
         return controllers.user.add_room_request()
     return render_template("user/roomRequest.html")
 
+@user_router.route('/report/<string:username>',methods=["GET","POST"])
+@login_required
+def report(username):
+    return controllers.user.report(username)
 
+@user_router.route('/do_report',methods=["POST"])
+@login_required
+def do_report():
+    return controllers.user.do_report(request.form.get("reported_username"),request.form.get("reporter_id"),request.form.get("reason"))
