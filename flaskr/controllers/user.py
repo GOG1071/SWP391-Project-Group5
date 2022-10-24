@@ -1,5 +1,7 @@
+from email import message
 import random
 import string
+from models.report import ReportUser, ReportUserDetail
 from models.user import Bookmark ,RoomRequest
 from models.user import UserRole, User, HomeOwnerRequest
 from models.model import db
@@ -108,11 +110,13 @@ def gen_new_password():
         password += random.choice(string.ascii_letters + string.digits + string.punctuation)
     return password
 
-def profile():
-    user = User.query.filter(User.id == session['id']).first()
-    username = user.username
-    email = user.email
-    return render_template("user/userProfile.html",username=username,email=email)
+def profile(username):
+    user = User.query.filter(User.username == username).first()
+    if user:
+        email = user.email
+        return render_template("user/userProfile.html",username=username,email=email)
+    else:
+        return render_template("user/userProfile.html",message = "User not found")
 
 def edit_profile():
     user = User.query.filter(User.id == session['id']).first()
@@ -158,3 +162,22 @@ def add_room_request():
     db.session.add(room_reqest)
     db.session.commit()
     return render_template("user/roomRequest.html", done = True, name = name, phone = phone, timeVisit = timeVisit)
+
+def report(username):
+    user = User.query.filter(User.username == username).first()
+    if user:
+        return render_template("user/report_user.html",username=username)
+    else:
+        return render_template("user/report_user.html",message = "User not found")
+
+def do_report(reported, reporter_id, reason):
+    user = User.query.filter(User.username == reported).first()
+    if user:
+        report = ReportUser(reporter_id = reporter_id)
+        db.session.add(report)
+        reportDetail = ReportUserDetail(report_id = report.id, reported_id = user.id, reason = reason)
+        db.session.add(reportDetail)
+        db.session.commit()
+        return render_template("user/report_user.html",message = "Report successfully!")
+    else:
+        return render_template("user/report_user.html",message = "User not found")
