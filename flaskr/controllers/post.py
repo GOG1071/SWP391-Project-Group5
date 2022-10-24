@@ -8,6 +8,7 @@ from models.post import PostImage
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
 from controllers.mail_service import mail
+import cloudinary.uploader 
 from controllers.upload_image import upload as upload
 
 def load_post():
@@ -48,14 +49,13 @@ def load_for_update():
     post_img = PostImage.query.filter_by(post_id = id)
     return render_template('post/update.html',post = post,post_img = post_img)
 
-
 def update_post():
     id  = request.form['id']
     post = Post.query.filter_by(id=id).first()
     timestamp = datetime.now()
     post_image = PostImage.query.filter_by(post_id = id)
     image_link = request.files.getlist('files[]')
-
+    
     file_path = None
     list_file_path = []
     # lấy 1 list link img rồi đẩy hết lên cloudinary rồi lấy link sau khi đẩy add vào list_file_path
@@ -65,20 +65,13 @@ def update_post():
                 response = cloudinary.uploader.upload(img)
                 file_path = response['secure_url']
                 list_file_path.append(file_path)
+
     if post_image:
         for i in post_image:
             
             db.session.delete(i)
             db.session.commit()
             
-
-    for file in list_file_path:
-        post_img = PostImage( post_id = id, image_link = file )
-        db.session.add(post_img)
-        db.session.commit()
-
-
-
     if post:
         db.session.delete(post)
         db.session.commit()
@@ -86,6 +79,12 @@ def update_post():
         post = Post(id = request.form['id'],content = request.form['caption'],author_id = request.form['author_id'],timestamp = timestamp)
         db.session.add(post)
         db.session.commit()
+    
+    if list_file_path:
+        for file in list_file_path:
+            post_img = PostImage( post_id = id, image_link = file )
+            db.session.add(post_img)
+            db.session.commit()
     return redirect( url_for('post_router.load_post',author_id = request.form["author_id"], img_link = image_link) )
 
 
@@ -140,11 +139,6 @@ def search_post():
         .order_by(Post.timestamp.desc())\
         .paginate(page=page, per_page=5)
         return render_template('post/postSearch.html', posts=posts)   
-    
-
-def post(post_id):
-    post = Post.query.get_or_404(post_id)
-    return render_template('post/post.html', title=post.title, post=post)
 
 def newsfeed():
     page = request.args.get('page', 1, type=int)
@@ -154,3 +148,4 @@ def newsfeed():
 def postpage_detail():
     post = Post.query.filter_by(id=id).first()
     return render_template('post/postpage_detail.html')
+

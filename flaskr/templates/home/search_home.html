@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search home by name</title>
+</head>
+<body>
+    <form action="/home/search" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="text" name="home_name" id="name">
+        <input type="submit" value="Search">
+    </form>
+    {% if list_home %}
+        <ul>
+            {% for home in list_home %}
+                <li>Link: <a href="/home/info/{{home.id}}">{{ home.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

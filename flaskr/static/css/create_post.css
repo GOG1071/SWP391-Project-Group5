@@ -5,13 +5,39 @@ body {
   background-color: #ffe3b3;
 }
 
+header {
+  font-family: "Roboto", sans-serif;
+  font-size: 30px;
+  color: #404040;
+  font-weight: bold;
+  margin-left: 43%;
+}
+
+img {
+  width: 40px;
+  margin-left: 5px;
+}
 .container {
-  width: 520px;
-  margin-top: 20px;
+  width: 620px;
+  background-color: #92de8b;
+  padding-left: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10%;
+  display: flexbox;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
 }
 
 .button-group {
   margin-bottom: 20px;
+  padding-left: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flexbox;
+  align-items: center;
+  justify-content: center;
 }
 
 .counter {
