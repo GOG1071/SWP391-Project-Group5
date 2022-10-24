@@ -94,6 +94,7 @@ def report_home(id, reason, reporter_id):
         user_id = reporter_id, \
         timestamp = datetime.now(), \
         reason = reason)
+        
     db.session.add(report_home)
     db.session.commit()
     return redirect(url_for('home_router.info', message = "Reported successfully", id = id))

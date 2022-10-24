@@ -36,15 +36,17 @@ def add_room():
 def info(id):
     return controllers.home.info(id)
 
+
 @home_router.route('/')
 def list_home():
     return controllers.home.list_home()
 
 @home_router.route('/report/<int:home_id>',methods=["GET","POST"])
 def report(home_id, home_name):
+
     if request.method == "POST":
         return controllers.home.report(\
-            home_id,\
+            id,\
             request.form.get("reason"),\
             session.get("user_id"),\
             )
@@ -70,3 +72,4 @@ def compare():
 def view_rooms_detail():
     home_id = request.args.get('home_id')
     return controllers.home.view_rooms_detail(home_id)
+
