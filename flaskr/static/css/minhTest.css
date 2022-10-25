@@ -1,34 +1,23 @@
 .theme-layout {
+    top: 0;
     float: left;
     position: relative;
     width: 100%;
 }
 
-.theme-layout.boxed {
-    background: none repeat scroll 0 0 #FFFFFF;
-    float: none;
-    margin: 0 auto;
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
-    width: 1230px;
-    -webkit-box-shadow: 0 0 6px #747474;
-    -moz-box-shadow: 0 0 6px #747474;
-    -ms-box-shadow: 0 0 6px #747474;
-    -o-box-shadow: 0 0 6px #747474;
-    box-shadow: 0 0 6px #747474;
-}
 
 .gap {
     float: left;
     padding: 60px 0;
     position: relative;
     width: 100%;
+    height: 100%;
 }
 
 .gray-bg {
     float: left;
     width: 100%;
+    height: 100%;
     background: #f4f2f2;
 }
 
@@ -56,7 +45,7 @@
 }
 
 .static,
-.static > div {
+.static>div {
     position: static !important;
 }
 
@@ -111,7 +100,7 @@
     white-space: nowrap;
 }
 
-.sidebar .widget li > a {
+.sidebar .widget li>a {
     font-size: 15px;
     text-transform: capitalize;
     display: inline-block;
@@ -119,7 +108,7 @@
     font-weight: 500;
 }
 
-.sidebar .widget li > a i {
+.sidebar .widget li>a i {
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -154,7 +143,7 @@
     width: 100%;
 }
 
-.friend-info > figure {
+.friend-info>figure {
     display: inline-block;
     margin-bottom: 0;
     vertical-align: middle;
@@ -168,7 +157,7 @@
     width: 90%;
 }
 
-.friend-name > ins {
+.friend-name>ins {
     float: left;
     font-weight: 700;
     width: 100%;
@@ -176,7 +165,7 @@
     text-decoration: none;
 }
 
-.friend-name > span {
+.friend-name>span {
     color: #999;
     float: left;
     font-size: 12px;
@@ -190,7 +179,7 @@
     width: 100%;
 }
 
-.post-meta > img {
+.post-meta>img {
     float: left;
     width: 100%;
 }
@@ -203,7 +192,7 @@
     z-index: 0;
 }
 
-.we-video-info > ul {
+.we-video-info>ul {
     float: left;
     width: 100%;
     line-height: 27px;
@@ -215,27 +204,27 @@
     vertical-align: sub;
 }
 
-.we-video-info > ul li {
+.we-video-info>ul li {
     display: inline-block;
     font-size: 13px;
     margin-right: 40px;
 }
 
-.we-video-info > ul li span {
+.we-video-info>ul li span {
     font-size: 16px;
     font-weight: 400;
     margin-right: 3px;
     position: relative;
 }
 
-.we-video-info > ul li.upload-date {
+.we-video-info>ul li.upload-date {
     float: right;
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
 }
 
-.upload-date > i {
+.upload-date>i {
     font-size: 13px;
     font-style: normal;
     font-weight: normal;
@@ -243,13 +232,13 @@
     text-transform: capitalize;
 }
 
-.we-video-info > ul li span.dislike {
+.we-video-info>ul li span.dislike {
     color: red;
     cursor: pointer;
     transition: all 0.2s linear 0s;
 }
 
-.we-video-info > ul li span ins {
+.we-video-info>ul li span ins {
     font-size: 11px;
     left: 20px;
     position: absolute;
@@ -257,13 +246,13 @@
     top: -10px;
 }
 
-.we-video-info > ul li span.like {
+.we-video-info>ul li span.like {
     color: green;
     cursor: pointer;
     transition: all 0.2s linear 0s;
 }
 
-.we-video-info > ul li span.like:hover .we-video-info > ul li span.dislike:hover {
+.we-video-info>ul li span.like:hover .we-video-info>ul li span.dislike:hover {
     transform: scale(1.1);
 }
 
@@ -273,11 +262,11 @@
     width: 100%;
 }
 
-.description > p {
+.description>p {
     margin-bottom: 20px;
 }
 
-.description > span {
+.description>span {
     color: #2a2a2a;
     font-size: 18px;
     font-weight: 600;
@@ -286,7 +275,7 @@
     margin-bottom: 5px;
 }
 
-.description > p a {
+.description>p a {
     font-weight: 600;
 }
 
@@ -296,14 +285,14 @@
     width: 100%;
 }
 
-.nav.nav-tabs.likes-btn > li {
+.nav.nav-tabs.likes-btn>li {
     float: left;
     margin-bottom: 10px;
     text-align: center;
     width: 50%;
 }
 
-.nav.nav-tabs.likes-btn > li a {
+.nav.nav-tabs.likes-btn>li a {
     background: #eeeeee none repeat scroll 0 0;
     font-size: 11px;
     font-weight: 500;
@@ -313,6 +302,6 @@
     width: 100%;
 }
 
-.nav.nav-tabs.likes-btn > li a.active {
+.nav.nav-tabs.likes-btn>li a.active {
     color: #fff;
 }

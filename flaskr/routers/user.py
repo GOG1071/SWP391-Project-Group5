@@ -39,14 +39,14 @@ def forgot_password():
 @user_router.route("/register_seller", methods=["POST", "GET"])
 def register_seller():
     if(request.method == "POST"):
-        return controllers.user.register_seller(request.form.get("username"), request.form.get("email"))
+        return controllers.user.register_seller(request.form.get("username"), request.form.get("email"), request.form.get("address"), request.form.get("home_name"))
     else:
         return render_template("user/register_seller.html")
 
-@user_router.route("/profile", methods=["POST", "GET"])
+@user_router.route("/profile/<string:username>", methods=["POST", "GET"])
 @login_required
-def profile():
-    return controllers.user.profile()
+def profile(username):
+    return controllers.user.profile(username)
 
 @user_router.route("/profile/edit", methods=["POST", "GET"])
 @login_required
@@ -66,12 +66,25 @@ def user_posts(username):
 def bookmark():
     return controllers.user.bookmark(session['id'])
 
-@user_router.route('/newRoomRequest',methods=["GET","POST"])
-def postRoomRequest():
-    if request.method == "POST":
-        return controllers.user.add_room_request()
-    return render_template("user/roomRequest.html")
 @user_router.route("/chat")
 @login_required
 def chat():
     return controllers.user.chat(session['id'])
+
+@user_router.route('/report/<string:username>',methods=["GET","POST"])
+@login_required
+def report(username):
+    return controllers.user.report(username)
+@user_router.route('/feedback', methods=["GET","POST"])
+@login_required
+def feedback():
+    if request.method == "POST":
+        return controllers.user.add_feedback(session['id'], request.form.get("content"))
+    return render_template("user/feedback.html")
+
+
+@user_router.route('/do_report',methods=["POST"])
+@login_required
+def do_report():
+    return controllers.user.do_report(request.form.get("reported_username"),request.form.get("reporter_id"),request.form.get("reason"))
+

@@ -12,6 +12,8 @@
 </head>
 
 <body>
+	{% include 'components/navbar.html' %}
+	
 	{% with info = get_flashed_messages() %}
 	{% if info %}
 		<script>alert("{{ info[0] }}");</script>
@@ -34,20 +36,12 @@
 				</div>
 				<br>
 				<div class="form-element">
-					<label for="wards" class="text-capitalize fw-bolder">Wards</label>
-					<select class="form-select" >
-						<option selected></option>
-						<option value="thach-hoa">Thạch Hòa</option>
-						<option value="tan-xa">Tân Xã</option>
-						<option value="ha-bang">Hạ Bằng</option>
-						<option value="binh-yen">Bình Yên</option>
-					</select>
-				</div>
-				<br>
-				<div class="form-element">
 					<label for="address" class="text-capitalize fw-bolder">Address</label>
 					<textarea name="address" id="address" rows="1" class="form-control"></textarea>
 				</div>
+				<br>
+				<label for="home_name" class="text-capitalize fw-bolder">Your Home Name:</label> 
+				<input type="text" name="home_name" class="form-control" required> 
 				<br>
 				<div class="text-center" style="padding-top: 20px;">
 					<button type="submit" class=" btn btn-success btn-block text-uppercase" style="width: 30%;"> register for home

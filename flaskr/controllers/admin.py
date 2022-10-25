@@ -1,17 +1,18 @@
 import random
 import string
+from models.home import RoomDetail , RoomImage
 
 from models.user import Bookmark ,RoomRequest
-from models.user import UserRole, User, HomeOwnerRequest
+from models.user import UserRole, User, HomeOwnerRequest, WebsiteFeedback
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
 from controllers.mail_service import mail
 from models.user import HomeOwnerRequest,User
 from datetime import datetime
-from models.post import  Post
-from models.report import ReportPost
-from models.post import PostImage
+from models.post import  Post, PostImage
+from models.report import ReportPost, ReportHome
+from models.home import Home
 
 def view_request_register():
 
@@ -37,8 +38,8 @@ def delete_report():
     if report:
         db.session.delete(report)
         db.session.commit()
-        return redirect( url_for('post_router.reportedPosts') )
-    return redirect( url_for('post_router.reportedPosts') )
+        return redirect( url_for('admin_router.reportedPosts') )
+    return redirect( url_for('admin_router.reportedPosts') )
 
 def accept_report():
     report_id = request.form.get("id")
@@ -50,13 +51,60 @@ def accept_report():
     postID = report.post_id
     post_img = PostImage.query.filter_by(post_id = postID).first()
     if post_img:
-        for img in post_img:
-            db.session.delete(img)
+        # for img in post_img:
+            db.session.delete(post_img)
             db.session.commit()
             
     post = Post.query.filter_by(id = postID).first()
-    if report:
+    if post:
         db.session.delete(post)
         db.session.commit()
-        return redirect( url_for('post_router.reportedPosts') )
-    return redirect( url_for('post_router.reportedPosts') )
+        return redirect( url_for('admin_router.reportedPosts') )
+    return redirect( url_for('admin_router.reportedPosts') )
+
+def view_feedback():
+    feedback_list = WebsiteFeedback.query.all()
+    for feedback in feedback_list:
+        feedback.username = User.query.filter_by(id = feedback.user_id).first().username
+    return render_template("admin/view_feedback.html",feedback_list = feedback_list)
+
+def reported_Homes():
+    page = request.args.get('page', 1, type=int)
+    number = ReportHome.query.count()
+    homes = ReportHome.query.order_by(ReportHome.timestamp.desc()).paginate(page=page, per_page=5)
+    return render_template('admin/reported_home.html', homes=homes, counter=number)
+
+def delete_home_report():
+    report_id = request.form.get("id")
+    report = ReportHome.query.filter_by(id = report_id).first()
+    if report:
+        db.session.delete(report)
+        db.session.commit()
+        return redirect( url_for('admin_router.reportedHomes') )
+    return redirect( url_for('admin_router.reportedHomes') )
+
+def accept_home_report():
+    report_id = request.form.get("id")
+    report = ReportHome.query.filter_by(id = report_id).first()
+    if report:
+        db.session.delete(report)
+        db.session.commit()
+        
+    homeID = report.home_id
+    rooms = RoomDetail.query.filter_by(home_id = homeID).all()
+    if rooms:
+        for room in rooms:
+            image = RoomImage.query.filter_by(room_id = room.id).first()
+            if image:
+                db.session.delete(image)
+                db.session.commit()      
+            db.session.delete(room)
+            db.session.commit()
+        
+    home = Home.query.filter_by(id = homeID).first()
+    if home:
+        db.session.delete(home)
+        db.session.commit()
+        return redirect( url_for('admin_router.reportedHomes') )
+    return redirect( url_for('admin_router.reportedHomes') )
+    

@@ -13,7 +13,7 @@ import cloudinary.uploader
 
 
 def add_home():
-    name = request.form['name']
+    name = request.form['home_name']
     address = request.form["address"]
     des = request.form["des"]
     num_room = request.form["num_room"]
@@ -23,6 +23,9 @@ def add_home():
     home = Home(name = name, address = address,description = des, total_rooms = num_room, available_rooms = room_not,timestamp = timestamp,user_id = user_id)
     db.session.add(home)
     db.session.commit()
+    if session.get('clear') != None:
+        session.clear()
+        return redirect(url_for('user_router.home'))
     return redirect( url_for('home_router.load_home'))
 
 
@@ -78,12 +81,10 @@ def add_room():
 def info(id):
     home = Home.query.filter_by(id = id).first()
     user = User.query.filter_by(id = home.user_id).first()
-    list_room = RoomDetail.query.filter_by(home_id = id)
-    list_img = []
-
+    list_room = RoomDetail.query.filter_by(home_id = id).all()
     for room in list_room:
-        list_img += RoomImage.query.filter_by(room_id = room.id)
-    return render_template("home/home_info.html",home = home, owner = user.username, list_room = list_room, list_img = list_img)
+        room.img = RoomImage.query.filter_by(room_id = room.id).all()
+    return render_template("home/home_info.html",home = home, owner = user.username, list_room = list_room)
 
 def report_home(id, reason, reporter_id):
     home = Home.query.filter_by(id = id).first()
@@ -93,6 +94,7 @@ def report_home(id, reason, reporter_id):
         user_id = reporter_id, \
         timestamp = datetime.now(), \
         reason = reason)
+        
     db.session.add(report_home)
     db.session.commit()
     return redirect(url_for('home_router.info', message = "Reported successfully", id = id))
@@ -104,3 +106,9 @@ def list_home():
 def search(home_name):
     list_home = Home.query.filter(Home.name.like("%"+home_name+"%"))
     return render_template("home/search_home.html",list_home = list_home)
+
+def view_rooms_detail(home_id):
+    list_room = RoomDetail.query.filter_by(home_id = home_id).all()
+    for room in list_room:
+        room.image_link = RoomImage.query.filter_by(room_id = room.id).all()
+    return render_template("home/room_detail_for_user.html",list_room = list_room)

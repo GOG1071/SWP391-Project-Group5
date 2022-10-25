@@ -1,7 +1,9 @@
+from email import message
 import random
 import string
+from models.report import ReportUser, ReportUserDetail
 from models.user import Bookmark ,RoomRequest
-from models.user import UserRole, User, HomeOwnerRequest
+from models.user import UserRole, User, HomeOwnerRequest, WebsiteFeedback
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
@@ -86,7 +88,7 @@ def register(username, password, email):
         flash("duplicate email or username", "info")
         return render_template("user/register.html")
 
-def register_seller(username, email):
+def register_seller(username, email, address, home_name):
     # kiem tra du lieu
     if not check_exist_user(username, email):
         password = gen_new_password()
@@ -99,8 +101,13 @@ def register_seller(username, email):
         db.session.add(user_request)
         db.session.commit()
         
-        flash("Your request has been sent to admin. Please wait for approval, we will send password in your email.","info")
-        return render_template("user/register_seller.html")
+        session['username'] = user.username
+        session['id'] = user.id
+        session['role'] = user.role
+        session['banned'] = False
+        session['clear'] = True
+        flash("Your request has been sent to admin. Please wait for approval, we will send password in your email. Now please add home!","info")
+        return render_template("home/add_home_for_owner.html", address=address, home_name = home_name)
     else:
         flash("duplicate email or username", "info")
         return render_template("user/register_seller.html")
@@ -111,10 +118,13 @@ def gen_new_password():
         password += random.choice(string.ascii_letters + string.digits + string.punctuation)
     return password
 
-def profile():
-    user = User.query.filter(User.id == session['id']).first()
-    return render_template("user/userProfile.html",user=user)
-
+def profile(username):
+    user = User.query.filter(User.username == username).first()
+    if user:
+        email = user.email
+        return render_template("user/userProfile.html",username=username,email=email)
+    else:
+        return render_template("user/userProfile.html",message = "User not found")
 def edit_profile():
     user = User.query.filter(User.id == session['id']).first()
     checkUsername = User.query.filter(User.username == request.form["username"]).first()
@@ -148,18 +158,33 @@ def bookmark(userid):
     flash("You don't have any bookmark yet!","info")
     return render_template("user/bookmark.html")
 
-def add_room_request():
-    name = request.form['name']
-    phone = request.form['phone']
-    timeVisit = request.form['timeVisit']
-    user_id = session["id"]
-    timestamp = datetime.now()
-    content = "Name: " + name + " Phone: " + phone + " Time visit: " + timeVisit
-    room_reqest = RoomRequest(user_id = user_id, content = content, timestamp = timestamp)
-    db.session.add(room_reqest)
-    db.session.commit()
-    return render_template("user/roomRequest.html", done = True, name = name, phone = phone, timeVisit = timeVisit)
 def chat(userid):
     #get all the user with userid
     user = User.query.filter(User.id == userid).all()
     return render_template("user/chat.html", list_user = user)
+
+
+def report(username):
+    user = User.query.filter(User.username == username).first()
+    if user:
+        return render_template("user/report_user.html",username=username)
+    else:
+        return render_template("user/report_user.html",message = "User not found")
+
+def do_report(reported, reporter_id, reason):
+    user = User.query.filter(User.username == reported).first()
+    if user:
+        report = ReportUser(reporter_id = reporter_id)
+        db.session.add(report)
+        reportDetail = ReportUserDetail(report_id = report.id, reported_id = user.id, reason = reason)
+        db.session.add(reportDetail)
+        db.session.commit()
+        return render_template("user/report_user.html",message = "Report successfully!")
+    else:
+        return render_template("user/report_user.html",message = "User not found")
+def add_feedback(id, content):
+    feedback = WebsiteFeedback(user_id = id, timestamp=datetime.now(), feedback = content)
+    db.session.add(feedback)
+    db.session.commit()
+    return redirect(url_for('user_router.home'))
+
