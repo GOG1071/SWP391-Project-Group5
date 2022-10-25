@@ -17,6 +17,8 @@ class User(db.Model):
     posts = db.relationship('Post', back_populates="author")
     comments = db.relationship('Comment')
     messages = db.relationship('Chat')
+    reports = db.relationship('ReportPost', backref='user', lazy=True) 
+    reporthomes = db.relationship('ReportHome', backref='user', lazy=True) 
 
 class Bookmark(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -40,4 +42,6 @@ class HomeOwnerRequest(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     home_id = db.Column(db.Integer, db.ForeignKey('home.id'), nullable=False)
     status = db.Column(db.Boolean, nullable=False, default=False)
+    user = db.relationship('User')
+    home = db.relationship('Home')
 

@@ -3,7 +3,7 @@ import random
 import string
 from models.report import ReportUser, ReportUserDetail
 from models.user import Bookmark ,RoomRequest
-from models.user import UserRole, User, HomeOwnerRequest
+from models.user import UserRole, User, HomeOwnerRequest, WebsiteFeedback
 from models.model import db
 from flask import Flask,redirect,url_for,json,render_template,request,session,flash
 from flask_mail import Message
@@ -23,6 +23,9 @@ def login():
     user_name = request.form["user"]
     pass_word = request.form["pass"]
     query = User.query.filter(User.username == user_name , User.password == pass_word).first()
+    if query.banned == True:
+        flash("You are banned!","info")
+        return render_template("user/login.html")
     if query:
         session['username'] = query.username
         session['id'] = query.id
@@ -85,7 +88,7 @@ def register(username, password, email):
         flash("duplicate email or username", "info")
         return render_template("user/register.html")
 
-def register_seller(username, email):
+def register_seller(username, email, address, home_name):
     # kiem tra du lieu
     if not check_exist_user(username, email):
         password = gen_new_password()
@@ -98,8 +101,13 @@ def register_seller(username, email):
         db.session.add(user_request)
         db.session.commit()
         
-        flash("Your request has been sent to admin. Please wait for approval, we will send password in your email.","info")
-        return render_template("user/register_seller.html")
+        session['username'] = user.username
+        session['id'] = user.id
+        session['role'] = user.role
+        session['banned'] = False
+        session['clear'] = True
+        flash("Your request has been sent to admin. Please wait for approval, we will send password in your email. Now please add home!","info")
+        return render_template("home/add_home_for_owner.html", address=address, home_name = home_name)
     else:
         flash("duplicate email or username", "info")
         return render_template("user/register_seller.html")
@@ -117,7 +125,6 @@ def profile(username):
         return render_template("user/userProfile.html",username=username,email=email)
     else:
         return render_template("user/userProfile.html",message = "User not found")
-
 def edit_profile():
     user = User.query.filter(User.id == session['id']).first()
     checkUsername = User.query.filter(User.username == request.form["username"]).first()
@@ -181,3 +188,8 @@ def do_report(reported, reporter_id, reason):
         return render_template("user/report_user.html",message = "Report successfully!")
     else:
         return render_template("user/report_user.html",message = "User not found")
+def add_feedback(id, content):
+    feedback = WebsiteFeedback(user_id = id, timestamp=datetime.now(), feedback = content)
+    db.session.add(feedback)
+    db.session.commit()
+    return redirect(url_for('user_router.home'))

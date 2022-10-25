@@ -25,7 +25,7 @@ def login():
 
 
 @user_router.route("/logout", methods=["GET"])
-@login_required
+# @login_required
 def logout():
     return controllers.user.logout()
 
@@ -39,7 +39,7 @@ def forgot_password():
 @user_router.route("/register_seller", methods=["POST", "GET"])
 def register_seller():
     if(request.method == "POST"):
-        return controllers.user.register_seller(request.form.get("username"), request.form.get("email"))
+        return controllers.user.register_seller(request.form.get("username"), request.form.get("email"), request.form.get("address"), request.form.get("home_name"))
     else:
         return render_template("user/register_seller.html")
 
@@ -76,6 +76,13 @@ def postRoomRequest():
 @login_required
 def report(username):
     return controllers.user.report(username)
+@user_router.route('/feedback', methods=["GET","POST"])
+@login_required
+def feedback():
+    if request.method == "POST":
+        return controllers.user.add_feedback(session['id'], request.form.get("content"))
+    return render_template("user/feedback.html")
+
 
 @user_router.route('/do_report',methods=["POST"])
 @login_required
