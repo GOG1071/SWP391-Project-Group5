@@ -158,17 +158,11 @@ def bookmark(userid):
     flash("You don't have any bookmark yet!","info")
     return render_template("user/bookmark.html")
 
-def add_room_request():
-    name = request.form['name']
-    phone = request.form['phone']
-    timeVisit = request.form['timeVisit']
-    user_id = session["id"]
-    timestamp = datetime.now()
-    content = "Name: " + name + " Phone: " + phone + " Time visit: " + timeVisit
-    room_reqest = RoomRequest(user_id = user_id, content = content, timestamp = timestamp)
-    db.session.add(room_reqest)
-    db.session.commit()
-    return render_template("user/roomRequest.html", done = True, name = name, phone = phone, timeVisit = timeVisit)
+def chat(userid):
+    #get all the user with userid
+    user = User.query.filter(User.id == userid).all()
+    return render_template("user/chat.html", list_user = user)
+
 
 def report(username):
     user = User.query.filter(User.username == username).first()
@@ -193,3 +187,4 @@ def add_feedback(id, content):
     db.session.add(feedback)
     db.session.commit()
     return redirect(url_for('user_router.home'))
+

@@ -66,11 +66,10 @@ def user_posts(username):
 def bookmark():
     return controllers.user.bookmark(session['id'])
 
-@user_router.route('/newRoomRequest',methods=["GET","POST"])
-def postRoomRequest():
-    if request.method == "POST":
-        return controllers.user.add_room_request()
-    return render_template("user/roomRequest.html")
+@user_router.route("/chat")
+@login_required
+def chat():
+    return controllers.user.chat(session['id'])
 
 @user_router.route('/report/<string:username>',methods=["GET","POST"])
 @login_required
@@ -88,3 +87,4 @@ def feedback():
 @login_required
 def do_report():
     return controllers.user.do_report(request.form.get("reported_username"),request.form.get("reporter_id"),request.form.get("reason"))
+
