@@ -18,6 +18,7 @@ class User(db.Model):
     comments = db.relationship('Comment')
     messages = db.relationship('Chat')
     reports = db.relationship('ReportPost', backref='user', lazy=True) 
+    reporthomes = db.relationship('ReportHome', backref='user', lazy=True) 
 
 class Bookmark(db.Model):
     id = db.Column(db.Integer, primary_key=True)
