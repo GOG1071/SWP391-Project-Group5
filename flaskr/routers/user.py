@@ -66,15 +66,15 @@ def user_posts(username):
 def bookmark():
     return controllers.user.bookmark(session['id'])
 
-@user_router.route("/list_user")
+@user_router.route("/chat_all")
 @login_required
-def list_user():
-    return controllers.user.list_user(session['id'])
+def chat_all():
+    return controllers.user.chat_all(session['id'])
 
-@user_router.route("/chat")
+@user_router.route("/message_user")
 @login_required
-def chat():
-    return controllers.user.chat(session['id'])
+def message_user():
+    return controllers.user.message_user(session['id'])
 
 @user_router.route('/report/<string:username>',methods=["GET","POST"])
 @login_required
