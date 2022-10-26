@@ -71,7 +71,7 @@ def postRoomRequest():
     if request.method == "POST":
         return controllers.user.add_room_request()
     return render_template("user/roomRequest.html")
-@user_router.route("/chat")
+@user_router.route("/list_user")
 @login_required
-def chat():
-    return controllers.user.chat(session['id'])
+def list_user():
+    return controllers.user.list_user(session['id'])

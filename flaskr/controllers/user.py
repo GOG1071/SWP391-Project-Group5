@@ -159,7 +159,7 @@ def add_room_request():
     db.session.add(room_reqest)
     db.session.commit()
     return render_template("user/roomRequest.html", done = True, name = name, phone = phone, timeVisit = timeVisit)
-def chat(userid):
+def list_user(userid):
     #get all the user with userid
-    user = User.query.filter(User.id == userid).all()
-    return render_template("user/chat.html", list_user = user)
+    user = User.query.filter(User.id != userid).all()
+    return render_template("user/list_user.html", list_user = user)
