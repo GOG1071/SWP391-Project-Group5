@@ -23,6 +23,9 @@ def login():
     user_name = request.form["user"]
     pass_word = request.form["pass"]
     query = User.query.filter(User.username == user_name , User.password == pass_word).first()
+    if not query:
+        flash("Your account doesn't exist","info")
+        return render_template("user/login.html")
     if query.banned == True:
         flash("You are banned!","info")
         return render_template("user/login.html")
@@ -33,7 +36,7 @@ def login():
         session['banned'] = query.banned
         session['email'] = query.email
         return redirect(url_for("user_router.home"))
-    flash("Your account doesn't exist","info")
+    
     return render_template("user/login.html")
 
 
@@ -93,8 +96,9 @@ def register_seller(username, email, address, home_name):
     if not check_exist_user(username, email):
         password = gen_new_password()
         # add vao database
-        user = User(username=username, password=password, email=email, role=UserRole.SELLER, banned=True)
+        user = User(username=username, email=email, password=password, banned=True, role=UserRole.SELLER)
         db.session.add(user)
+        db.session.commit()
         user = User.query.filter(User.username == username).first()
 
         user_request = HomeOwnerRequest(user_id=user.id, home_id = 1)
