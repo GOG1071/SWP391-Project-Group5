@@ -66,6 +66,11 @@ def user_posts(username):
 def bookmark():
     return controllers.user.bookmark(session['id'])
 
+@user_router.route("/list_user")
+@login_required
+def list_user():
+    return controllers.user.list_user(session['id'])
+
 @user_router.route("/chat")
 @login_required
 def chat():
@@ -87,4 +92,3 @@ def feedback():
 @login_required
 def do_report():
     return controllers.user.do_report(request.form.get("reported_username"),request.form.get("reporter_id"),request.form.get("reason"))
-
