@@ -16,13 +16,13 @@
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Home</a>
                     <div class="dropdown-menu bg-light m-0">
                         <a href="{{ url_for('home_router.load_home') }}" class="dropdown-item">My homes</a>
-                        <a href="quote.html" class="dropdown-item">Room request</a>
+                        <a href="{{ url_for('home_router.list_home') }}" class="dropdown-item">Find home</a>
                         <a href="team.html" class="dropdown-item">...</a>
                     </div>
                     {% elif session.get('role') == 'MEMBER' %}
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Home</a>
                     <div class="dropdown-menu bg-light m-0">
-                        <a href="quote.html" class="dropdown-item">...</a>
+                        <a href="{{ url_for('home_router.list_home') }}" class="dropdown-item">Find home</a>
                         <a href="team.html" class="dropdown-item">...</a>
                     </div>
                     {% endif %}
