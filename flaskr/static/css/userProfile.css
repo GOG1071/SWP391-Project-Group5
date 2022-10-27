@@ -78,6 +78,7 @@ body {
     color: #2e323c;
 }
 
+
 .card {
     background: #ffffff;
     -webkit-border-radius: 5px;
@@ -89,4 +90,7 @@ body {
 
 .btn {
     background-color: #028174;
+}
+.btn-danger{
+    background-color: #ff0000;
 }

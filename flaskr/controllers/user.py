@@ -1,5 +1,7 @@
+from email import message
 import random
 import string
+from models.report import ReportUser, ReportUserDetail
 from models.user import Bookmark, RoomRequest
 from models.user import UserRole, User, HomeOwnerRequest, WebsiteFeedback
 from models.model import db
@@ -26,6 +28,8 @@ def login():
     pass_word = request.form["pass"]
     query = User.query.filter(
         User.username == user_name, User.password == pass_word).first()
+    if not query:
+        flash("Your account doesn't exist", "info")
     if query.banned == True:
         flash("You are banned!", "info")
         return render_template("user/login.html")
@@ -36,7 +40,6 @@ def login():
         session['banned'] = query.banned
         session['email'] = query.email
         return redirect(url_for("user_router.home"))
-    flash("Your account doesn't exist", "info")
     return render_template("user/login.html")
 
 
@@ -104,9 +107,10 @@ def register_seller(username, email, address, home_name):
     if not check_exist_user(username, email):
         password = gen_new_password()
         # add vao database
-        user = User(username=username, password=password,
-                    email=email, role=UserRole.SELLER, banned=True)
+        user = User(username=username, email=email,
+                    password=password, banned=True, role=UserRole.SELLER)
         db.session.add(user)
+        db.session.commit()
         user = User.query.filter(User.username == username).first()
 
         user_request = HomeOwnerRequest(user_id=user.id, home_id=1)
@@ -132,10 +136,14 @@ def gen_new_password():
                                   string.digits + string.punctuation)
     return password
 
+def profile(id):
+    user = User.query.filter(User.id == id).first()
+    if user:
+        email = user.email
+        return render_template("user/userProfile.html", user=user, email=email)
+    else:
+        return render_template("user/userProfile.html", message="User not found")
 
-def profile():
-    user = User.query.filter(User.id == session['id']).first()
-    return render_template("user/userProfile.html", user=user)
 
 
 def edit_profile():
@@ -175,18 +183,38 @@ def bookmark(userid):
     return render_template("user/bookmark.html")
 
 
-def add_room_request():
-    name = request.form['name']
-    phone = request.form['phone']
-    timeVisit = request.form['timeVisit']
-    user_id = session["id"]
-    timestamp = datetime.now()
-    content = "Name: " + name + " Phone: " + phone + " Time visit: " + timeVisit
-    room_reqest = RoomRequest(
-        user_id=user_id, content=content, timestamp=timestamp)
-    db.session.add(room_reqest)
-    db.session.commit()
-    return render_template("user/roomRequest.html", done=True, name=name, phone=phone, timeVisit=timeVisit)
+def list_user(userid):
+    # get all the user with userid
+    user = User.query.filter(User.id != userid).all()
+    return render_template("user/list_user.html", list_user=user)
+
+
+def chat(userid):
+    # get all the user with userid
+    user = User.query.filter(User.id == userid).all()
+    return render_template("user/chat.html", list_user=user)
+
+
+def report(username):
+    user = User.query.filter(User.username == username).first()
+    if user:
+        return render_template("user/report_user.html", username=username)
+    else:
+        return render_template("user/report_user.html", message="User not found")
+
+
+def do_report(reported, reporter_id, reason):
+    user = User.query.filter(User.username == reported).first()
+    if user:
+        report = ReportUser(reporter_id=reporter_id)
+        db.session.add(report)
+        reportDetail = ReportUserDetail(
+            report_id=report.id, reported_id=user.id, reason=reason)
+        db.session.add(reportDetail)
+        db.session.commit()
+        return render_template("user/report_user.html", message="Report successfully!")
+    else:
+        return render_template("user/report_user.html", message="User not found")
 
 
 def add_feedback(id, content):
