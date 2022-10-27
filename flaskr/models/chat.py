@@ -2,7 +2,8 @@ from models.model import db
 
 class Chat(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    creater_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
+    user_id_1 = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
+    user_id_2 = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key = True)

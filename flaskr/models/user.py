@@ -18,7 +18,6 @@ class User(db.Model):
     role = db.Column(db.String(80), nullable=False, default=UserRole.MEMBER)
     posts = db.relationship('Post', back_populates="author")
     comments = db.relationship('Comment')
-    messages = db.relationship('Chat')
     reports = db.relationship('ReportPost', backref='user', lazy=True)
     reporthomes = db.relationship('ReportHome', backref='user', lazy=True)
     home = db.relationship('Home', backref='owner', lazy=True)
