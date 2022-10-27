@@ -18,67 +18,43 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic"
         rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/home.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/home.css') }}">
 </head>
 
 <body id="page-top">
 
     {% include 'components/navbar.html' %}
-
-    <!-- Header-->
-    <header class="masthead d-flex align-items-center">
-        <div class="container px-4 px-lg-5 text-center">
-            <h1 class="mb-1">Sweet home Hola</h1>
-            <h3 class="mb-5"><em>A place for your stay request</em></h3>
-            <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
-        </div>
-    </header>
-    <!-- About-->
-    <section class="content-section bg-light" id="about">
-        <div class="container px-4 px-lg-5 text-center">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-lg-10">
-                    <h2>Page được lập ra để giúp các bạn sinh viên mới dễ dàng tìm được phòng trọ ưng ý
-                        và dễ dàng nhất để ở trong thòi gian học tập quanh khu vực Hòa lạc, cũng như các
-                        chủ trọ tìm được các ban sinh viên dễ dàng hơn</h2>
-                    <p class="lead mb-5">
-                        Với nhiều chức năng tiện ích và hữu dụng
-                    </p>
-                    <a class="btn btn-dark btn-xl" href="#services">What We Offer</a>
-                </div>
-            </div>
-        </div>
-    </section>
     <!-- Services-->
     <section class="content-section bg-primary text-white text-center" id="services">
         <div class="container px-4 px-lg-5">
             <div class="content-section-heading">
                 <h3 class="text-secondary mb-0">Services</h3>
-                <h2 class="mb-5">What We Offer</h2>
+                <h2 class="mb-5">Admin Manager</h2>
             </div>
             <div class="row gx-4 gx-lg-5">
                 <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
                     <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-screen-smartphone"></i></span>
-                    <h4><strong>Forum</strong></h4>
-                    <p class="text-faded mb-0">1 môi trường nhỏ để mọi người trao dổi trò chuyện với nhau về
-                        trọ</p>
+                    <h4><strong>Responsive</strong></h4>
+                    <p class="text-faded mb-0">Looks great on any screen size!</p>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
                     <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-pencil"></i></span>
-                    <h4><strong>My homes</strong></h4>
-                    <p class="text-faded mb-0">Quản lý trọ dễ dang cho chủ trọ</p>
+                    <h4><strong>Redesigned</strong></h4>
+                    <p class="text-faded mb-0">Freshly redesigned for Bootstrap 5.</p>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-5 mb-md-0">
                     <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-like"></i></span>
-                    <h4><strong>Convenient</strong></h4>
+                    <h4><strong>Favorited</strong></h4>
                     <p class="text-faded mb-0">
-                        Dễ dàng tìm kiếm trọ thích hợp nhất cho các bạn sinh viên
+                        Millions of users
+                        <i class="fas fa-heart"></i>
+                        Start Bootstrap!
                     </p>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-mustache"></i></span>
-                    <h4><strong>Admin manager</strong></h4>
-                    <p class="text-faded mb-0">Hệ thống quản lý thông minh</p>
+                    <h4><strong>Question</strong></h4>
+                    <p class="text-faded mb-0">I mustache you a question...</p>
                 </div>
             </div>
         </div>
@@ -104,8 +80,7 @@
                             class="icon-social-twitter"></i></a>
                 </li>
                 <li class="list-inline-item">
-                    <a class="social-link rounded-circle text-white"
-                        href="https://github.com/gog1071/SWP391-Project-Group5"><i class="icon-social-github"></i></a>
+                    <a class="social-link rounded-circle text-white" href="#!"><i class="icon-social-github"></i></a>
                 </li>
             </ul>
             <p class="text-muted small mb-0">Copyright &copy; Your Website 2022</p>
