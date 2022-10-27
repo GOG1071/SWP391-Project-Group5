@@ -9,6 +9,12 @@ from models.post import Post
 admin_router = Blueprint('admin_router', __name__)
 
 
+@admin_router.route("/dashBoard")
+@admin_required
+def dashBoard():
+    return controllers.admin.dashBoard()
+
+
 @admin_router.route('/view_request_register', methods=['POST', 'GET'])
 def view_request_register():
     return controllers.admin.view_request_register()

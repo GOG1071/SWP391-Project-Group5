@@ -15,6 +15,10 @@ from models.report import ReportPost, ReportHome
 from models.home import Home
 
 
+def dashBoard():
+    return render_template('admin/dashBoard.html')
+
+
 def view_request_register():
 
     request_register = HomeOwnerRequest.query.all()
