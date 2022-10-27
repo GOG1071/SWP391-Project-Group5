@@ -1,10 +1,11 @@
 .post {
-    width: 100%;
+    width: 60%;
     height: auto;
     background: #ffffff;
     border: 1px solid #dfdfdf;
     margin-top: 40px;
     margin-left: 0px;
+    left: 20%;
 }
 
 .info {
