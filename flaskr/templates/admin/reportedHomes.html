@@ -61,6 +61,7 @@
                 Addons
             </div>
 
+            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
@@ -70,18 +71,19 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{url_for('admin_router.all_Posts')}}">All posts</a>
-                        <a class="collapse-item" href="{{url_for('admin_router.reportedPosts')}}">Reported posts</a>
+                        <a class="collapse-item" href="{{url_for('admin_router.reportedPosts')}}">Reported
+                            posts</a>
                     </div>
                 </div>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers"
+                    aria-expanded="true" aria-controls="collapseUsers">
                     <i class="bi bi-people-fill"></i>
                     <span>Users</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapseUsers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{url_for('admin_router.all_Users')}}">All users</a>
                         <a class="collapse-item" href="{{url_for('admin_router.banned_Users')}}">Banner users</a>
@@ -90,12 +92,12 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="bi bi-people-fill"></i>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHomes"
+                    aria-expanded="true" aria-controls="collapseHomes">
+                    <i class="bi bi-house-heart-fill"></i>
                     <span>Homes</span>
                 </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+                <div id="collapseHomes" class="collapse show" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{url_for('admin_router.all_Homes')}}">All homes</a>
@@ -143,6 +145,7 @@
                                             <th>Home owner</th>
                                             <th>Address</th>
                                             <th>Reported by</th>
+                                            <th>Reason</th>
                                             <th>Action</th>
                                             <th></th>
                                         </tr>
@@ -156,6 +159,7 @@
                                             <td>{{report.home.owner.username}}</td>
                                             <td>{{report.home.address}}</td>
                                             <td>{{report.user.username}}</td>
+                                            <td>{{report.reason}}</td>
                                             <td>
                                                 <form
                                                     onSubmit="if(!confirm('Accept this report and delete this home?')){return false;}"
