@@ -95,6 +95,13 @@ def all_Posts():
     return controllers.admin.all_Posts()
 
 
+@admin_router.route("/delete_post", methods=["POST", "GET"])
+@admin_required
+def deleta_post():
+    if request.method == "POST":
+        return controllers.admin.delete_post()
+
+
 @admin_router.route("/all_Users")
 @admin_required
 def all_Users():

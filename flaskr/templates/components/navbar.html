@@ -34,7 +34,7 @@
                     {% endif %}
                 </div>
                 <div class="nav-item dropdown">
-                    {% if session.get('user')%}
+                    {% if session.get('username') != None%}
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Forums</a>
                     <div class="dropdown-menu bg-light m-0">
                         <a href="{{ url_for('post_router.newfeed') }}" class="dropdown-item">Newfeeds</a>

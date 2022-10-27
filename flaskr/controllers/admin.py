@@ -151,6 +151,22 @@ def all_Posts():
     return render_template('admin/allPosts.html', posts=posts)
 
 
+def delete_post():
+    postID = request.form.get("id")
+    post_img = PostImage.query.filter_by(post_id=postID).first()
+    if post_img:
+        # for img in post_img:
+        db.session.delete(post_img)
+        db.session.commit()
+
+    post = Post.query.filter_by(id=postID).first()
+    if post:
+        db.session.delete(post)
+        db.session.commit()
+        return redirect(url_for('admin_router.all_Posts'))
+    return redirect(url_for('admin_router.all_Posts'))
+
+
 def all_Users():
     users = User.query.all()
     return render_template('admin/allUser.html', users=users)

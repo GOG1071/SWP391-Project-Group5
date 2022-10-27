@@ -143,6 +143,8 @@
                                             <th>Posts</th>
                                             <th>Post by</th>
                                             <th>Date report</th>
+                                            <th>Action</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -154,6 +156,25 @@
                                             </td>
                                             <td>{{post.post.author.username}}</td>
                                             <td>{{post.timestamp}}</td>
+                                            <td>
+                                                <form onSubmit="if(!confirm('Refuse this report?')){return false;}"
+                                                    action="./delete_report" method="POST">
+                                                    <input type="text" value="{{post.id}}" name="id" hidden>
+                                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                                    <button class="btn btn-danger" type="submit"><i
+                                                            class="bi bi-file-earmark-excel-fill"></i> Refuse </button>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <form
+                                                    onSubmit="if(!confirm('Accept this report and delete this post?')){return false;}"
+                                                    action="./accept_report" method="POST">
+                                                    <input type="text" value="{{post.id}}" name="id" hidden>
+                                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                                    <button class="btn btn-success" type="submit"><i
+                                                            class="bi bi-file-earmark-check-fill"></i> Accept </button>
+                                                </form>
+                                            </td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
