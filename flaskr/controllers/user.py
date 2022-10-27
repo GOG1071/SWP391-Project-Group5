@@ -15,7 +15,10 @@ from datetime import datetime
 def home():
     if "username" in session:
         user = session['username']
-        return render_template("user/home.html", username=user, isLogin=True)
+        if user == "admin":
+            return render_template("admin/adminHome.html")
+        else:
+            return render_template("user/home.html", username=user, isLogin=True)
     else:
         return render_template("user/home.html", stringName="you are not login", isLogin=False)
 
@@ -27,7 +30,6 @@ def login():
         User.username == user_name, User.password == pass_word).first()
     if not query:
         flash("Your account doesn't exist", "info")
-        return render_template("user/login.html")
     if query.banned == True:
         flash("You are banned!", "info")
         return render_template("user/login.html")
@@ -38,7 +40,6 @@ def login():
         session['banned'] = query.banned
         session['email'] = query.email
         return redirect(url_for("user_router.home"))
-
     return render_template("user/login.html")
 
 
@@ -135,7 +136,6 @@ def gen_new_password():
                                   string.digits + string.punctuation)
     return password
 
-
 def profile(id):
     user = User.query.filter(User.id == id).first()
     if user:
@@ -143,6 +143,7 @@ def profile(id):
         return render_template("user/userProfile.html", user=user, email=email)
     else:
         return render_template("user/userProfile.html", message="User not found")
+
 
 
 def edit_profile():
