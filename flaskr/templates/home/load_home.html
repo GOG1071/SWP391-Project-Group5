@@ -26,6 +26,7 @@
             <td> total room </td>
             <td> available room </td>
             <td></td>
+            <td></td>
         </tr>
     </thead>
 {%for i in list_home%}
@@ -37,6 +38,8 @@
             <td>{{i.total_rooms}}</td>
             <td> {{i.available_rooms}} </td>
             <td> <a href="{{url_for('home_router.load_room',home_id = i.id)}}"><button class="btn btn-danger"> View Detail </button> </td></a> 
+            <td> <a href="{{url_for('home_router.remove_home',home_id = i.id)}}"><button class="btn btn-warning"> Remove </button> </td></a> 
+
         </tr>
     </tbody>
 {%endfor%}

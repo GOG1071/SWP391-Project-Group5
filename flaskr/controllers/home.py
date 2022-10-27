@@ -1,5 +1,7 @@
 from datetime import datetime
 from email import message
+
+
 from models.report import ReportHome
 from models.home import Home
 from models.home import RoomDetail
@@ -31,10 +33,19 @@ def add_home():
 
 
 def load_home():
+    
     user_id = session['id']
+    
     list_home = Home.query.filter_by(user_id=user_id)
     return render_template("home/load_home.html", list_home=list_home)
 
+def remove_home():
+    home_id = request.args.get("home_id")
+    home = Home.query.filter_by(id = home_id).first()
+    if home:
+        db.session.delete(home)
+        db.session.commit()
+    return redirect(url_for("home_router.load_home"))
 
 def load_room():
     home_id = request.args.get("home_id")
@@ -47,6 +58,15 @@ def load_room():
         return render_template("home/load_room.html", list_room=list_room, list_room_img=list_room_img, home_id=home_id)
 
     return render_template("home/load_room.html", list_room=list_room, home_id=home_id)
+
+def remove_room():
+    room_id = request.args.get("room_id")
+    room = RoomDetail.query.filter_by(id = room_id).first()
+    home = Home.query.filter_by(id = room.home_id).first()
+    if room:
+        db.session.delete(room)
+        db.session.commit()
+    return redirect(url_for("home_router.load_room",home_id =home.id))
 
 
 def add_room():

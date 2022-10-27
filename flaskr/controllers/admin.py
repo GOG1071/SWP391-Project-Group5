@@ -32,6 +32,7 @@ def view_request_register():
 def allow_access():
     id = request.args.get("id")
     request_register = HomeOwnerRequest.query.filter_by(id=id).first()
+    request_register.user.status = True
     request_register.status = True
     db.session.commit()
     return redirect(url_for("admin_router.view_request_register"))
