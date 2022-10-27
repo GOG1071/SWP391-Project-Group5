@@ -148,18 +148,19 @@
                                             <th>Description</th>
                                             <th>Home owner</th>
                                             <th>Address</th>
-                                            <th>View detail</th>
+                                            <th>Reported by</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for report in reportedHomes %}
                                         <tr>
-                                            <td>{{report.home.name}}</td>
+                                            <td><a href="/home/view_room_detail?home_id={{report.home.id}}"
+                                                    title="">{{report.home.name}}</a></td>
                                             <td>{{report.home.description}}</td>
                                             <td>{{report.home.owner.username}}</td>
                                             <td>{{report.home.address}}</td>
-                                            <td>asd</td>
+                                            <td>{{report.user.username}}</td>
                                             <td>
                                                 <form
                                                     onSubmit="if(!confirm('Accept this report and delete this home?')){return false;}"
