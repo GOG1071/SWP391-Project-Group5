@@ -12500,22 +12500,6 @@ footer.footer .social-link:hover {
   background-size: cover;
 }
 
-.masthead2 {
-  min-height: 30rem;
-  position: relative;
-  display: table;
-  width: 100%;
-  height: auto;
-  padding-top: 8rem;
-  padding-bottom: 8rem;
-  background: linear-gradient(90deg,
-      rgba(255, 255, 255, 0.1) 0%,
-      rgba(255, 255, 255, 0.1) 100%),
-  ;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
 
 .masthead h1,
 .masthead .h1 {
