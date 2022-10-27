@@ -11,12 +11,16 @@ from controllers.mail_service import mail
 from models.user import HomeOwnerRequest, User
 from datetime import datetime
 from models.post import Post, PostImage
-from models.report import ReportPost, ReportHome
+from models.report import ReportPost, ReportHome, ReportUser
 from models.home import Home
 
 
 def dashBoard():
-    return render_template('admin/dashBoard.html')
+    users = User.query.all()
+    posts = Post.query.all()
+    homes = Home.query.all()
+    rooms = RoomDetail.query.all()
+    return render_template('admin/dashBoard.html', users=users, posts=posts, homes=homes, rooms=rooms, user=User, post=Post, home=Home, reportedPosts=ReportPost, reportedHomes=ReportHome, reportedUsers=ReportUser)
 
 
 def view_request_register():
