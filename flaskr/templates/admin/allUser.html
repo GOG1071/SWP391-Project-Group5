@@ -129,7 +129,7 @@
                                             <th>Email</th>
                                             <th>role</th>
                                             <th>Banned</th>
-                                            <th></th>
+                                            <th>How about this shit?</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -142,7 +142,25 @@
                                             <td>{% if user.banned == 0%}
                                                 No {% else %} Yes {% endif %}
                                             </td>
-                                            <td></td>
+                                            <td>
+                                                {% if user.banned == 0%}
+                                                <form onSubmit="if(!confirm('Ban this shit?')){return false;}"
+                                                    action="./ban_user" method="POST">
+                                                    <input type="text" value="{{user.id}}" name="id" hidden>
+                                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                                    <button class="btn btn-danger" type="submit"><i
+                                                            class="bi bi-lock-fill"></i> Ban </button>
+                                                </form>
+                                                {% else %}
+                                                <form onSubmit="if(!confirm('Unban this shit?')){return false;}"
+                                                    action="./unban_user2" method="POST">
+                                                    <input type="text" value="{{user.id}}" name="id" hidden>
+                                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                                    <button class="btn btn-success" type="submit"><i
+                                                            class="bi bi-unlock-fill"></i> Unban </button>
+                                                </form>
+                                                {% endif %}
+                                            </td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>

@@ -135,6 +135,16 @@ def banned_Users():
     return render_template('admin/bannedUsers.html', users=users)
 
 
+def ban_user():
+    user_id = request.form.get("id")
+    user = User.query.filter_by(id=user_id).first()
+    if user:
+        user.banned = 1
+        db.session.commit()
+        return redirect(url_for('admin_router.all_Users'))
+    return redirect(url_for('admin_router.all_Users'))
+
+
 def unban_user():
     user_id = request.form.get("id")
     user = User.query.filter_by(id=user_id).first()
@@ -143,3 +153,13 @@ def unban_user():
         db.session.commit()
         return redirect(url_for('admin_router.banned_Users'))
     return redirect(url_for('admin_router.banned_Users'))
+
+
+def unban_user2():
+    user_id = request.form.get("id")
+    user = User.query.filter_by(id=user_id).first()
+    if user:
+        user.banned = 0
+        db.session.commit()
+        return redirect(url_for('admin_router.all_Users'))
+    return redirect(url_for('admin_router.all_Users'))
