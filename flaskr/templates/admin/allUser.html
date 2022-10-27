@@ -24,6 +24,8 @@
     <link href="../../static/css/admin/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
 
 </head>
 
@@ -49,7 +51,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{url_for('admin_router.dashBoard')}}">
                     <i class="bi bi-clipboard-data"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -71,19 +73,19 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{url_for('admin_router.all_Posts')}}">All posts</a>
-                        <a class="collapse-item" href="{{url_for('admin_router.reportedPosts')}}">Reported posts</a>
+                        <a class="collapse-item" href="{{url_for('admin_router.reportedPosts')}}">Reported
+                            posts</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers"
+                    aria-expanded="true" aria-controls="collapseUsers">
                     <i class="bi bi-people-fill"></i>
                     <span>Users</span>
                 </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+                <div id="collapseUsers" class="collapse show" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item active" href="{{url_for('admin_router.all_Users')}}">All users</a>
@@ -92,13 +94,25 @@
                 </div>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHomes"
+                    aria-expanded="true" aria-controls="collapseHomes">
+                    <i class="bi bi-house-heart-fill"></i>
+                    <span>Homes</span>
+                </a>
+                <div id="collapseHomes" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{url_for('admin_router.all_Homes')}}">All homes</a>
+                        <a class="collapse-item" href="{{url_for('admin_router.reportedHomes')}}">Reported
+                            homes</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
+
 
         </ul>
         <!-- End of Sidebar -->
@@ -136,7 +150,8 @@
                                         {% for user in users %}
                                         <tr>
                                             <td>{{user.id}}</td>
-                                            <td>{{user.username}}</td>
+                                            <td><a href="{{ url_for('user_router.profile', id = user.id) }}"
+                                                    title="">{{user.username}}</a></td>
                                             <td>{{user.email}}</td>
                                             <td>{{user.role}}</td>
                                             <td>{% if user.banned == 0%}

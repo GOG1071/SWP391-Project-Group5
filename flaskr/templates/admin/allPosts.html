@@ -24,6 +24,8 @@
     <link href="../../static/css/admin/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
 
 </head>
 
@@ -49,7 +51,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{url_for('admin_router.dashBoard')}}" data-target="#deletePost">
                     <i class="bi bi-clipboard-data"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -72,19 +74,19 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item active" href="{{url_for('admin_router.all_Posts')}}">All posts</a>
-                        <a class="collapse-item" href="{{url_for('admin_router.reportedPosts')}}">Reported posts</a>
+                        <a class="collapse-item" href="{{url_for('admin_router.reportedPosts')}}">Reported
+                            posts</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers"
+                    aria-expanded="true" aria-controls="collapseUsers">
                     <i class="bi bi-people-fill"></i>
                     <span>Users</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapseUsers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{url_for('admin_router.all_Users')}}">All users</a>
                         <a class="collapse-item" href="{{url_for('admin_router.banned_Users')}}">Banner users</a>
@@ -92,20 +94,26 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Tables -->
-            <li class="nav-item active">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHomes"
+                    aria-expanded="true" aria-controls="collapseHomes">
+                    <i class="bi bi-house-heart-fill"></i>
+                    <span>Homes</span>
+                </a>
+                <div id="collapseHomes" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{url_for('admin_router.all_Homes')}}">All homes</a>
+                        <a class="collapse-item" href="{{url_for('admin_router.reportedHomes')}}">Reported
+                            homes</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
+
 
         </ul>
         <!-- End of Sidebar -->
@@ -135,7 +143,7 @@
                                             <th>Timestamp</th>
                                             <th>Post</th>
                                             <th>Content</th>
-                                            <th></th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -146,7 +154,16 @@
                                             <td><a href="/post/post_detail?id={{post.id}}" title="">see post</a>
                                             </td>
                                             <td>{{post.content}}</td>
-                                            <td></td>
+                                            <td>
+                                                <form onSubmit="if(!confirm('Delete this report?')){return false;}"
+                                                    action="./delete_post" method="POST">
+                                                    <input type="text" value="{{post.id}}" name="id" hidden>
+                                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                                    <button class="btn btn-danger" type="submit"><i
+                                                            class="bi bi-trash-fill"></i>
+                                                        Delete </button>
+                                                </form>
+                                            </td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -183,24 +200,24 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Delete this shit?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Select "Delete" below if you are ready to delete this post.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-primary" href="login.html">Logout</a>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Bootstrap core JavaScript-->
     <script src="../../static/css/admin/jquery.min.js"></script>

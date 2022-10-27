@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>ReportedPost</title>
+    <title>Reported Home</title>
 
     <!-- Custom fonts for this template -->
     <link href="../../static/css/admin/all.min.css" rel="stylesheet" type="text/css">
@@ -70,11 +70,10 @@
                     <i class="bi bi-file-earmark-post"></i>
                     <span>Posts</span>
                 </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
-                    data-parent="#accordionSidebar">
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{url_for('admin_router.all_Posts')}}">All posts</a>
-                        <a class="collapse-item active" href="{{url_for('admin_router.reportedPosts')}}">Reported
+                        <a class="collapse-item" href="{{url_for('admin_router.reportedPosts')}}">Reported
                             posts</a>
                     </div>
                 </div>
@@ -100,14 +99,16 @@
                     <i class="bi bi-house-heart-fill"></i>
                     <span>Homes</span>
                 </a>
-                <div id="collapseHomes" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapseHomes" class="collapse show" aria-labelledby="headingPages"
+                    data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{url_for('admin_router.all_Homes')}}">All homes</a>
+                        <a class="collapse-item active" href="{{url_for('admin_router.all_Homes')}}">All homes</a>
                         <a class="collapse-item" href="{{url_for('admin_router.reportedHomes')}}">Reported
                             homes</a>
                     </div>
                 </div>
             </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -129,7 +130,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Reported Posts</h1>
+                    <h1 class="h3 mb-2 text-gray-800">All User</h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -138,41 +139,32 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Reported by</th>
-                                            <th>Reason</th>
-                                            <th>Posts</th>
-                                            <th>Post by</th>
-                                            <th>Date report</th>
+                                            <th>Home name</th>
+                                            <th>Description</th>
+                                            <th>Home owner</th>
+                                            <th>Address</th>
+                                            <th>Total rooms</th>
+                                            <th>Avaiable rooms</th>
                                             <th>Action</th>
-                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for post in posts.items %}
+                                        {% for home in homes %}
                                         <tr>
-                                            <td>{{post.user.username}}</td>
-                                            <td>{{post.reason}}</td>
-                                            <td><a href="/post/post_detail?id={{post.post.id}}" title="">see post</a>
-                                            </td>
-                                            <td>{{post.post.author.username}}</td>
-                                            <td>{{post.timestamp}}</td>
+                                            <td><a href="/home/view_room_detail?home_id={{home.id}}"
+                                                    title="">{{home.name}}</a></td>
+                                            <td>{{home.description}}</td>
+                                            <td>{{home.owner.username}}</td>
+                                            <td>{{home.address}}</td>
+                                            <td>{{home.total_rooms}}</td>
+                                            <td>{{home.available_rooms}}</td>
                                             <td>
-                                                <form onSubmit="if(!confirm('Refuse this report?')){return false;}"
-                                                    action="./delete_report" method="POST">
-                                                    <input type="text" value="{{post.id}}" name="id" hidden>
+                                                <form onSubmit="if(!confirm('DELETE THIS HOME?')){return false;}"
+                                                    action="./delete_home" method="POST">
+                                                    <input type="text" value="{{home.id}}" name="id" hidden>
                                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                                     <button class="btn btn-danger" type="submit"><i
-                                                            class="bi bi-file-earmark-excel-fill"></i> Refuse </button>
-                                                </form>
-                                            </td>
-                                            <td>
-                                                <form
-                                                    onSubmit="if(!confirm('Accept this report and delete this post?')){return false;}"
-                                                    action="./accept_report" method="POST">
-                                                    <input type="text" value="{{post.id}}" name="id" hidden>
-                                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                                    <button class="btn btn-success" type="submit"><i
-                                                            class="bi bi-file-earmark-check-fill"></i> Accept </button>
+                                                            class="bi bi-trash-fill"></i> DELETE </button>
                                                 </form>
                                             </td>
                                         </tr>

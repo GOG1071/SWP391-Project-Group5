@@ -9,6 +9,12 @@ from models.post import Post
 admin_router = Blueprint('admin_router', __name__)
 
 
+@admin_router.route("/dashBoard")
+@admin_required
+def dashBoard():
+    return controllers.admin.dashBoard()
+
+
 @admin_router.route('/view_request_register', methods=['POST', 'GET'])
 def view_request_register():
     return controllers.admin.view_request_register()
@@ -50,6 +56,19 @@ def view_feedback():
     return controllers.admin.view_feedback()
 
 
+@admin_router.route("/all_Homes")
+@admin_required
+def all_Homes():
+    return controllers.admin.all_Homes()
+
+
+@admin_router.route('/delete_home', methods=["POST", "GET"])
+@admin_required
+def delete_home():
+    if request.method == "POST":
+        return controllers.admin.delete_home()
+
+
 @admin_router.route("/reportedHomes")
 @admin_required
 def reportedHomes():
@@ -74,6 +93,13 @@ def accept_home_report():
 @admin_required
 def all_Posts():
     return controllers.admin.all_Posts()
+
+
+@admin_router.route("/delete_post", methods=["POST", "GET"])
+@admin_required
+def deleta_post():
+    if request.method == "POST":
+        return controllers.admin.delete_post()
 
 
 @admin_router.route("/all_Users")
