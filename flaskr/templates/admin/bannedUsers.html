@@ -147,7 +147,15 @@
                                             <td>{{user.email}}</td>
                                             <td>{{user.role}}</td>
                                             <td></td>
-                                            <td></td>
+                                            <td>
+                                                <form onSubmit="if(!confirm('Unban this shit?')){return false;}"
+                                                    action="./unban_user" method="POST">
+                                                    <input type="text" value="{{user.id}}" name="id" hidden>
+                                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                                    <button class="btn btn-success" type="submit"><i
+                                                            class="bi bi-unlock-fill"></i> Unban </button>
+                                                </form>
+                                            </td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>

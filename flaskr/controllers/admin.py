@@ -133,3 +133,13 @@ def all_Users():
 def banned_Users():
     users = User.query.filter_by(banned=1).all()
     return render_template('admin/bannedUsers.html', users=users)
+
+
+def unban_user():
+    user_id = request.form.get("id")
+    user = User.query.filter_by(id=user_id).first()
+    if user:
+        user.banned = 0
+        db.session.commit()
+        return redirect(url_for('admin_router.banned_Users'))
+    return redirect(url_for('admin_router.banned_Users'))
