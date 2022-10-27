@@ -183,16 +183,16 @@ def bookmark(userid):
     return render_template("user/bookmark.html")
 
 
-def list_user(userid):
-    # get all the user with userid
+def chat_all(userid):
+    #get all the user with userid
     user = User.query.filter(User.id != userid).all()
-    return render_template("user/list_user.html", list_user=user)
+    return render_template("user/chat_all.html", list_user = user)
 
-
-def chat(userid):
-    # get all the user with userid
+def message_user(userid):
+    #get all the user with userid
     user = User.query.filter(User.id == userid).all()
-    return render_template("user/chat.html", list_user=user)
+    return render_template("user/message_user.html", list_user = user)
+
 
 
 def report(username):
