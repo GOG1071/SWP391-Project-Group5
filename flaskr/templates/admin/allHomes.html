@@ -61,6 +61,7 @@
                 Addons
             </div>
 
+            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
@@ -70,18 +71,19 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{url_for('admin_router.all_Posts')}}">All posts</a>
-                        <a class="collapse-item" href="{{url_for('admin_router.reportedPosts')}}">Reported posts</a>
+                        <a class="collapse-item" href="{{url_for('admin_router.reportedPosts')}}">Reported
+                            posts</a>
                     </div>
                 </div>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers"
+                    aria-expanded="true" aria-controls="collapseUsers">
                     <i class="bi bi-people-fill"></i>
                     <span>Users</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapseUsers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{url_for('admin_router.all_Users')}}">All users</a>
                         <a class="collapse-item" href="{{url_for('admin_router.banned_Users')}}">Banner users</a>
@@ -90,16 +92,16 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="bi bi-people-fill"></i>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHomes"
+                    aria-expanded="true" aria-controls="collapseHomes">
+                    <i class="bi bi-house-heart-fill"></i>
                     <span>Homes</span>
                 </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+                <div id="collapseHomes" class="collapse show" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{url_for('admin_router.all_Homes')}}">All homes</a>
-                        <a class="collapse-item active" href="{{url_for('admin_router.reportedHomes')}}">Reported
+                        <a class="collapse-item active" href="{{url_for('admin_router.all_Homes')}}">All homes</a>
+                        <a class="collapse-item" href="{{url_for('admin_router.reportedHomes')}}">Reported
                             homes</a>
                     </div>
                 </div>
@@ -142,37 +144,28 @@
                                             <th>Description</th>
                                             <th>Home owner</th>
                                             <th>Address</th>
-                                            <th>Reported by</th>
+                                            <th>Total rooms</th>
+                                            <th>Avaiable rooms</th>
                                             <th>Action</th>
-                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for report in reportedHomes %}
+                                        {% for home in homes %}
                                         <tr>
-                                            <td><a href="/home/view_room_detail?home_id={{report.home.id}}"
-                                                    title="">{{report.home.name}}</a></td>
-                                            <td>{{report.home.description}}</td>
-                                            <td>{{report.home.owner.username}}</td>
-                                            <td>{{report.home.address}}</td>
-                                            <td>{{report.user.username}}</td>
+                                            <td><a href="/home/view_room_detail?home_id={{home.id}}"
+                                                    title="">{{home.name}}</a></td>
+                                            <td>{{home.description}}</td>
+                                            <td>{{home.owner.username}}</td>
+                                            <td>{{home.address}}</td>
+                                            <td>{{home.total_rooms}}</td>
+                                            <td>{{home.available_rooms}}</td>
                                             <td>
-                                                <form
-                                                    onSubmit="if(!confirm('Accept this report and delete this home?')){return false;}"
-                                                    action="./accept_home_report" method="POST">
-                                                    <input type="text" value="{{report.id}}" name="id" hidden>
-                                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                                    <button class="btn btn-success" type="submit"><i
-                                                            class="fa fa-pencil"></i> Accept </button>
-                                                </form>
-                                            </td>
-                                            <td>
-                                                <form onSubmit="if(!confirm('Refuse this report?')){return false;}"
-                                                    action="./delete_home_report" method="POST">
-                                                    <input type="text" value="{{report.id}}" name="id" hidden>
+                                                <form onSubmit="if(!confirm('DELETE THIS HOME?')){return false;}"
+                                                    action="./delete_home" method="POST">
+                                                    <input type="text" value="{{home.id}}" name="id" hidden>
                                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                                     <button class="btn btn-danger" type="submit"><i
-                                                            class="fa fa-trash"></i> Refuse </button>
+                                                            class="fa fa-pencil"></i> DELETE </button>
                                                 </form>
                                             </td>
                                         </tr>

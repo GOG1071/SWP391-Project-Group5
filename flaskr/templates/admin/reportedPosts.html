@@ -80,12 +80,12 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers"
+                    aria-expanded="true" aria-controls="collapseUsers">
                     <i class="bi bi-people-fill"></i>
                     <span>Users</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapseUsers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{url_for('admin_router.all_Users')}}">All users</a>
                         <a class="collapse-item" href="{{url_for('admin_router.banned_Users')}}">Banner users</a>
@@ -93,11 +93,19 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Tables -->
-            <li class="nav-item active">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHomes"
+                    aria-expanded="true" aria-controls="collapseHomes">
+                    <i class="bi bi-house-heart-fill"></i>
+                    <span>Homes</span>
+                </a>
+                <div id="collapseHomes" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{url_for('admin_router.all_Homes')}}">All homes</a>
+                        <a class="collapse-item" href="{{url_for('admin_router.reportedHomes')}}">Reported
+                            homes</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->

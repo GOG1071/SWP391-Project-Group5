@@ -50,6 +50,19 @@ def view_feedback():
     return controllers.admin.view_feedback()
 
 
+@admin_router.route("/all_Homes")
+@admin_required
+def all_Homes():
+    return controllers.admin.all_Homes()
+
+
+@admin_router.route('/delete_home', methods=["POST", "GET"])
+@admin_required
+def delete_home():
+    if request.method == "POST":
+        return controllers.admin.delete_home()
+
+
 @admin_router.route("/reportedHomes")
 @admin_required
 def reportedHomes():
