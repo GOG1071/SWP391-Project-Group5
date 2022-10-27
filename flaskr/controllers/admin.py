@@ -77,11 +77,8 @@ def view_feedback():
 
 
 def reported_Homes():
-    page = request.args.get('page', 1, type=int)
-    number = ReportHome.query.count()
-    homes = ReportHome.query.order_by(
-        ReportHome.timestamp.desc()).paginate(page=page, per_page=5)
-    return render_template('admin/reported_home.html', homes=homes, counter=number)
+    reportedHomes = ReportHome.query.all()
+    return render_template('admin/reportedHomes.html', reportedHomes=reportedHomes)
 
 
 def delete_home_report():
