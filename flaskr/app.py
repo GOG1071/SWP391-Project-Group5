@@ -9,6 +9,7 @@ from routers.user import user_router
 from routers.post import post_router
 from routers.home import home_router
 from routers.admin import admin_router
+from routers.chat import chat_router
 import cloudinary
 from flask_wtf.csrf import CSRFProtect
 
@@ -48,6 +49,7 @@ app.register_blueprint(user_router, url_prefix="/user")
 app.register_blueprint(post_router, url_prefix="/post")
 app.register_blueprint(home_router,url_prefix="/home")
 app.register_blueprint(admin_router,url_prefix="/admin")
+app.register_blueprint(chat_router,url_prefix="/chat")
 
 @app.route("/")
 def index():

@@ -71,10 +71,10 @@ def bookmark():
 def chat_all():
     return controllers.user.chat_all(session['id'])
 
-@user_router.route("/message_user")
+@user_router.route("/message_user/<int:userid>")
 @login_required
-def message_user():
-    return controllers.user.message_user(session['id'])
+def message_user(userid):
+    return controllers.user.message_user(userid)
 
 @user_router.route('/report/<string:username>',methods=["GET","POST"])
 @login_required

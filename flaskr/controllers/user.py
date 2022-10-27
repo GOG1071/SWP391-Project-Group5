@@ -162,17 +162,6 @@ def bookmark(userid):
     flash("You don't have any bookmark yet!","info")
     return render_template("user/bookmark.html")
 
-def chat_all(userid):
-    #get all the user with userid
-    user = User.query.filter(User.id != userid).all()
-    return render_template("user/chat_all.html", list_user = user)
-
-def message_user(userid):
-    #get all the user with userid
-    user = User.query.filter(User.id == userid).all()
-    return render_template("user/message_user.html", list_user = user)
-
-
 def report(username):
     user = User.query.filter(User.username == username).first()
     if user:
@@ -196,5 +185,4 @@ def add_feedback(id, content):
     db.session.add(feedback)
     db.session.commit()
     return redirect(url_for('user_router.home'))
-
 
