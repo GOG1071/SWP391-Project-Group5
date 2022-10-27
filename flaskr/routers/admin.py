@@ -86,3 +86,10 @@ def all_Users():
 @admin_required
 def banned_Users():
     return controllers.admin.banned_Users()
+
+
+@admin_router.route('/unban_user', methods=["POST", "GET"])
+@admin_required
+def unban_user():
+    if request.method == "POST":
+        return controllers.admin.unban_user()
