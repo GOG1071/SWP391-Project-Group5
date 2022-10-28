@@ -1,5 +1,8 @@
 import random
 import string
+
+from click import command
+
 from models.home import RoomDetail, RoomImage
 
 from models.user import Bookmark, RoomRequest
@@ -32,6 +35,9 @@ def view_request_register():
 def allow_access():
     id = request.args.get("id")
     request_register = HomeOwnerRequest.query.filter_by(id=id).first()
+    home_user = User.query.filter_by(id = request_register.user_id).first()
+    home_user.banned = False
+    db.session.commit()
     request_register.status = True
     db.session.commit()
     return redirect(url_for("admin_router.view_request_register"))
