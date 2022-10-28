@@ -15,10 +15,7 @@ from datetime import datetime
 def home():
     if "username" in session:
         user = session['username']
-        if user == "admin":
-            return render_template("admin/adminHome.html")
-        else:
-            return render_template("user/home.html", username=user, isLogin=True)
+        return render_template("user/home.html", username=user, isLogin=True)
     else:
         return render_template("user/home.html", stringName="you are not login", isLogin=False)
 
