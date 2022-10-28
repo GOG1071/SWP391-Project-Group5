@@ -28,9 +28,15 @@
     <!-- Header-->
     <header class="masthead d-flex align-items-center">
         <div class="container px-4 px-lg-5 text-center">
+            {% if session.get('role') == 'ADMIN' %}
+            <h1 class="mb-1">Sweet home Hola</h1>
+            <h3 class="mb-5"><em>ADMIN PAGE </em></h3>
+            <a class="btn btn-primary btn-xl" href="{{url_for('admin_router.dashBoard')}}">Admin Manager</a>
+            {% else %}
             <h1 class="mb-1">Sweet home Hola</h1>
             <h3 class="mb-5"><em>A place for your stay request</em></h3>
             <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
+            {% endif %}
         </div>
     </header>
     <!-- About-->

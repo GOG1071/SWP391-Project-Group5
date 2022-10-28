@@ -149,7 +149,8 @@
                                     <tbody>
                                         {% for post in posts %}
                                         <tr>
-                                            <td>{{post.author.username}}</td>
+                                            <td><a href="{{ url_for('user_router.profile', id = post.author.id) }}"
+                                                title="">{{post.author.username}}</a></td>
                                             <td>{{post.timestamp}}</td>
                                             <td><a href="/post/post_detail?id={{post.id}}" title="">see post</a>
                                             </td>

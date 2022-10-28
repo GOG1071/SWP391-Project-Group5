@@ -155,9 +155,11 @@
                                             <td><a href="/home/view_room_detail?home_id={{report.home.id}}"
                                                     title="">{{report.home.name}}</a></td>
                                             <td>{{report.home.description}}</td>
-                                            <td>{{report.home.owner.username}}</td>
+                                            <td><a href="{{ url_for('user_router.profile', id = report.home.owner.id) }}"
+                                                title="">{{report.home.owner.username}}</a></td>
                                             <td>{{report.home.address}}</td>
-                                            <td>{{report.user.username}}</td>
+                                            <td><a href="{{ url_for('user_router.profile', id = report.user.id) }}"
+                                                title="">{{report.user.username}}</a></td>
                                             <td>{{report.reason}}</td>
                                             <td>
                                                 <form
