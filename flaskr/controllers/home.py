@@ -1,7 +1,5 @@
 from datetime import datetime
 from email import message
-
-
 from models.report import ReportHome
 from models.home import Home
 from models.home import RoomDetail

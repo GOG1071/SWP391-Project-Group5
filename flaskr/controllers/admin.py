@@ -1,10 +1,6 @@
 import random
 import string
-
-from click import command
-
 from models.home import RoomDetail, RoomImage
-
 from models.user import Bookmark, RoomRequest
 from models.user import UserRole, User, HomeOwnerRequest, WebsiteFeedback
 from models.model import db
