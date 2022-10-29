@@ -33,10 +33,10 @@
            
             <br>
             <label for="num_room" class="text-capitalize"> Total room:</label> 
-           <input type="number" name="num_room"  class="form-control" style=" background-color: #D9D9D9;" required>
+           <input type="number" name="num_room" id="total_room" class="form-control" style=" background-color: #D9D9D9;" required>
             <br>
             <label for="reason" class="text-capitalize"> available room:</label> 
-           <input type="number" name="room_no" class="form-control" style=" background-color: #D9D9D9;" required>
+           <input type="number" name="room_no" id="available_room" class="form-control" style=" background-color: #D9D9D9;" oninput="comparation()" required>
             <br>
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
@@ -48,6 +48,17 @@
         </form>
         </div>
     </div>
+
+    <script>
+        function comparation()
+        {
+            var total_room = document.getElementById("total_room").value;
+            var available_room = document.getElementById("available_room").value;
+            if(available_room > total_room)  document.getElementById("available_room").value = total_room;
+        }
+        
+
+    </script>
     
 </body>
 </html>

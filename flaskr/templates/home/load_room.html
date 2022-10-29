@@ -53,14 +53,17 @@
           {%endfor%}
         </tbody>
       </table>
-      <div>
-        <a
-          href="{{url_for('home_router.add_room',home_id = home_id)}}"
-          style="padding-right: 10px"
-        >
-          <button class="btn btn-primary btn-lg">Add New Room</button>
-        </a>
-
+      <div style="margin-bottom: 50px;">
+        {%if room_home >= total_room: %}
+          <h1> The room in your home have been max number </h1>
+        {%else:%}
+          <a
+            href="{{url_for('home_router.add_room',home_id = home_id)}}"
+            style="padding-right: 10px"
+          >
+            <button class="btn btn-primary btn-lg">Add New Room</button>
+          </a>
+        {%endif%}
         <a href="{{url_for('home_router.load_home')}}">
           <button class="btn btn-warning btn-lg">
             Back to Home Management
