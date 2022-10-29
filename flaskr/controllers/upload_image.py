@@ -11,6 +11,9 @@ cloudinary.config(cloud_name = os.getenv('CLOUDINARY_CLOUD_NAME'),
     api_secret=os.getenv('CLOUDINARY_API_SECRET'))
 
 def upload(file):
-    response = cloudinary.uploader.upload(file)
-    return response
+    try:
+        response = cloudinary.uploader.upload(file)
+        return response
+    except Exception as e:
+        pass
 

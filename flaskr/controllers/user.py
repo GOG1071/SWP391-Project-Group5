@@ -27,6 +27,7 @@ def login():
         User.username == user_name, User.password == pass_word).first()
     if not query:
         flash("Your account doesn't exist", "info")
+        return render_template("user/login.html")
     if query.banned == True:
         flash("You are banned!", "info")
         return render_template("user/login.html")
