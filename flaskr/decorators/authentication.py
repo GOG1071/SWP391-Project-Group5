@@ -6,7 +6,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if "username" in session:
-            if session['banned'] == False:
+            if session.get('banned') == False:
                 return f(*args, **kwargs)
             else:
                 return render_template("exceptions/exception.html", error=403, message="You have been banned"), 403
@@ -18,7 +18,7 @@ def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         login_required(f)
-        if session["role"] != UserRole.ADMIN:
+        if session.get("role") != UserRole.ADMIN:
             return render_template("exceptions/exception.html", error=403, message="Admin role required"), 403
         return f(*args, **kwargs)
     return decorated_function
@@ -27,7 +27,7 @@ def seller_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         login_required(f)
-        if session["role"] != UserRole.SELLER:
+        if session.get("role") != UserRole.SELLER:
             return render_template("exceptions/exception.html", error=403, message="Seller role required"), 403
         return f(*args, **kwargs)
     return decorated_function
