@@ -50,14 +50,14 @@ def remove_home():
 def load_room():
     home_id = request.args.get("home_id")
     list_room = RoomDetail.query.filter_by(home_id=home_id)
+    home = Home.query.filter_by(id = home_id).first()
     list_room_img = []
     for i in list_room:
         room_img = RoomImage.query.filter_by(room_id=i.id)
         list_room_img += room_img
     if list_room_img:
-        return render_template("home/load_room.html", list_room=list_room, list_room_img=list_room_img, home_id=home_id)
-
-    return render_template("home/load_room.html", list_room=list_room, home_id=home_id)
+        return render_template("home/load_room.html", list_room=list_room, list_room_img=list_room_img, home_id=home_id, total_room = home.total_rooms,room_home = list_room.count())
+    return render_template("home/load_room.html", list_room=list_room, home_id=home_id,total_room = home.total_rooms,room_home = list_room.count())
 
 def remove_room():
     room_id = request.args.get("room_id")
