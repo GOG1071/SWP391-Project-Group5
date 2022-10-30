@@ -15,7 +15,10 @@
 	{% include 'components/navbar.html' %}
 	<div class="container">
 		<div style="margin-top: 30px">
-			<h1 class="text-center" style="margin-bottom: 30px"></h1>
+			<h1 class="text-center" style="margin-bottom: 30px">Detail of rooms type in the home</h1>
+			{% if username != session['username']%}
+				<a href="/home/report/{{home_id}}"><button>Report this home</button></a>
+			{% endif %}
 		</div>
 		<table class="table table-bordered table-hover table-dark">
 			<thead>

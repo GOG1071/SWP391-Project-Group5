@@ -48,12 +48,18 @@
 				</tr>
 				<tr>
 					<td>Image</td>
-					<td>{%for image in list_room1.image_link %}
-						<img src="{{image.image_link}}" class="img-fluid" width="30%" height="100%">
+					<td>
+						{%for room in list_room1 %}
+							{%for image in room.image_link %}
+								<img src="{{image.image_link}}" class="img-fluid" width="30%" height="80%">
+							{%endfor%}
 						{%endfor%}
 					</td>
-					<td>{%for image in list_room2.image_link %}
-						<img src="{{image.image_link}}" class="img-fluid" width="30%" height="100%">
+					<td>
+						{%for room in list_room2 %}
+							{%for image in room.image_link %}
+								<img src="{{image.image_link}}" class="img-fluid" width="30%" height="80%">
+							{%endfor%}
 						{%endfor%}
 					</td>
 				</tr>

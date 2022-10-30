@@ -132,10 +132,16 @@ def search(home_name):
 
 
 def home_detail(home_id):
+    user = User.query.filter_by(username = session['username']).first()
+    home = Home.query.filter_by(id=home_id).first()
+    if home.user_id == user.id:
+        username = user.username
+    else:
+        username = User.query.filter_by(id=home.user_id).first().username
     list_room = RoomDetail.query.filter_by(home_id=home_id).all()
     for room in list_room:
         room.image_link = RoomImage.query.filter_by(room_id=room.id).all()
-    return render_template("home/home_detail.html", list_room=list_room)
+    return render_template("home/home_detail.html", list_room=list_room, home_id=home_id, username=username)
 
 def compare(home1, home2):
     home1 = Home.query.filter_by(id=home1).first()
