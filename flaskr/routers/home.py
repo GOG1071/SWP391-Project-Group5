@@ -61,16 +61,13 @@ def home_detail():
 
 @home_router.route('/report/<int:home_id>', methods=["GET", "POST"])
 @login_required
-def report(home_id, home_name):
-    if request.method == "POST":
-        return controllers.home.report(
-            id,
-            request.form.get("reason"),
-            session.get("user_id"),
-        )
-    return render_template("report.html", home_id=home_id, home_name=home_name, reasons=reasons)
+def report(home_id):
+    return controllers.home.report(home_id=home_id)
 
-
+@home_router.route('/do_report', methods=["POST"])
+@login_required
+def do_report():
+    return controllers.home.do_report(request.form.get('home_id'),request.form.get('user_id'), request.form.get('reason'))
 @home_router.route('/search', methods=["GET", "POST"])
 @login_required
 def search():
