@@ -112,15 +112,16 @@ def report(home_id):
     if home:
         user = User.query.filter(User.id == home.user_id).first()
         if user:
-            return render_template("home/report_home.html", home_id=home_id)
+            return render_template("home/report.html", home_id=home_id)
         else:
-            render_template("home/report_home.html", message="Home not found")
+            render_template("home/report.html", message="Home not found")
     else:
-        return render_template("home/report_home.html", message="Home not found")
+        return render_template("home/report.html", message="Home not found")
 
 
 def do_report(reported_home_id, reporter_id, reason):
     home = Home.query.filter(Home.id == reported_home_id).first()
+    print(reported_home_id)
     if home:
         report = ReportHome(\
             home_id=reported_home_id,\
@@ -129,9 +130,9 @@ def do_report(reported_home_id, reporter_id, reason):
             reason=reason)
         db.session.add(report)
         db.session.commit()
-        return render_template("home/report_home.html", message="Report successfully!")
+        return render_template("home/report.html", message="Report successfully!")
     else:
-        return render_template("home/report_home.html", message="User not found")
+        return render_template("home/report.html", message="Home not found")
 
 
 def list_home():

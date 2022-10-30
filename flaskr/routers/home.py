@@ -67,7 +67,7 @@ def report(home_id):
 @home_router.route('/do_report', methods=["POST"])
 @login_required
 def do_report():
-    return controllers.home.do_report(request.form.get('home_id'),request.form.get('user_id'), request.form.get('reason'))
+    return controllers.home.do_report(request.form.get("home_name"))
 @home_router.route('/search', methods=["GET", "POST"])
 @login_required
 def search():
