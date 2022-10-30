@@ -121,7 +121,7 @@ def report(home_id):
 
 def do_report(reported_home_id, reporter_id, reason):
     home = Home.query.filter(Home.id == reported_home_id).first()
-    print(reported_home_id)
+    print(f"{reason=}")
     if home:
         report = ReportHome(\
             home_id=reported_home_id,\
