@@ -1,10 +1,6 @@
 import random
 import string
-
-from click import command
-
 from models.home import RoomDetail, RoomImage
-
 from models.user import Bookmark, RoomRequest
 from models.user import UserRole, User, HomeOwnerRequest, WebsiteFeedback
 from models.model import db
@@ -40,6 +36,8 @@ def allow_access():
     db.session.commit()
     request_register.status = True
     db.session.commit()
+    msg = Message('Your request has been accepted. Your password is: '+ home_user.password , sender='sweethomehola@outlook.com', recipients=[home_user.email])
+    mail.send(msg)
     return redirect(url_for("admin_router.view_request_register"))
 
 

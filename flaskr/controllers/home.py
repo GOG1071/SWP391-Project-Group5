@@ -1,7 +1,5 @@
 from datetime import datetime
 from email import message
-
-
 from models.report import ReportHome
 from models.home import Home
 from models.home import RoomDetail
@@ -33,9 +31,7 @@ def add_home():
 
 
 def load_home():
-    
     user_id = session['id']
-    
     list_home = Home.query.filter_by(user_id=user_id)
     return render_template("home/load_home.html", list_home=list_home)
 
@@ -135,8 +131,26 @@ def search(home_name):
     return render_template("home/search_home.html", list_home=list_home)
 
 
-def view_rooms_detail(home_id):
+def home_detail(home_id):
     list_room = RoomDetail.query.filter_by(home_id=home_id).all()
     for room in list_room:
         room.image_link = RoomImage.query.filter_by(room_id=room.id).all()
-    return render_template("home/room_detail_for_user.html", list_room=list_room)
+    return render_template("home/home_detail.html", list_room=list_room)
+
+def compare(home1, home2):
+    home1 = Home.query.filter_by(id=home1).first()
+    home2 = Home.query.filter_by(id=home2).first()
+    list_room1 = RoomDetail.query.filter_by(home_id=home1.id).all()
+    list_room2 = RoomDetail.query.filter_by(home_id=home2.id).all()
+    for room in list_room1:
+        room.image_link = RoomImage.query.filter_by(room_id=room.id).all()
+    for room in list_room2:
+        room.image_link = RoomImage.query.filter_by(room_id=room.id).all()
+    return render_template("home/compare.html", home1=home1, home2=home2, list_room1=list_room1, list_room2=list_room2)
+
+def home_compare(home_id):
+    home_list = Home.query.all()
+    for home in home_list:
+        if home.id == int(home_id):
+            home_list.remove(home)
+    return render_template("home/home_compare.html", home_list=home_list, origin=home_id)

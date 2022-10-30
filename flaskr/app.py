@@ -12,7 +12,7 @@ from routers.admin import admin_router
 from routers.chat import chat_router
 import cloudinary
 from flask_wtf.csrf import CSRFProtect
-
+from exceptions.handle import error_router
 
 #load environment variables
 env_path = Path('.') / '../.env'
@@ -50,6 +50,7 @@ app.register_blueprint(post_router, url_prefix="/post")
 app.register_blueprint(home_router,url_prefix="/home")
 app.register_blueprint(admin_router,url_prefix="/admin")
 app.register_blueprint(chat_router,url_prefix="/chat")
+app.register_blueprint(error_router)
 
 @app.route("/")
 def index():
@@ -60,6 +61,5 @@ def apply_caching(response):
     response.headers["X-Frame-Options"] = "SAMEORIGIN"
     response.headers["HTTP-HEADER"] = "VALUE"
     return response
-
 
 app.run("0.0.0.0", port=os.environ["port"], debug=True)

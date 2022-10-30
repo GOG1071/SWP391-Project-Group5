@@ -1,7 +1,4 @@
 from datetime import datetime
-from tempfile import template
-
-from sqlalchemy import null
 from models.post import PostImage
 from models.post import Post
 from models.user import User

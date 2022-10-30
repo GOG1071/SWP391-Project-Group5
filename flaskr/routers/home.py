@@ -7,6 +7,7 @@ home_router = Blueprint('home_router', __name__)
 
 
 @home_router.route('/add_home', methods=["POST", "GET"])
+@seller_required
 def add_home():
     if request.method == "POST":
         return controllers.home.add_home()
@@ -36,6 +37,7 @@ def remove_room():
 
 
 @home_router.route('/add_room', methods=["Get", "POST"])
+@seller_required
 def add_room():
     home_id = request.args.get('home_id')
     if home_id == None:
@@ -44,26 +46,22 @@ def add_room():
         return controllers.home.add_room()
     return render_template("home/add_room.html", home_id=home_id)
 
-
-@home_router.route('/info/<int:id>', methods=["GET"])
-def info(id):
-    return controllers.home.info(id)
-
 @home_router.route('/')
+@login_required
 def list_home():
     return controllers.home.list_home()
 
 
-@home_router.route('/view_room_detail', methods=["GET"])
+@home_router.route('/home_detail', methods=["GET"])
 @login_required
-def view_rooms_detail():
+def home_detail():
     home_id = request.args.get('home_id')
-    return controllers.home.view_rooms_detail(home_id)
+    return controllers.home.home_detail(home_id)
 
 
 @home_router.route('/report/<int:home_id>', methods=["GET", "POST"])
+@login_required
 def report(home_id, home_name):
-
     if request.method == "POST":
         return controllers.home.report(
             id,
@@ -74,18 +72,21 @@ def report(home_id, home_name):
 
 
 @home_router.route('/search', methods=["GET", "POST"])
+@login_required
 def search():
     if request.method == "POST" and request.form.get("home_name") != None:
         return controllers.home.search(request.form.get("home_name"))
     return render_template("home/search_home.html")
 
 
-@home_router.route('/compare', methods=["GET", "POST"])
+@home_router.route('/compare', methods=["GET"])
+@login_required
 def compare():
-    if request.method == "POST":
-        if request.form.get("home1") != None and request.form.get("home2") != None:
-            return controllers.home.compare(request.form.get("home1"), request.form.get("home2"))
-        else:
-            return redirect(url_for('home_router.list_home'))
-    return render_template("compare_home.html")
+    return controllers.home.compare(request.args.get("home1"), request.args.get("home2"))
+
+@home_router.route('/home_compare', methods=["GET"])
+@login_required
+def home_compare():
+    home_id = request.args.get('home_id')
+    return controllers.home.home_compare(home_id)
 

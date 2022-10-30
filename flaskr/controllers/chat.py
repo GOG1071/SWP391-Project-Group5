@@ -1,5 +1,5 @@
+
 from datetime import datetime
-from requests import session
 from models.user import User
 from models.chat import Chat
 from models.chat import Message
