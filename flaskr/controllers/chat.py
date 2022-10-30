@@ -1,9 +1,10 @@
+from datetime import datetime
 from requests import session
 from models.user import User
 from models.chat import Chat
+from models.chat import Message
+from models.model import db
 from flask import render_template,session
-from flask_mail import Message
-
 
 def chat_all(userid):
     #get all the user with userid
@@ -16,6 +17,10 @@ def message_user(receiver_id):
     sender = User.query.filter(User.id == sender_id).first()
     receiver = User.query.filter(User.id == receiver_id).first()
     list_message = get_list_message(sender_id,receiver_id)
+    if(list_message == []):
+        chat = Chat(user_id_1 = sender_id, user_id_2 = receiver_id)
+        db.session.add(chat)
+        db.session.commit()
     return render_template("chat/message_user.html", sender = sender, receiver = receiver, list_message = list_message)
 def get_list_message(sender_id,receiver_id):
     chat = Chat.query.filter(((Chat.user_id_1 == sender_id) & (Chat.user_id_2 == receiver_id))|( (Chat.user_id_2 == sender_id) & (Chat.user_id_1 == receiver_id))).all()
