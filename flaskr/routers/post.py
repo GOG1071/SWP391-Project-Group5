@@ -62,4 +62,9 @@ def search_post():
 #@login_required
 def newfeed():
     return controllers.post.newsfeed()
+@post_router.route("/list_user_post/")
+#@login_required
+def list_user_post():
+    return controllers.post.list_user_post(session['id'])
+
 
