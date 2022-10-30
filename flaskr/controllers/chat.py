@@ -1,4 +1,3 @@
-from requests import session
 from models.user import User
 from models.chat import Chat
 from flask import render_template,session
