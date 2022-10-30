@@ -13,30 +13,34 @@
     <title>Document</title>
   </head>
   <body>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th scope="col" class="text-center">#</th>
-          <th scope="col" class="text-center">Image</th>
-          <th scope="col" class="text-center">Content</th>
-          <th scope="col" class="text-center">TimeStamp</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for post in list_post %}
-        <tr>
-          <td class="text-center">{{post.id}}</td>
-          {%for i in list_image%} {%if i.post_id == post.id%}
-          <td class="text-center">
-            <img src="{{i.image_link}}" style="width: 30%; height: 100px" />
-          </td>
-          {%else%} {%endif%} {%endfor%}
-          <td class="text-center">{{post.content}}</td>
-          <td class="text-center">{{post.timestamp}}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <div class="table-form" style="width: 700px">
+      <h2 class="text-center">List of User's Post</h2>
+      <br />
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" class="text-center">#</th>
+            <th scope="col" class="text-center">Image</th>
+            <th scope="col" class="text-center">Content</th>
+            <th scope="col" class="text-center">TimeStamp</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for post in list_post %}
+          <tr>
+            <td class="text-center">{{post.id}}</td>
+            <td class="text-center">
+              {%for i in list_image%} {%if i.post_id == post.id%}
+              <img src="{{i.image_link}}" style="width: 192px; height: 108px" />
+              {%endif%} {%endfor%}
+            </td>
+            <td class="text-center">{{post.content}}</td>
+            <td class="text-center">{{post.timestamp}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
       integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
