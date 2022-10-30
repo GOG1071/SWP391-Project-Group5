@@ -169,3 +169,10 @@ def newsfeed():
 def postpage_detail():
     post = Post.query.filter_by(id=id).first()
     return render_template('post/postpage_detail.html')
+def list_user_post(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    list_post = Post.query.filter_by(author_id=user_id).all()
+    list_image = []
+    for post in list_post:
+        list_image.append(PostImage.query.filter_by(post_id=post.id).first())
+    return render_template('post/list_user_post.html', user=user, list_post=list_post, list_image=list_image)
