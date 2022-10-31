@@ -107,18 +107,32 @@ def info(id):
     return render_template("home/home_info.html", home=home, owner=user.username, list_room=list_room)
 
 
-def report_home(id, reason, reporter_id):
-    home = Home.query.filter_by(id=id).first()
-    home.reported = True
-    report_home = ReportHome(
-        home_id=id,
-        user_id=reporter_id,
-        timestamp=datetime.now(),
-        reason=reason)
+def report(home_id):
+    home = Home.query.filter(Home.id == home_id).first()
+    if home:
+        user = User.query.filter(User.id == home.user_id).first()
+        if user:
+            return render_template("home/report.html", home_id=home_id)
+        else:
+            render_template("home/report.html", message="Home not found")
+    else:
+        return render_template("home/report.html", message="Home not found")
 
-    db.session.add(report_home)
-    db.session.commit()
-    return redirect(url_for('home_router.info', message="Reported successfully", id=id))
+
+def do_report(reported_home_id, reporter_id, reason):
+    home = Home.query.filter(Home.id == reported_home_id).first()
+    print(f"{reason=}")
+    if home:
+        report = ReportHome(\
+            home_id=reported_home_id,\
+            user_id=reporter_id,\
+            timestamp = datetime.now()  ,\
+            reason=reason)
+        db.session.add(report)
+        db.session.commit()
+        return render_template("home/report.html", message="Report successfully!")
+    else:
+        return render_template("home/report.html", message="Home not found")
 
 
 def list_home():
