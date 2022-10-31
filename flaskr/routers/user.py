@@ -49,10 +49,10 @@ def register_seller():
         return render_template("user/register_seller.html")
 
 
-@user_router.route("/profile/<int:id>", methods=["POST", "GET"])
+@user_router.route("/profile/<string:username>", methods=["POST", "GET"])
 @login_required
-def profile(id):
-    return controllers.user.profile(id)
+def profile(username):
+    return controllers.user.profile(username)
 
 
 @user_router.route("/profile/edit", methods=["POST", "GET"])
@@ -103,4 +103,4 @@ def feedback():
 @user_router.route('/do_report', methods=["POST"])
 @login_required
 def do_report():
-    return controllers.user.do_report(request.form.get("reported_username"), request.form.get("reporter_id"), request.form.get("reason"))
+    return controllers.user.do_report(request.form.get("reported_username"), request.form.get("reporter_user_id"), request.form.get("reason"))
