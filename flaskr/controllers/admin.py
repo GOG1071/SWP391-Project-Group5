@@ -1,4 +1,5 @@
 import random
+import re
 import string
 from models.home import RoomDetail, RoomImage
 from models.user import Bookmark, RoomRequest
@@ -44,17 +45,24 @@ def allow_access():
 
 def reported_Posts():
     page = request.args.get('page', 1, type=int)
-    reported_posts = ReportPost.query.order_by(
-        ReportPost.timestamp.desc()).paginate(page=page, per_page=5)
+    reported_posts = ReportPost.query.all()
     return render_template('admin/reportedPosts.html', posts=reported_posts)
 
 
 def delete_report():
     report_id = request.form.get("id")
     report = ReportPost.query.filter_by(id=report_id).first()
+    email = report.user.email
     if report:
         db.session.delete(report)
         db.session.commit()
+
+        msg = Message('Refuse report',
+                      sender='sweethomehola@outlook.com', recipients=[email])
+        msg.body = "Your report has been refuse by admin \r\n Reason: " + report.reason + \
+            "\r\n Please contact admin for more information"
+        mail.send(msg)
+
         return redirect(url_for('admin_router.reportedPosts'))
     return redirect(url_for('admin_router.reportedPosts'))
 
@@ -62,6 +70,7 @@ def delete_report():
 def accept_report():
     report_id = request.form.get("id")
     report = ReportPost.query.filter_by(id=report_id).first()
+    emailReporter = report.user.email
     if report:
         db.session.delete(report)
         db.session.commit()
@@ -74,9 +83,24 @@ def accept_report():
         db.session.commit()
 
     post = Post.query.filter_by(id=postID).first()
+    email = post.author.email
     if post:
         db.session.delete(post)
         db.session.commit()
+
+        msg = Message('Accept report',
+                      sender='sweethomehola@outlook.com', recipients=[emailReporter])
+        msg.body = "Your report has been accpted by admin \r\n Reason: " + report.reason + \
+            "\r\n Please contact admin for more information"
+        mail.send(msg)
+
+        msg = Message('Delete post',
+                      sender='sweethomehola@outlook.com', recipients=[email])
+        msg.body = "Your post has been delete by admin \r\n Reason: " + report.reason + \
+            "\r\n Reason" + post.content + \
+            "\r\n Please contact admin for more information"
+        mail.send(msg)
+
         return redirect(url_for('admin_router.reportedPosts'))
     return redirect(url_for('admin_router.reportedPosts'))
 
@@ -107,9 +131,16 @@ def delete_home():
             db.session.commit()
 
     home = Home.query.filter_by(id=homeID).first()
+    email = home.owner.email
     if home:
         db.session.delete(home)
         db.session.commit()
+
+        msg = Message('Your home has been deleted by admin',
+                      sender='sweethomehola@outlook.com', recipients=[email])
+        msg.body = "Your post has been deleted by admin  \r\nPlease contact admin for more information"
+        mail.send(msg)
+
         return redirect(url_for('admin_router.all_Homes'))
     return redirect(url_for('admin_router.all_Homes'))
 
@@ -122,7 +153,15 @@ def reported_Homes():
 def delete_home_report():
     report_id = request.form.get("id")
     report = ReportHome.query.filter_by(id=report_id).first()
+    email = report.user.email
     if report:
+
+        msg = Message('Your report has been refuse',
+                      sender='sweethomehola@outlook.com', recipients=[email])
+        msg.body = "Your report has been refused by admin  \r\nHome: " + report.home.name + "\r\nReason: " + \
+            report.reason + "\r\nPlease contact admin for more information"
+        mail.send(msg)
+
         db.session.delete(report)
         db.session.commit()
         return redirect(url_for('admin_router.reportedHomes'))
@@ -132,6 +171,7 @@ def delete_home_report():
 def accept_home_report():
     report_id = request.form.get("id")
     report = ReportHome.query.filter_by(id=report_id).first()
+    emailReporter = report.user.email
     if report:
         db.session.delete(report)
         db.session.commit()
@@ -148,7 +188,21 @@ def accept_home_report():
             db.session.commit()
 
     home = Home.query.filter_by(id=homeID).first()
+    email = home.owner.email
     if home:
+
+        msg = Message('Your report has been accepted',
+                      sender='sweethomehola@outlook.com', recipients=[emailReporter])
+        msg.body = "Your report has been accepted by admin  \r\nHome: " + home.name + " is deleted\r\nReason: " + \
+            report.reason + "\r\nPlease contact admin for more information"
+        mail.send(msg)
+
+        msg = Message('Your home has been deleted',
+                      sender='sweethomehola@outlook.com', recipients=[email])
+        msg.body = "Your home has been reported and deleted by admin\r\nHome: " + home.name + "\r\nReason: " + \
+            report.reason + "\r\nPlease contact admin for more information"
+        mail.send(msg)
+
         db.session.delete(home)
         db.session.commit()
         return redirect(url_for('admin_router.reportedHomes'))
@@ -169,9 +223,18 @@ def delete_post():
         db.session.commit()
 
     post = Post.query.filter_by(id=postID).first()
+    email = post.author.email
+
     if post:
         db.session.delete(post)
         db.session.commit()
+
+        msg = Message('Your post has been deleted by admin',
+                      sender='sweethomehola@outlook.com', recipients=[email])
+        msg.body = "Your post has been deleted by admin, post content :" + \
+            post.content + ", please contact admin for more information"
+        mail.send(msg)
+
         return redirect(url_for('admin_router.all_Posts'))
     return redirect(url_for('admin_router.all_Posts'))
 
@@ -251,6 +314,8 @@ def ban_report_user():
         db.session.commit()
 
     report = ReportUser.query.filter_by(id=reportDetail.report_id).first()
+    userReport = User.query.filter_by(id=report.reporter_id).first()
+    emailUserReport = userReport.email
     if report:
         db.session.delete(report)
         db.session.commit()
@@ -264,8 +329,15 @@ def ban_report_user():
 
         msg = Message('You are banned by admin',
                       sender='sweethomehola@outlook.com', recipients=[email])
-        msg.body = "You are banned by admin, the reason is: " + \
+        msg.body = "You are banned by ademin, the reason is: " + \
             reportDetail.reason + ", please contact admin for more information"
+        mail.send(msg)
+
+        msg = Message('Accept report',
+                      sender='sweethomehola@outlook.com', recipients=[emailUserReport])
+        msg.body = "Your report is excuted, user :" + user.username + " is banned, the reason is: " + \
+            reportDetail.reason + \
+            ", thank you for your contribution, please contact admin for more information"
         mail.send(msg)
 
         return redirect(url_for('admin_router.reportedUsers'))
