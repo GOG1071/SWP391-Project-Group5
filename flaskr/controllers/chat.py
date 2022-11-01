@@ -7,9 +7,20 @@ from models.model import db
 from flask import render_template,session, redirect, url_for, flash,request
 
 def chat_all(userid):
-    #get all the user with userid
-    user = User.query.filter(User.id != userid).all()
-    return render_template("chat/chat_all.html", list_user = user)
+    #get all the chat with userid
+    chat = Chat.query.filter((Chat.user_id_1 == userid) | (Chat.user_id_2 == userid)).all()
+    #list the user chat with userid
+    list_user = []
+    for c in chat:
+        if c.user_id_1 == userid:
+            user = User.query.filter(User.id == c.user_id_2).first()
+            list_user.append(user)
+        else:
+            user = User.query.filter(User.id == c.user_id_1).first()
+            list_user.append(user)
+    #remove duplicate user
+    list_user = list(dict.fromkeys(list_user))
+    return render_template("chat/chat_all.html", list_user = list_user)
 
 def message_user(receiver_id):
     #get all the user with userid
