@@ -10,14 +10,9 @@ chat_router = Blueprint('chat_router', __name__)
 def chat_all():
     return controllers.chat.chat_all(session['id'])
 
-@chat_router.route("/message_user/<int:receiver_id>")
+@chat_router.route("/message_user/<int:receiver_id>",methods=["POST", "GET"])
 @login_required
 def message_user(receiver_id):
-    return controllers.chat.message_user(receiver_id)
-@chat_router.route("/send_message",methods=["POST", "GET"])
-@login_required
-def send_message():
     if request.method == "POST":
-        return controllers.chat.send_message(request.form['receiver_id'])
-    return redirect(url_for('chat_router.message_user', receiver_id = request.form['receiver_id']))
-
+        return controllers.chat.send_message(receiver_id)
+    return controllers.chat.message_user(receiver_id)

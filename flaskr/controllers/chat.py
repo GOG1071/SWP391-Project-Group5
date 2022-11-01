@@ -41,4 +41,7 @@ def send_message(receiver_id):
     message = Message(chat_id = chat_id, message = message, sender_id = sender_id, timestamp = timestamp)
     db.session.add(message)
     db.session.commit()
-    return redirect(url_for('chat_router.message_user', receiver_id = receiver_id))
+    sender = User.query.filter(User.id == sender_id).first()
+    receiver = User.query.filter(User.id == receiver_id).first()    
+    list_message = get_list_message(sender_id,receiver_id)
+    return render_template("chat/message_user.html", sender = sender, receiver = receiver, list_message = list_message)
