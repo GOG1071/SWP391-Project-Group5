@@ -32,7 +32,7 @@
         </div>
         <div class="modal-footer">
           <div class="row">
-            <form method="post" enctype="multipart/form-data">
+            <form method="post" action ="{{ url_for('chat_router.message_user',receiver_id = receiver.id) }}">
               <div class="col-10"></div>
             <textarea id="message" class="form-control"></textarea>
             </div>
