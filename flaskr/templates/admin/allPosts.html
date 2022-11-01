@@ -90,6 +90,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{url_for('admin_router.all_Users')}}">All users</a>
                         <a class="collapse-item" href="{{url_for('admin_router.banned_Users')}}">Banner users</a>
+                        <a class="collapse-item" href="{{url_for('admin_router.reportedUsers')}}">Reported users</a>
                     </div>
                 </div>
             </li>
@@ -150,7 +151,7 @@
                                         {% for post in posts %}
                                         <tr>
                                             <td><a href="{{ url_for('user_router.profile', id = post.author.id) }}"
-                                                title="">{{post.author.username}}</a></td>
+                                                    title="">{{post.author.username}}</a></td>
                                             <td>{{post.timestamp}}</td>
                                             <td><a href="/post/post_detail?id={{post.id}}" title="">see post</a>
                                             </td>

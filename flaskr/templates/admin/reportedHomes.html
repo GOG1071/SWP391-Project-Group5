@@ -89,6 +89,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{url_for('admin_router.all_Users')}}">All users</a>
                         <a class="collapse-item" href="{{url_for('admin_router.banned_Users')}}">Banner users</a>
+                        <a class="collapse-item" href="{{url_for('admin_router.reportedUsers')}}">Reported users</a>
                     </div>
                 </div>
             </li>
@@ -156,10 +157,10 @@
                                                     title="">{{report.home.name}}</a></td>
                                             <td>{{report.home.description}}</td>
                                             <td><a href="{{ url_for('user_router.profile', id = report.home.owner.id) }}"
-                                                title="">{{report.home.owner.username}}</a></td>
+                                                    title="">{{report.home.owner.username}}</a></td>
                                             <td>{{report.home.address}}</td>
                                             <td><a href="{{ url_for('user_router.profile', id = report.user.id) }}"
-                                                title="">{{report.user.username}}</a></td>
+                                                    title="">{{report.user.username}}</a></td>
                                             <td>{{report.reason}}</td>
                                             <td>
                                                 <form
