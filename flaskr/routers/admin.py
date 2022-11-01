@@ -133,3 +133,16 @@ def unban_user():
 def unban_user2():
     if request.method == "POST":
         return controllers.admin.unban_user2()
+
+
+@admin_router.route("/reportedUsers")
+@admin_required
+def reportedUsers():
+    return controllers.admin.reported_Users()
+
+
+@admin_router.route("/banReportedUser", methods=["POST", "GET"])
+@admin_required
+def ban_report_user():
+    if request.method == "POST":
+        return controllers.admin.ban_report_user()

@@ -139,28 +139,26 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Username</th>
-                                            <th>Email</th>
-                                            <th>role</th>
-                                            <th>Reason banned</th>
-                                            <th>Unban</th>
+                                            <th>Reason</th>
+                                            <th>Time</th>
+                                            <th>Ban?</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for user in users %}
+                                        {% for report in reportedUsers %}
                                         <tr>
-                                            <td>{{user.id}}</td>
-                                            <td><a href="{{ url_for('user_router.profile', id = user.id) }}"
-                                                    title="">{{user.username}}</a></td>
-                                            <td>{{user.email}}</td>
-                                            <td>{{user.role}}</td>
-                                            <td></td>
+                                            <td>{{report.report.id}}</td>
+                                            <td>{{report.reported_user_id}}</td>
+                                            <td>{{report.reason}}</td>
+                                            <td>{{report.timestamp}}</td>
                                             <td>
                                                 <form onSubmit="if(!confirm('Unban this shit?')){return false;}"
-                                                    action="./unban_user" method="POST">
-                                                    <input type="text" value="{{user.id}}" name="id" hidden>
+                                                    action="./banReportedUser" method="POST">
+                                                    <input type="text" value="{{report.reported_user_id}}" name="id"
+                                                        hidden>
                                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                                    <button class="btn btn-success" type="submit"><i
-                                                            class="bi bi-unlock-fill"></i> Unban </button>
+                                                    <button class="btn btn-danger" type="submit"><i
+                                                            class="bi bi-lock-fill"></i> Ban </button>
                                                 </form>
                                             </td>
                                         </tr>

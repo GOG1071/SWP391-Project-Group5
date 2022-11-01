@@ -23,7 +23,8 @@ def home():
 def login():
     user_name = request.form["user"]
     pass_word = request.form["pass"]
-    query = User.query.filter(User.username == user_name, User.password == pass_word).first()
+    query = User.query.filter(
+        User.username == user_name, User.password == pass_word).first()
     if not query:
         flash("Your account doesn't exist", "info")
         return render_template("user/login.html")
@@ -133,6 +134,7 @@ def gen_new_password():
                                   string.digits + string.punctuation)
     return password
 
+
 def profile(id):
     user = User.query.filter(User.id == id).first()
     if user:
@@ -140,7 +142,6 @@ def profile(id):
         return render_template("user/userProfile.html", user=user, email=email)
     else:
         return render_template("user/userProfile.html", message="User not found")
-
 
 
 def edit_profile():
@@ -178,6 +179,7 @@ def bookmark(userid):
         return render_template("user/bookmark.html", bookmarks=bookmarks)
     flash("You don't have any bookmark yet!", "info")
     return render_template("user/bookmark.html")
+
 
 def report(username):
     user = User.query.filter(User.username == username).first()
