@@ -10,7 +10,7 @@ from controllers.mail_service import mail
 from models.user import HomeOwnerRequest, User
 from datetime import datetime
 from models.post import Post, PostImage
-from models.report import ReportPost, ReportHome, ReportUser
+from models.report import ReportPost, ReportHome, ReportUser, ReportUserDetail
 from models.home import Home
 
 
@@ -31,12 +31,13 @@ def view_request_register():
 def allow_access():
     id = request.args.get("id")
     request_register = HomeOwnerRequest.query.filter_by(id=id).first()
-    home_user = User.query.filter_by(id = request_register.user_id).first()
+    home_user = User.query.filter_by(id=request_register.user_id).first()
     home_user.banned = False
     db.session.commit()
     request_register.status = True
     db.session.commit()
-    msg = Message('Your request has been accepted. Your password is: '+ home_user.password , sender='sweethomehola@outlook.com', recipients=[home_user.email])
+    msg = Message('Your request has been accepted. Your password is: ' + home_user.password,
+                  sender='sweethomehola@outlook.com', recipients=[home_user.email])
     mail.send(msg)
     return redirect(url_for("admin_router.view_request_register"))
 
@@ -213,3 +214,30 @@ def unban_user2():
         db.session.commit()
         return redirect(url_for('admin_router.all_Users'))
     return redirect(url_for('admin_router.all_Users'))
+
+
+def reported_Users():
+    reportedUsers = ReportUserDetail.query.all()
+    return render_template('admin/reportedUsers.html', reportedUsers=reportedUsers)
+
+
+def ban_report_user():
+    report_id = request.form.get("id")
+    reportDetail = ReportUserDetail.query.filter_by(
+        reported_user_id=report_id).first()
+    if reportDetail:
+        db.session.delete(reportDetail)
+        db.session.commit()
+
+    report = ReportUser.query.filter_by(id=reportDetail.report_id).first()
+    if report:
+        db.session.delete(report)
+        db.session.commit()
+
+    user_id = reportDetail.reported_user_id
+    user = User.query.filter_by(id=user_id).first()
+    if user:
+        user.banned = 1
+        db.session.commit()
+        return redirect(url_for('admin_router.reportedUsers'))
+    return redirect(url_for('admin_router.reportedUsers'))

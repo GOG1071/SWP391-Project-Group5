@@ -89,6 +89,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{url_for('admin_router.all_Users')}}">All users</a>
                         <a class="collapse-item" href="{{url_for('admin_router.banned_Users')}}">Banner users</a>
+                        <a class="collapse-item" href="{{url_for('admin_router.reportedUsers')}}">Reported users</a>
                     </div>
                 </div>
             </li>
@@ -112,6 +113,17 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('admin_router.view_feedback')}}">
+                    <i class="fas bi bi-send-check-fill"></i>
+                    <span>View feedback</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('admin_router.view_request_register')}}">
+                    <i class="fas bi bi-bookmark-plus-fill"></i>
+                    <span>Register request</span></a>
+            </li>
 
 
 
@@ -155,7 +167,7 @@
                                                     title="">{{home.name}}</a></td>
                                             <td>{{home.description}}</td>
                                             <td><a href="{{ url_for('user_router.profile', id = home.owner.id) }}"
-                                                title="">{{home.owner.username}}</a></td>
+                                                    title="">{{home.owner.username}}</a></td>
                                             <td>{{home.address}}</td>
                                             <td>{{home.total_rooms}}</td>
                                             <td>{{home.available_rooms}}</td>
