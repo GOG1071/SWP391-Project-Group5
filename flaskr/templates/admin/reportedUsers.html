@@ -140,8 +140,9 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Username</th>
+                                            <th>Report by</th>
                                             <th>Reason</th>
+                                            <th>Username</th>
                                             <th>Time</th>
                                             <th>Ban?</th>
                                         </tr>
@@ -150,8 +151,12 @@
                                         {% for report in reportedUsers %}
                                         <tr>
                                             <td>{{report.report.id}}</td>
-                                            <td>{{report.reported_user_id}}</td>
+                                            <td><a href="{{ url_for('user_router.profile', id = report.report.user.id) }}"
+                                                    title="">{{report.report.user.username}}</a></td>
                                             <td>{{report.reason}}</td>
+                                            <td><a href="{{ url_for('user_router.profile', id = report.user.id) }}"
+                                                    title="">{{report.user.username}}</a>
+                                            </td>
                                             <td>{{report.timestamp}}</td>
                                             <td>
                                                 <form onSubmit="if(!confirm('Unban this shit?')){return false;}"
