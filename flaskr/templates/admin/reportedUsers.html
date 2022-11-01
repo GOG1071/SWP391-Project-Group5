@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>All posts</title>
+    <title>Banned User</title>
 
     <!-- Custom fonts for this template -->
     <link href="../../static/css/admin/all.min.css" rel="stylesheet" type="text/css">
@@ -51,7 +51,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="{{url_for('admin_router.dashBoard')}}" data-target="#deletePost">
+                <a class="nav-link" href="{{url_for('admin_router.dashBoard')}}">
                     <i class="bi bi-clipboard-data"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -70,10 +70,9 @@
                     <i class="bi bi-file-earmark-post"></i>
                     <span>Posts</span>
                 </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
-                    data-parent="#accordionSidebar">
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item active" href="{{url_for('admin_router.all_Posts')}}">All posts</a>
+                        <a class="collapse-item" href="{{url_for('admin_router.all_Posts')}}">All posts</a>
                         <a class="collapse-item" href="{{url_for('admin_router.reportedPosts')}}">Reported
                             posts</a>
                     </div>
@@ -86,11 +85,13 @@
                     <i class="bi bi-people-fill"></i>
                     <span>Users</span>
                 </a>
-                <div id="collapseUsers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapseUsers" class="collapse show" aria-labelledby="headingPages"
+                    data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{url_for('admin_router.all_Users')}}">All users</a>
                         <a class="collapse-item" href="{{url_for('admin_router.banned_Users')}}">Banner users</a>
-                        <a class="collapse-item" href="{{url_for('admin_router.reportedUsers')}}">Reported users</a>
+                        <a class="collapse-item active" href="{{url_for('admin_router.reportedUsers')}}">Reported
+                            users</a>
                     </div>
                 </div>
             </li>
@@ -113,7 +114,6 @@
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
-            <!-- Sidebar Toggler (Sidebar) -->
             <li class="nav-item">
                 <a class="nav-link" href="{{url_for('admin_router.view_feedback')}}">
                     <i class="fas bi bi-send-check-fill"></i>
@@ -141,7 +141,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">All Posts</h1>
+                    <h1 class="h3 mb-2 text-gray-800">All User</h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -150,30 +150,33 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Post by</th>
-                                            <th>Timestamp</th>
-                                            <th>Post</th>
-                                            <th>Content</th>
-                                            <th>Action</th>
+                                            <th>ID</th>
+                                            <th>Report by</th>
+                                            <th>Reason</th>
+                                            <th>Username</th>
+                                            <th>Time</th>
+                                            <th>Ban?</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for post in posts %}
+                                        {% for report in reportedUsers %}
                                         <tr>
-                                            <td><a href="{{ url_for('user_router.profile', id = post.author.id) }}"
-                                                    title="">{{post.author.username}}</a></td>
-                                            <td>{{post.timestamp}}</td>
-                                            <td><a href="/post/post_detail?id={{post.id}}" title="">see post</a>
+                                            <td>{{report.report.id}}</td>
+                                            <td><a href="{{ url_for('user_router.profile', id = report.report.user.id) }}"
+                                                    title="">{{report.report.user.username}}</a></td>
+                                            <td>{{report.reason}}</td>
+                                            <td><a href="{{ url_for('user_router.profile', id = report.user.id) }}"
+                                                    title="">{{report.user.username}}</a>
                                             </td>
-                                            <td>{{post.content}}</td>
+                                            <td>{{report.timestamp}}</td>
                                             <td>
-                                                <form onSubmit="if(!confirm('Delete this report?')){return false;}"
-                                                    action="./delete_post" method="POST">
-                                                    <input type="text" value="{{post.id}}" name="id" hidden>
+                                                <form onSubmit="if(!confirm('Unban this shit?')){return false;}"
+                                                    action="./banReportedUser" method="POST">
+                                                    <input type="text" value="{{report.reported_user_id}}" name="id"
+                                                        hidden>
                                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                                     <button class="btn btn-danger" type="submit"><i
-                                                            class="bi bi-trash-fill"></i>
-                                                        Delete </button>
+                                                            class="bi bi-lock-fill"></i> Ban </button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -212,24 +215,24 @@
     </a>
 
     <!-- Logout Modal-->
-    <!-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete this shit?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Delete" below if you are ready to delete this post.</div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-primary" href="login.html">Logout</a>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="../../static/css/admin/jquery.min.js"></script>

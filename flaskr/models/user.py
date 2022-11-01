@@ -20,6 +20,9 @@ class User(db.Model):
     comments = db.relationship('Comment')
     reports = db.relationship('ReportPost', backref='user', lazy=True)
     reporthomes = db.relationship('ReportHome', backref='user', lazy=True)
+    reportUsers = db.relationship('ReportUser', backref='user', lazy=True)
+    reportUserDetail = db.relationship(
+        'ReportUserDetail', backref='user', lazy=True)
     home = db.relationship('Home', backref='owner', lazy=True)
 
 
