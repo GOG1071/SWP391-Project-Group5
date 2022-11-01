@@ -135,8 +135,8 @@ def gen_new_password():
     return password
 
 
-def profile(id):
-    user = User.query.filter(User.id == id).first()
+def profile(username):
+    user = User.query.filter(User.username == username).first()
     if user:
         email = user.email
         return render_template("user/userProfile.html", user=user, email=email)
@@ -194,8 +194,10 @@ def do_report(reported, reporter_id, reason):
     if user:
         report = ReportUser(reporter_id=reporter_id)
         db.session.add(report)
-        reportDetail = ReportUserDetail(
-            report_id=report.id, reported_id=user.id, reason=reason)
+        reports = ReportUser.query.filter(reporter_id == reporter_id)
+        report = reports[-1]
+        reportDetail = ReportUserDetail(\
+            report_id=report.id, reported_user_id=user.id,timestamp=datetime.now() ,reason=reason if reason != "" else "No reason")
         db.session.add(reportDetail)
         db.session.commit()
         return render_template("user/report_user.html", message="Report successfully!")

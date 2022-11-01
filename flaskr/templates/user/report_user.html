@@ -16,7 +16,7 @@
         <h1 class="text-center text-capitalize" style="color: #028174;"> Report User </h1>
         
         {% if not message %}
-        <form action="./do_report" method="post" class="text-center">
+        <form action="/user/do_report" method="post" class="text-center">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <input type="hidden" name="reported_username" value="{{username}}"><br>
             <input type="hidden" name="reporter_user_id" value="{{session['id']}}"><br>
