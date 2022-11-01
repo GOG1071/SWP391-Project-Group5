@@ -32,8 +32,8 @@
             <td class="text-center">{{user.role}}</td>
             <td class="text-center">
               <a
-                href="{{ url_for('chat_router.message_user', receiver_id=user.id) }}"
-                ><button class="btn btn-outline-success">Message</button></a
+                href="{{ url_for('chat_router.message_user',receiver_id = user.id) }}"
+                ><button class="btn btn-success">Messages</button></a
               >
             </td>
           </tr>
