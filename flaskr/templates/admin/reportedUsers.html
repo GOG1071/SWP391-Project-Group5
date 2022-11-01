@@ -153,7 +153,7 @@
                                             <th>ID</th>
                                             <th>Report by</th>
                                             <th>Reason</th>
-                                            <th>Username</th>
+                                            <th>reported user</th>
                                             <th>Time</th>
                                             <th>Ban?</th>
                                         </tr>
@@ -170,7 +170,7 @@
                                             </td>
                                             <td>{{report.timestamp}}</td>
                                             <td>
-                                                <form onSubmit="if(!confirm('Unban this shit?')){return false;}"
+                                                <form onSubmit="if(!confirm('Ban this shit?')){return false;}"
                                                     action="./banReportedUser" method="POST">
                                                     <input type="text" value="{{report.reported_user_id}}" name="id"
                                                         hidden>

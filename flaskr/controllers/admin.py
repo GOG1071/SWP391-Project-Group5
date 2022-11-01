@@ -189,9 +189,16 @@ def banned_Users():
 def ban_user():
     user_id = request.form.get("id")
     user = User.query.filter_by(id=user_id).first()
+    email = user.email
     if user:
         user.banned = 1
         db.session.commit()
+
+        msg = Message('You are banned by admin',
+                      sender='sweethomehola@outlook.com', recipients=[email])
+        msg.body = "You are banned by admin, please contact admin for more information"
+        mail.send(msg)
+
         return redirect(url_for('admin_router.all_Users'))
     return redirect(url_for('admin_router.all_Users'))
 
@@ -199,9 +206,16 @@ def ban_user():
 def unban_user():
     user_id = request.form.get("id")
     user = User.query.filter_by(id=user_id).first()
+    email = user.email
     if user:
         user.banned = 0
         db.session.commit()
+
+        msg = Message('You are unbanned by admin',
+                      sender='sweethomehola@outlook.com', recipients=[email])
+        msg.body = "Contact admin for more information and to answer questions, have a nice day"
+        mail.send(msg)
+
         return redirect(url_for('admin_router.banned_Users'))
     return redirect(url_for('admin_router.banned_Users'))
 
@@ -209,9 +223,16 @@ def unban_user():
 def unban_user2():
     user_id = request.form.get("id")
     user = User.query.filter_by(id=user_id).first()
+    email = user.email
     if user:
         user.banned = 0
         db.session.commit()
+
+        msg = Message('You are unbanned by admin',
+                      sender='sweethomehola@outlook.com', recipients=[email])
+        msg.body = "Contact admin for more information and to answer questions, have a nice day"
+        mail.send(msg)
+
         return redirect(url_for('admin_router.all_Users'))
     return redirect(url_for('admin_router.all_Users'))
 
@@ -236,8 +257,16 @@ def ban_report_user():
 
     user_id = reportDetail.reported_user_id
     user = User.query.filter_by(id=user_id).first()
+    email = user.email
     if user:
         user.banned = 1
         db.session.commit()
+
+        msg = Message('You are banned by admin',
+                      sender='sweethomehola@outlook.com', recipients=[email])
+        msg.body = "You are banned by admin, the reason is: " + \
+            reportDetail.reason + ", please contact admin for more information"
+        mail.send(msg)
+
         return redirect(url_for('admin_router.reportedUsers'))
     return redirect(url_for('admin_router.reportedUsers'))
