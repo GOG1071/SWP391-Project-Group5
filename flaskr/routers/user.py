@@ -104,3 +104,9 @@ def feedback():
 @login_required
 def do_report():
     return controllers.user.do_report(request.form.get("reported_username"), request.form.get("reporter_user_id"), request.form.get("reason"))
+@user_router.route('/chpwd', methods=["GET","POST"])
+@login_required
+def chpwd():
+    if request.method == "POST":
+        return controllers.user.chpwd(request.form.get("oldpass"), request.form.get("newpass"), request.form.get("cfnewpass"))
+    return render_template("user/changepass.html")
