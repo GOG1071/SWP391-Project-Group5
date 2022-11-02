@@ -1,5 +1,5 @@
 import random
-import re 
+import re
 import string
 from models.home import RoomDetail, RoomImage
 from models.user import Bookmark, RoomRequest
@@ -44,7 +44,6 @@ def allow_access():
 
 
 def reported_Posts():
-    page = request.args.get('page', 1, type=int)
     reported_posts = ReportPost.query.all()
     return render_template('admin/reportedPosts.html', posts=reported_posts)
 
