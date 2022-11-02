@@ -153,7 +153,6 @@
                                             <th>Reported by</th>
                                             <th>Reason</th>
                                             <th>Posts</th>
-                                            <th>Post by</th>
                                             <th>Date report</th>
                                             <th>Action</th>
                                             <th></th>
@@ -167,8 +166,6 @@
                                             <td>{{post.reason}}</td>
                                             <td><a href="/post/post_detail?id={{post.post.id}}" title="">see post</a>
                                             </td>
-                                            <td><a href="{{ url_for('user_router.profile', username = post.post.author.username) }}"
-                                                    title="">{{post.post.author.username}}</a></td>
                                             <td>{{post.timestamp}}</td>
                                             <td>
                                                 <form onSubmit="if(!confirm('Refuse this report?')){return false;}"
