@@ -211,3 +211,18 @@ def add_feedback(id, content):
     db.session.add(feedback)
     db.session.commit()
     return redirect(url_for('user_router.home'))
+
+def chpwd(oldpass, newpass, cfnewpass):
+    user = User.query.filter(User.id == session['id']).first()
+    if user.password == oldpass:
+        if newpass == cfnewpass:
+            if newpass != oldpass:
+                user.password = newpass
+                db.session.commit()
+                flash("Change password successfully!", "successchangepass")
+                return render_template("user/changepass.html")
+            else:
+                flash("Do you really understand the term of \"Change password\"!", "failchangepass")
+                return render_template("user/changepass.html")
+    flash("Somethings is not right", "failchangepass")
+    return render_template("user/changepass.html")
