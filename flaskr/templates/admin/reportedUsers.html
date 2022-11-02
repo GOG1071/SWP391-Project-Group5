@@ -162,10 +162,10 @@
                                         {% for report in reportedUsers %}
                                         <tr>
                                             <td>{{report.report.id}}</td>
-                                            <td><a href="{{ url_for('user_router.profile', id = report.report.user.id) }}"
+                                            <td><a href="{{ url_for('user_router.profile', username = report.report.user.username) }}"
                                                     title="">{{report.report.user.username}}</a></td>
                                             <td>{{report.reason}}</td>
-                                            <td><a href="{{ url_for('user_router.profile', id = report.user.id) }}"
+                                            <td><a href="{{ url_for('user_router.profile', username = report.user.username) }}"
                                                     title="">{{report.user.username}}</a>
                                             </td>
                                             <td>{{report.timestamp}}</td>
