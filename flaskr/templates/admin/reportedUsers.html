@@ -153,7 +153,7 @@
                                             <th>ID</th>
                                             <th>Report by</th>
                                             <th>Reason</th>
-                                            <th>Username</th>
+                                            <th>reported user</th>
                                             <th>Time</th>
                                             <th>Ban?</th>
                                         </tr>
@@ -162,15 +162,15 @@
                                         {% for report in reportedUsers %}
                                         <tr>
                                             <td>{{report.report.id}}</td>
-                                            <td><a href="{{ url_for('user_router.profile', id = report.report.user.id) }}"
+                                            <td><a href="{{ url_for('user_router.profile', username = report.report.user.username) }}"
                                                     title="">{{report.report.user.username}}</a></td>
                                             <td>{{report.reason}}</td>
-                                            <td><a href="{{ url_for('user_router.profile', id = report.user.id) }}"
+                                            <td><a href="{{ url_for('user_router.profile', username = report.user.username) }}"
                                                     title="">{{report.user.username}}</a>
                                             </td>
                                             <td>{{report.timestamp}}</td>
                                             <td>
-                                                <form onSubmit="if(!confirm('Unban this shit?')){return false;}"
+                                                <form onSubmit="if(!confirm('Ban this shit?')){return false;}"
                                                     action="./banReportedUser" method="POST">
                                                     <input type="text" value="{{report.reported_user_id}}" name="id"
                                                         hidden>

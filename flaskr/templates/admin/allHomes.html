@@ -163,10 +163,10 @@
                                     <tbody>
                                         {% for home in homes %}
                                         <tr>
-                                            <td><a href="/home/view_room_detail?home_id={{home.id}}"
+                                            <td><a href="/home/home_detail?home_id={{home.id}}"
                                                     title="">{{home.name}}</a></td>
                                             <td>{{home.description}}</td>
-                                            <td><a href="{{ url_for('user_router.profile', id = home.owner.id) }}"
+                                            <td><a href="{{ url_for('user_router.profile', username = home.owner.username) }}"
                                                     title="">{{home.owner.username}}</a></td>
                                             <td>{{home.address}}</td>
                                             <td>{{home.total_rooms}}</td>
