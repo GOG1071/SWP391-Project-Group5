@@ -164,13 +164,13 @@
                                     <tbody>
                                         {% for report in reportedHomes %}
                                         <tr>
-                                            <td><a href="/home/view_room_detail?home_id={{report.home.id}}"
+                                            <td><a href="/home/home_detail?home_id={{report.home.id}}"
                                                     title="">{{report.home.name}}</a></td>
                                             <td>{{report.home.description}}</td>
-                                            <td><a href="{{ url_for('user_router.profile', id = report.home.owner.id) }}"
+                                            <td><a href="{{ url_for('user_router.profile', username = report.home.owner.username) }}"
                                                     title="">{{report.home.owner.username}}</a></td>
                                             <td>{{report.home.address}}</td>
-                                            <td><a href="{{ url_for('user_router.profile', id = report.user.id) }}"
+                                            <td><a href="{{ url_for('user_router.profile', username = report.user.username) }}"
                                                     title="">{{report.user.username}}</a></td>
                                             <td>{{report.reason}}</td>
                                             <td>

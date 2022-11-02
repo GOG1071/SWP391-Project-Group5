@@ -161,7 +161,7 @@
                                         {% for user in users %}
                                         <tr>
                                             <td>{{user.id}}</td>
-                                            <td><a href="{{ url_for('user_router.profile', id = user.id) }}"
+                                            <td><a href="{{ url_for('user_router.profile', username = user.username) }}"
                                                     title="">{{user.username}}</a></td>
                                             <td>{{user.email}}</td>
                                             <td>{{user.role}}</td>
