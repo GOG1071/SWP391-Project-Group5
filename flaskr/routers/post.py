@@ -1,6 +1,5 @@
 from decorators.authentication import login_required,admin_required
 from flask import Blueprint, jsonify, request, render_template, session,url_for,flash
-from controllers import post
 from models.post import Post
 import controllers.post
 
