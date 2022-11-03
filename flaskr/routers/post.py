@@ -66,4 +66,13 @@ def newfeed():
 def list_user_post():
     return controllers.post.list_user_post(session['id'])
 
+@post_router.route("/upvote/")
+#@login_required
+def upvote(post_id):
+    return controllers.post.upvote(session['id'],post_id)
+
+@post_router.route("/user_post/<int:user_id>")
+#@login_required
+def user_posts(user_id):
+    return controllers.post.user_posts(user_id)
 
