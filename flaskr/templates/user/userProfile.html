@@ -83,6 +83,7 @@
                                 </a>
                                 <a href="/user/chpwd"><button type="button" id="submit" name="submit" class="btn btn-primary">Change Password</button>
                                 </a>
+                                <a href="/user/delete"><button type="button" id="submit" name="submit" class="btn btn-primary">Deactive</button></a>
                                 {% endif %}
                                 {%if user.username != session['username']  %}
                                 <a href="{{url_for('user_router.report', username = user.username)}}"><button type="button" id="submit" name="submit" class="btn btn-primary btn-danger">Report</button>
