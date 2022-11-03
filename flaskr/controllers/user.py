@@ -45,7 +45,13 @@ def logout():
     session.clear()
     return redirect(url_for('user_router.home'))
 
+def search_user(username):
+    # search user has contain username
+    users = User.query.filter(User.username.like('%' + username + '%')).all()
+    return render_template("user/list_user.html", list_user=users, current_user_id=session['id'])
 
+
+    
 def forgot_password(email):
     # kiem tra email
     user = db.session.execute(
