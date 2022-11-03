@@ -19,6 +19,11 @@ def add_home():
 def load_home():
     return controllers.home.load_home()
 
+@home_router.route('/edit_home', methods=["POST", "GET"])
+@seller_required
+def edit_home():
+    return controllers.home.edit_home()
+
 @home_router.route('/remove_home',methods = ["POST","GET"])
 @seller_required
 def remove_home():

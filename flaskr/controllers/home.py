@@ -43,6 +43,23 @@ def remove_home():
         db.session.commit()
     return redirect(url_for("home_router.load_home"))
 
+def edit_home():
+    if request.method == "GET":
+        home_id = request.args.get("home_id")
+        home = Home.query.filter_by(id=home_id).first()
+        return render_template("home/edit_home.html", home=home, home_id=home_id)
+    else:
+        home_id = request.form.get("home_id")
+        home = Home.query.filter_by(id = home_id).first()
+        if home:
+            home.name = request.form['home_name'] if request.form['home_name'] else home.name
+            home.address = request.form["address"] if request.form["address"] else home.address
+            home.description = request.form["des"] if request.form["des"] else home.description
+            home.total_rooms = request.form["num_room"] if request.form["num_room"] else home.total_rooms
+            home.available_rooms = request.form["room_no"] if request.form["room_no"] else home.available_rooms
+            db.session.commit()
+        return redirect(url_for("home_router.load_home"))
+
 def load_room():
     home_id = request.args.get("home_id")
     list_room = RoomDetail.query.filter_by(home_id=home_id)
