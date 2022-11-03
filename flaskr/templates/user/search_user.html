@@ -13,8 +13,8 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="../../static/css/register.css" />
-    <script src="../../static/js/register.js"></script>
+    <link rel="stylesheet" href="../../static/css/search_user.css" />
+    <script src="../../static/js/search_user.js"></script>
   </head>
 
   <body>
@@ -22,16 +22,14 @@
     <div class="" id="greensquare">
       <div id="whitesquare">
         <form class="container" method="post">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
           <div class="row">
-            <h1 style="text-align: center; margin-bottom: 10vh">
-              Forgot Password
-            </h1>
+            <h1 style="text-align: center; margin-bottom: 10vh">Search User</h1>
           </div>
 
           <div class="row">
-            <label>Email</label><br />
-            <input type="email" name="email" required /><br />
+            <label>Username</label><br />
+            <input type="text" name="username" required /><br />
           </div>
           <div class="row">
             <button
@@ -39,7 +37,7 @@
               class="btn btn-success btn-block text-uppercase"
               style="width: 30%; margin: auto; margin-top: 5vh"
             >
-              Find
+              Search
             </button>
           </div>
         </form>

@@ -13,7 +13,7 @@
   </head>
   <body>
     <div class="table-form" style="width: 700px">
-      <h2 class="text-center">Chat history</h2>
+      <h2 class="text-center">List of User</h2>
       <br />
       <table class="table table-bordered">
         <thead>
@@ -25,19 +25,19 @@
           </tr>
         </thead>
         <tbody>
-          {% for user in list_user %}
+          {% for user in list_user %} {% if user.id != current_user_id %}
           <tr>
             <td class="text-center">{{user.id}}</td>
             <td class="text-center">{{user.username}}</td>
             <td class="text-center">{{user.role}}</td>
             <td class="text-center">
               <a
-                href="{{ url_for('chat_router.message_user',receiver_id = user.id) }}"
-                ><button class="btn btn-success">Messages</button></a
+                href="{{ url_for('user_router.profile', username = user.username) }}"
+                ><button class="btn btn-success">Profile</button></a
               >
             </td>
           </tr>
-          {% endfor %}
+          {% endif %} {% endfor %}
         </tbody>
       </table>
     </div>

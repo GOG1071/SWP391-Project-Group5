@@ -11,6 +11,13 @@ user_router = Blueprint('user_router', __name__)
 @user_router.route("/home", methods=["POST", "GET"])
 def home():
     return controllers.user.home()
+     
+@user_router.route("/search_user", methods=["POST", "GET"])
+def search_user():
+    if (request.method == "POST"):
+        return controllers.user.search_user(request.form.get("username"))
+    else:
+        return render_template("user/search_user.html")
 
 
 @user_router.route("/register", methods=["POST", "GET"])
@@ -73,18 +80,6 @@ def user_posts(username):
 @login_required
 def bookmark():
     return controllers.user.bookmark(session['id'])
-
-
-@user_router.route("/chat_all")
-
-@login_required
-def chat_all():
-    return controllers.user.chat_all(session['id'])
-
-@login_required
-def message_user(userid):
-    return controllers.user.message_user(userid)
-
 
 @user_router.route('/report/<string:username>', methods=["GET", "POST"])
 @login_required
