@@ -110,3 +110,10 @@ def chpwd():
     if request.method == "POST":
         return controllers.user.chpwd(request.form.get("oldpass"), request.form.get("newpass"), request.form.get("cfnewpass"))
     return render_template("user/changepass.html")
+
+@user_router.route('/delete', methods=["GET","POST"])
+@login_required
+def delete():
+    if request.method == "POST":
+        return controllers.user.delete(request.form.get("step"),request.form.get("input"))
+    return render_template("user/delete.html")
