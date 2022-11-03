@@ -1,4 +1,3 @@
-from email import message
 import random
 import string
 from models.report import ReportUser, ReportUserDetail
@@ -232,3 +231,24 @@ def chpwd(oldpass, newpass, cfnewpass):
                 return render_template("user/changepass.html")
     flash("Somethings is not right", "failchangepass")
     return render_template("user/changepass.html")
+
+def delete(step, input):
+    print(f"{step=} {input=}")
+    if(step == '0'):
+        if(input != 'Confirm'):
+            print(0)
+            message = "Assuming you accidently got here. Click OK to get back Home!"
+            return render_template("user/delete.html", message=message)
+        print(1)
+        return render_template("user/delete.html", isConfirmed = True)
+    else:
+        user = User.query.filter(User.id == session['id']).first()
+        if(user.password == input):
+            print(2)
+            db.session.delete(user)
+            db.session.commit()
+            session.clear()
+            return render_template("user/delete.html", message="Delete successfully!")
+        else:
+            print(3)
+            return render_template("user/delete.html", message = "Wrong password")
