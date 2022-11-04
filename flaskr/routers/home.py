@@ -18,12 +18,14 @@ def add_home():
 def load_home():
     return controllers.home.load_home()
 
+
 @home_router.route('/edit_home', methods=["POST", "GET"])
 @seller_required
 def edit_home():
     return controllers.home.edit_home()
 
-@home_router.route('/remove_home',methods = ["POST","GET"])
+
+@home_router.route('/remove_home', methods=["POST", "GET"])
 @seller_required
 def remove_home():
     return controllers.home.remove_home()
@@ -34,7 +36,8 @@ def remove_home():
 def load_room():
     return controllers.home.load_room()
 
-@home_router.route('/remove_room',methods = ["POST","GET"])
+
+@home_router.route('/remove_room', methods=["POST", "GET"])
 @seller_required
 def remove_room():
     return controllers.home.remove_room()
@@ -49,6 +52,7 @@ def add_room():
     if request.method == "POST":
         return controllers.home.add_room()
     return render_template("home/add_room.html", home_id=home_id)
+
 
 @home_router.route('/')
 @login_required
@@ -68,10 +72,13 @@ def home_detail():
 def report(home_id):
     return controllers.home.report(home_id=home_id)
 
+
 @home_router.route('/do_report', methods=["POST"])
 @login_required
 def do_report():
-    return controllers.home.do_report(request.form.get("home_id"), request.form.get("user_id") ,request.form.get("reason"))
+    return controllers.home.do_report(request.form.get("home_id"), request.form.get("user_id"), request.form.get("reason"))
+
+
 @home_router.route('/search', methods=["GET", "POST"])
 @login_required
 def search():
@@ -85,9 +92,17 @@ def search():
 def compare():
     return controllers.home.compare(request.args.get("home1"), request.args.get("home2"))
 
+
 @home_router.route('/home_compare', methods=["GET"])
 @login_required
 def home_compare():
     home_id = request.args.get('home_id')
     return controllers.home.home_compare(home_id)
 
+
+@home_router.route('/newRoomRequest', methods=["GET", "POST"])
+def newRoomRequest():
+    if request.method == "POST":
+        home_id = request.args.get('home_id')
+        return controllers.home.new_room_request(home_id)
+    return render_template("home/roomRequest.html")
