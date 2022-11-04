@@ -107,3 +107,9 @@ def newRoomRequest(room_id):
         return controllers.home.new_room_request(room_id)
     room = RoomDetail.query.filter_by(id=room_id).first()
     return render_template("home/roomRequest.html", room_id=room_id, room=room)
+
+
+@home_router.route("/roomRequests")
+@login_required
+def roomRequests():
+    return controllers.home.roomRequests()

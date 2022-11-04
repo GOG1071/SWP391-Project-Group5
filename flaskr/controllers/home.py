@@ -206,12 +206,16 @@ def new_room_request(room_id):
     facebook = request.form['facebook']
     user_id = session["id"]
     timestamp = datetime.now()
-    content = "Name: " + name + " Phone: " + phone + \
-        " Time visit: " + timeVisit + ' Facebook: ' + facebook
     room = RoomDetail.query.filter_by(id=room_id).first()
     owner = User.query.filter_by(id=room.home.user_id).first()
     room_reqest = RoomRequest(
-        user_id=user_id, content=content, timestamp=timestamp, room_id=room_id, Seller_id=owner.id)
+        user_id=user_id, timestamp=timestamp, room_id=room_id, Seller_id=owner.id, name=name, phone=phone, facebook=facebook, content=timeVisit, readed=0)
     db.session.add(room_reqest)
     db.session.commit()
     return render_template("home/roomRequest.html", done=True, name=name, phone=phone, timeVisit=timeVisit, facebook=facebook, room=room)
+
+
+def roomRequests():
+    requests = RoomRequest.query.filter_by(Seller_id=session["id"]).all()
+    user = User.query.all()
+    return render_template("home/roomRequests.html", requests=requests, user=user)
