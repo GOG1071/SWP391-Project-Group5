@@ -44,8 +44,9 @@
 
                             <h3 class="thin-heading mb-4">Message Us</h3>
 
-                            <form class="mb-5" method="post" id="contactForm" name="contactForm">
+                            <form class="mb-5" method="post">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                                <input type="text" value="{{room.id}}" name="id" hidden>
                                 {% if done != True %}
                                 <div class="row">
                                     <div class="col-md-6 form-group">

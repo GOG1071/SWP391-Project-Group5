@@ -36,7 +36,8 @@ class RoomRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     Seller_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    room_id = db.Column(db.Integer, db.ForeignKey('room_detail.id'), nullable=False)
+    room_id = db.Column(db.Integer, db.ForeignKey(
+        'room_detail.id'), nullable=False)
     content = db.Column(db.String(500), nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False)
 

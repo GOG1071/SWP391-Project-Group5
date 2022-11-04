@@ -198,20 +198,20 @@ def home_compare(home_id):
     return render_template("home/home_compare.html", home_list=home_list, origin=home_id)
 
 
-def new_room_request_page(room_id):
+def new_room_request(room_id):
+    room_id = request.form.get("id")
+    name = request.form['name']
+    phone = request.form['phone']
+    timeVisit = request.form['timeVisit']
+    facebook = request.form['facebook']
+    user_id = session["id"]
+    timestamp = datetime.now()
+    content = "Name: " + name + " Phone: " + phone + \
+        " Time visit: " + timeVisit + ' Facebook: ' + facebook
     room = RoomDetail.query.filter_by(id=room_id).first()
-    return render_template("home/roomRequest.html", room=room)
-
-
-# def new_room_request_page(room_id):
-#     name = request.form['name']
-#     phone = request.form['phone']
-#     timeVisit = request.form['timeVisit']
-#     user_id = session["id"]
-#     timestamp = datetime.now()
-#     content = "Name: " + name + " Phone: " + phone + " Time visit: " + timeVisit
-#     room_reqest = RoomRequest(
-#         user_id=user_id, content=content, timestamp=timestamp)
-#     db.session.add(room_reqest)
-#     db.session.commit()
-#     return render_template("roomRequest.html", done=True, name=name, phone=phone, timeVisit=timeVisit)
+    owner = User.query.filter_by(id=room.home.user_id).first()
+    room_reqest = RoomRequest(
+        user_id=user_id, content=content, timestamp=timestamp, room_id=room_id, Seller_id=owner.id)
+    db.session.add(room_reqest)
+    db.session.commit()
+    return render_template("home/roomRequest.html", done=True, name=name, phone=phone, timeVisit=timeVisit, facebook=facebook, room=room)

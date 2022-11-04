@@ -1,6 +1,7 @@
 from decorators.authentication import login_required, seller_required
 from flask import Blueprint, request, render_template, url_for, redirect
 import controllers.home
+from models.home import RoomDetail
 
 home_router = Blueprint('home_router', __name__)
 
@@ -102,4 +103,7 @@ def home_compare():
 
 @home_router.route('/newRoomRequest/<int:room_id>', methods=["GET", "POST"])
 def newRoomRequest(room_id):
-    return controllers.home.new_room_request_page(room_id)
+    if request.method == "POST":
+        return controllers.home.new_room_request(room_id)
+    room = RoomDetail.query.filter_by(id=room_id).first()
+    return render_template("home/roomRequest.html", room_id=room_id, room=room)
