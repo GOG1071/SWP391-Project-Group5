@@ -31,11 +31,11 @@
                     <div class="row mb-5">
                         <div class="col-md-4 mr-auto">
                             <h3 class="thin-heading mb-4">Address</h3>
-                            <p>Địa chỉ trọ </p>
+                            <p>{{room.home.address}}</p>
                         </div>
                         <div class="col-md-6 ml-auto">
                             <h3 class="thin-heading mb-4">Contact Info</h3>
-                            <p>T: +1 (291) 939 9321 <br> E: info@mail.com</p>
+                            <p>Owner: {{room.home.owner.username}} <br> Email: {{room.home.owner.email}}</p>
                         </div>
                     </div>
 
@@ -58,9 +58,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12 form-group">
-                                        <textarea class="form-control" name="timeVisit" id="message" cols="30" rows="2"
-                                            placeholder="time visit" required></textarea>
+                                    <div class="col-md-6 form-group">
+                                        <input type="text" class="form-control" name="facebook" id="facebook"
+                                            placeholder="Your facebook" required>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <input type="text" class="form-control" name="timeVisit" id="timeVisit"
+                                            placeholder="time visit" required>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -79,8 +83,11 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12 form-group">
-                                        <div class="form-control">Time: {{timeVisit}}</div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="form-control">Facebook: {{facebook}} </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="form-control">time visit: {{timeVisit}} </div>
                                     </div>
                                 </div>
                                 <div>Đặt phòng thành công</div>

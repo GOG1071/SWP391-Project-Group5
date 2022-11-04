@@ -17,7 +17,7 @@
 		<div style="margin-top: 30px">
 			<h1 class="text-center" style="margin-bottom: 30px">Detail of rooms type in the home</h1>
 			{% if username != session['username']%}
-				<a href="/home/report/{{home_id}}"><button>Report this home</button></a>
+			<a href="/home/report/{{home_id}}"><button>Report this home</button></a>
 			{% endif %}
 		</div>
 		<table class="table table-bordered table-hover table-dark">
@@ -44,6 +44,9 @@
 						<img src="{{img.image_link}}" class="img-fluid" style="width: 30%; height: 100%" />
 						{%endfor%}
 					</td>
+					<td> <a href="{{url_for('home_router.newRoomRequest', room_id = i.id)}}"><button
+								class="btn btn-danger">
+								Contact </button></a> </td>
 				</tr>
 				{%endfor%}
 			</tbody>

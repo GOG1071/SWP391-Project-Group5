@@ -198,15 +198,20 @@ def home_compare(home_id):
     return render_template("home/home_compare.html", home_list=home_list, origin=home_id)
 
 
-def new_room_request(home_id):
-    name = request.form['name']
-    phone = request.form['phone']
-    timeVisit = request.form['timeVisit']
-    user_id = session["id"]
-    timestamp = datetime.now()
-    content = "Name: " + name + " Phone: " + phone + " Time visit: " + timeVisit
-    room_reqest = RoomRequest(
-        user_id=user_id, content=content, timestamp=timestamp)
-    db.session.add(room_reqest)
-    db.session.commit()
-    return render_template("roomRequest.html", done=True, name=name, phone=phone, timeVisit=timeVisit)
+def new_room_request_page(room_id):
+    room = RoomDetail.query.filter_by(id=room_id).first()
+    return render_template("home/roomRequest.html", room=room)
+
+
+# def new_room_request_page(room_id):
+#     name = request.form['name']
+#     phone = request.form['phone']
+#     timeVisit = request.form['timeVisit']
+#     user_id = session["id"]
+#     timestamp = datetime.now()
+#     content = "Name: " + name + " Phone: " + phone + " Time visit: " + timeVisit
+#     room_reqest = RoomRequest(
+#         user_id=user_id, content=content, timestamp=timestamp)
+#     db.session.add(room_reqest)
+#     db.session.commit()
+#     return render_template("roomRequest.html", done=True, name=name, phone=phone, timeVisit=timeVisit)

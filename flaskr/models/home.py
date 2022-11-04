@@ -11,6 +11,7 @@ class Home(db.Model):
     timestamp = db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     reports = db.relationship('ReportHome', backref='home', lazy=True)
+    room = db.relationship('RoomDetail', backref='home', lazy=True)
 
 
 class RoomDetail(db.Model):

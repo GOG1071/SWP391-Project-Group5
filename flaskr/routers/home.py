@@ -100,9 +100,6 @@ def home_compare():
     return controllers.home.home_compare(home_id)
 
 
-@home_router.route('/newRoomRequest', methods=["GET", "POST"])
-def newRoomRequest():
-    if request.method == "POST":
-        home_id = request.args.get('home_id')
-        return controllers.home.new_room_request(home_id)
-    return render_template("home/roomRequest.html")
+@home_router.route('/newRoomRequest/<int:room_id>', methods=["GET", "POST"])
+def newRoomRequest(room_id):
+    return controllers.home.new_room_request_page(room_id)
