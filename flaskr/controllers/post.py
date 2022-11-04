@@ -175,15 +175,20 @@ def list_user_post(user_id):
     for post in list_post:
         list_image.append(PostImage.query.filter_by(post_id=post.id).first())
     return render_template('post/list_user_post.html', user=user, list_post=list_post, list_image=list_image)
-def upvote(user_id, post_id):
-    upvote = Upvote(user_id=user_id, post_id=post_id)
+def upvote(post_id):
+    user_id = session['id']
+    #find user of post has post_id
+    post = Post.query.filter_by(id=post_id).first()
+    user = User.query.filter_by(id=post.author_id).first()
+    upvote = Upvote.query.filter_by(user_id=user_id, post_id=post_id).first()
     if upvote:
-        db.session.add(upvote)
-        db.session.commit()
-    else:
         db.session.delete(upvote)
         db.session.commit()
-    return redirect(url_for('post_router.post_detail', author_id=user_id))
+    else:
+        upvote = Upvote(user_id=user_id, post_id=post_id)
+        db.session.add(upvote)
+        db.session.commit()
+    return redirect(url_for('post_router.user_posts',user_id = user.id))
 def user_posts(user_id):
     page = request.args.get('page', 1, type=int)
     posts = Post.query.filter_by(author_id=user_id).order_by(
