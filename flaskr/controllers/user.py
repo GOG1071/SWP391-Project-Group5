@@ -42,6 +42,8 @@ def login():
 
 def logout():
     session.clear()
+
+    
     return redirect(url_for('user_router.home'))
 
 def search_user(username):
@@ -233,7 +235,6 @@ def chpwd(oldpass, newpass, cfnewpass):
     return render_template("user/changepass.html")
 
 def delete(step, input):
-    print(f"{step=} {input=}")
     if(step == '0'):
         if(input != 'Confirm'):
             print(0)
