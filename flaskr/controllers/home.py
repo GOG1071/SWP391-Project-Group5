@@ -60,6 +60,7 @@ def edit_home():
             db.session.commit()
         return redirect(url_for("home_router.load_home"))
 
+
 def load_room():
     home_id = request.args.get("home_id")
     list_room = RoomDetail.query.filter_by(home_id=home_id)
