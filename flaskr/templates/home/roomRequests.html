@@ -77,7 +77,9 @@
                                             <td>{{request.content}}</td>
                                             <td>{{request.timestamp}}</td>
                                             <td>
-                                                asd
+                                                <a href="{{ url_for('home_router.roomRequestDetail', room_id = request.id) }}"
+                                                    title=""><button class="btn btn-success" type="submit"><i
+                                                            class="bi bi-eye-fill"></i>View detail</button></a>
                                             </td>
                                         </tr>
                                         {% endfor %}

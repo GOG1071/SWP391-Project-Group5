@@ -42,11 +42,30 @@
                     <div class="row justify-content-center">
                         <div class="col-md-12">
 
+                            <h3 class="thin-heading mb-4">room info</h3>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <div class="form-control">Room type: {{room.room_type}} </div>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <div class="form-control">Amount: {{room.amount}} </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <div class="form-control">Price: {{room.price}} </div>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <div class="form-control">Description: {{room.description}} </div>
+                                </div>
+                            </div>
+
                             <h3 class="thin-heading mb-4">Message Us</h3>
 
                             <form class="mb-5" method="post">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                                 <input type="text" value="{{room.id}}" name="id" hidden>
+
                                 {% if done != True %}
                                 <div class="row">
                                     <div class="col-md-6 form-group">

@@ -21,6 +21,7 @@ class RoomDetail(db.Model):
     amount = db.Column(db.Integer, unique=False, nullable=False)
     price = db.Column(db.Float, nullable=False)
     description = db.Column(db.String(1000), unique=False, nullable=False)
+    roomRequest = db.relationship('RoomRequest', backref='room', lazy=True)
 
 
 class RoomImage(db.Model):

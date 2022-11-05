@@ -219,3 +219,10 @@ def roomRequests():
     requests = RoomRequest.query.filter_by(Seller_id=session["id"]).all()
     user = User.query.all()
     return render_template("home/roomRequests.html", requests=requests, user=user)
+
+
+def roomRequestDetail(id):
+    request = RoomRequest.query.filter_by(id=id).first()
+    user = User.query.filter_by(id=request.user_id).first()
+    room = RoomDetail.query.filter_by(id=request.room_id).first()
+    return render_template("home/roomRequestDetail.html", request=request, user=user, room=room)

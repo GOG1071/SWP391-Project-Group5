@@ -113,3 +113,11 @@ def newRoomRequest(room_id):
 @login_required
 def roomRequests():
     return controllers.home.roomRequests()
+
+
+@home_router.route("/roomRequestDetail/<int:room_id>", methods=["GET", "POST"])
+@login_required
+def roomRequestDetail(room_id):
+    if request.method == "POST":
+        return controllers.home.roomRequestDetail(room_id)
+    return controllers.home.roomRequestDetail(room_id)
