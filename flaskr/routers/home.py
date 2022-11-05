@@ -121,3 +121,17 @@ def roomRequestDetail(room_id):
     if request.method == "POST":
         return controllers.home.roomRequestDetail(room_id)
     return controllers.home.roomRequestDetail(room_id)
+
+
+@home_router.route("/roomRequestDetail/refuseRoomRequest", methods=["GET", "POST"])
+@login_required
+def refuseRoomRequest():
+    if request.method == "POST":
+        return controllers.home.refuseRoomRequest()
+
+
+@home_router.route('/roomRequestDetail/accept_report', methods=["POST", "GET"])
+@login_required
+def acceptRoomRequest():
+    if request.method == "POST":
+        return controllers.home.acceptRoomRequest()

@@ -63,6 +63,8 @@
           <a class="nav-item nav-link" href="{{ url_for('user_router.bookmark')}}">Bookmark</a>
           <a class="nav-item nav-link"
             href="{{ url_for('user_router.profile', username = session['username']) }}">{{session['username']}}</a>
+
+          {% if session.get('role') == 'SELLER' %}
           <a class="nav-item nav-link" href="{{ url_for('home_router.roomRequests')}}">
             Room requests
             {% set notis = session.get('noti') %}
@@ -76,6 +78,8 @@
   color: white;">{{notis}}</span>
             {% endif %}
           </a>
+          {% endif %}
+
           <a class="nav-item nav-link" href="{{ url_for('user_router.logout')  }}">Logout</a>
           {% else %}
           <a class="nav-item nav-link" href="{{ url_for('user_router.login') }}">Login</a>

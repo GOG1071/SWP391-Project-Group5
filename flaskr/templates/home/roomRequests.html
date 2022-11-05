@@ -47,7 +47,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">All User</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Room requests Manager</h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -56,6 +56,7 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th></th>
                                             <th>User</th>
                                             <th>Name</th>
                                             <th>Phone</th>
@@ -68,6 +69,13 @@
                                     <tbody>
                                         {% for request in requests %}
                                         <tr>
+                                            <td>
+                                                {% if request.readed == 0 %}
+                                                <i class="bi bi-envelope-fill" style="color: red;">unread</i>
+                                                {% else %}
+                                                <i class="bi bi-envelope-open-fill">readed</i>
+                                                {% endif %}
+                                            </td>
                                             <td><a href="{{ url_for('user_router.profile', username = request.user.username) }}"
                                                     title="">{{request.user.username}}</a>
                                             </td>

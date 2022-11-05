@@ -36,7 +36,8 @@ def login():
         session['role'] = query.role
         session['banned'] = query.banned
         session['email'] = query.email
-        session['noti'] = RoomRequest.query.filter_by(Seller_id=session['id']).count()
+        session['noti'] = RoomRequest.query.filter_by(
+            Seller_id=session['id'], readed=0).count()
         return redirect(url_for("user_router.home"))
     return render_template("user/login.html")
 

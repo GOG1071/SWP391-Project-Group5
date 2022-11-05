@@ -225,4 +225,60 @@ def roomRequestDetail(id):
     request = RoomRequest.query.filter_by(id=id).first()
     user = User.query.filter_by(id=request.user_id).first()
     room = RoomDetail.query.filter_by(id=request.room_id).first()
+    request.readed = 1
+    session['noti'] = RoomRequest.query.filter_by(
+        Seller_id=session['id'], readed=0).count()
+    db.session.commit()
     return render_template("home/roomRequestDetail.html", request=request, user=user, room=room)
+
+
+def refuseRoomRequest():
+    requset_id = request.form.get("id")
+    roomRequestDetail = RoomRequest.query.filter_by(id=requset_id).first()
+    customer = User.query.filter_by(id=roomRequestDetail.user_id).first()
+    homeOnwer = User.query.filter_by(id=roomRequestDetail.Seller_id).first()
+    email = customer.email
+
+    if roomRequestDetail:
+
+        msg = Message('Your room request has been refused',
+                      sender='sweethomehola@outlook.com', recipients=[email])
+        msg.body = "Home owner has been refuse your room request, please contact to home owner for more information \r\n Home owner email: " + \
+            homeOnwer.email + "\r\n Thank you for using our service"
+        mail.send(msg)
+
+        db.session.delete(roomRequestDetail)
+        db.session.commit()
+
+        requests = RoomRequest.query.filter_by(Seller_id=session["id"]).all()
+        users = User.query.all()
+        return render_template("home/roomRequests.html", requests=requests, user=users)
+    requests = RoomRequest.query.filter_by(Seller_id=session["id"]).all()
+    users = User.query.all()
+    return render_template("home/roomRequests.html", requests=requests, user=users)
+
+
+def acceptRoomRequest():
+    requset_id = request.form.get("id")
+    roomRequestDetail = RoomRequest.query.filter_by(id=requset_id).first()
+    customer = User.query.filter_by(id=roomRequestDetail.user_id).first()
+    homeOnwer = User.query.filter_by(id=roomRequestDetail.Seller_id).first()
+    email = customer.email
+
+    if roomRequestDetail:
+
+        msg = Message('Your room request has been accpetd',
+                      sender='sweethomehola@outlook.com', recipients=[email])
+        msg.body = "Home owner has been accept your room request, please contact to home owner for more information \r\n Home owner email: " + \
+            homeOnwer.email + "\r\n Thank you for using our service"
+        mail.send(msg)
+
+        db.session.delete(roomRequestDetail)
+        db.session.commit()
+
+        requests = RoomRequest.query.filter_by(Seller_id=session["id"]).all()
+        users = User.query.all()
+        return render_template("home/roomRequests.html", requests=requests, user=users)
+    requests = RoomRequest.query.filter_by(Seller_id=session["id"]).all()
+    users = User.query.all()
+    return render_template("home/roomRequests.html", requests=requests, user=users)
