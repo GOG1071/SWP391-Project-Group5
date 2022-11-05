@@ -4,7 +4,7 @@ from models.report import ReportHome
 from models.home import Home
 from models.home import RoomDetail
 from models.home import RoomImage
-from models.user import User
+from models.user import User, RoomRequest
 from models.model import db
 from flask import Flask, redirect, url_for, json, render_template, request, session, flash
 from flask_mail import Message
@@ -35,13 +35,15 @@ def load_home():
     list_home = Home.query.filter_by(user_id=user_id)
     return render_template("home/load_home.html", list_home=list_home)
 
+
 def remove_home():
     home_id = request.args.get("home_id")
-    home = Home.query.filter_by(id = home_id).first()
+    home = Home.query.filter_by(id=home_id).first()
     if home:
         db.session.delete(home)
         db.session.commit()
     return redirect(url_for("home_router.load_home"))
+
 
 def edit_home():
     if request.method == "GET":
@@ -50,7 +52,7 @@ def edit_home():
         return render_template("home/edit_home.html", home=home, home_id=home_id)
     else:
         home_id = request.form.get("home_id")
-        home = Home.query.filter_by(id = home_id).first()
+        home = Home.query.filter_by(id=home_id).first()
         if home:
             home.name = request.form['home_name'] if request.form['home_name'] else home.name
             home.address = request.form["address"] if request.form["address"] else home.address
@@ -64,23 +66,24 @@ def edit_home():
 def load_room():
     home_id = request.args.get("home_id")
     list_room = RoomDetail.query.filter_by(home_id=home_id)
-    home = Home.query.filter_by(id = home_id).first()
+    home = Home.query.filter_by(id=home_id).first()
     list_room_img = []
     for i in list_room:
         room_img = RoomImage.query.filter_by(room_id=i.id)
         list_room_img += room_img
     if list_room_img:
-        return render_template("home/load_room.html", list_room=list_room, list_room_img=list_room_img, home_id=home_id, total_room = home.total_rooms,room_home = list_room.count())
-    return render_template("home/load_room.html", list_room=list_room, home_id=home_id,total_room = home.total_rooms,room_home = list_room.count())
+        return render_template("home/load_room.html", list_room=list_room, list_room_img=list_room_img, home_id=home_id, total_room=home.total_rooms, room_home=list_room.count())
+    return render_template("home/load_room.html", list_room=list_room, home_id=home_id, total_room=home.total_rooms, room_home=list_room.count())
+
 
 def remove_room():
     room_id = request.args.get("room_id")
-    room = RoomDetail.query.filter_by(id = room_id).first()
-    home = Home.query.filter_by(id = room.home_id).first()
+    room = RoomDetail.query.filter_by(id=room_id).first()
+    home = Home.query.filter_by(id=room.home_id).first()
     if room:
         db.session.delete(room)
         db.session.commit()
-    return redirect(url_for("home_router.load_room",home_id =home.id))
+    return redirect(url_for("home_router.load_room", home_id=home.id))
 
 
 def add_room():
@@ -140,10 +143,10 @@ def report(home_id):
 def do_report(reported_home_id, reporter_id, reason):
     home = Home.query.filter(Home.id == reported_home_id).first()
     if home:
-        report = ReportHome(\
-            home_id=reported_home_id,\
-            user_id=reporter_id,\
-            timestamp = datetime.now()  ,\
+        report = ReportHome(
+            home_id=reported_home_id,
+            user_id=reporter_id,
+            timestamp=datetime.now(),
             reason=reason)
         db.session.add(report)
         db.session.commit()
@@ -163,7 +166,7 @@ def search(home_name):
 
 
 def home_detail(home_id):
-    user = User.query.filter_by(username = session['username']).first()
+    user = User.query.filter_by(username=session['username']).first()
     home = Home.query.filter_by(id=home_id).first()
     if home.user_id == user.id:
         username = user.username
@@ -173,6 +176,7 @@ def home_detail(home_id):
     for room in list_room:
         room.image_link = RoomImage.query.filter_by(room_id=room.id).all()
     return render_template("home/home_detail.html", list_room=list_room, home_id=home_id, username=username)
+
 
 def compare(home1, home2):
     home1 = Home.query.filter_by(id=home1).first()
@@ -185,9 +189,96 @@ def compare(home1, home2):
         room.image_link = RoomImage.query.filter_by(room_id=room.id).all()
     return render_template("home/compare.html", home1=home1, home2=home2, list_room1=list_room1, list_room2=list_room2)
 
+
 def home_compare(home_id):
     home_list = Home.query.all()
     for home in home_list:
         if home.id == int(home_id):
             home_list.remove(home)
     return render_template("home/home_compare.html", home_list=home_list, origin=home_id)
+
+
+def new_room_request(room_id):
+    room_id = request.form.get("id")
+    name = request.form['name']
+    phone = request.form['phone']
+    timeVisit = request.form['timeVisit']
+    facebook = request.form['facebook']
+    user_id = session["id"]
+    timestamp = datetime.now()
+    room = RoomDetail.query.filter_by(id=room_id).first()
+    owner = User.query.filter_by(id=room.home.user_id).first()
+    room_reqest = RoomRequest(
+        user_id=user_id, timestamp=timestamp, room_id=room_id, Seller_id=owner.id, name=name, phone=phone, facebook=facebook, content=timeVisit, readed=0)
+    db.session.add(room_reqest)
+    db.session.commit()
+    return render_template("home/roomRequest.html", done=True, name=name, phone=phone, timeVisit=timeVisit, facebook=facebook, room=room)
+
+
+def roomRequests():
+    requests = RoomRequest.query.filter_by(Seller_id=session["id"]).all()
+    user = User.query.all()
+    return render_template("home/roomRequests.html", requests=requests, user=user)
+
+
+def roomRequestDetail(id):
+    request = RoomRequest.query.filter_by(id=id).first()
+    user = User.query.filter_by(id=request.user_id).first()
+    room = RoomDetail.query.filter_by(id=request.room_id).first()
+    request.readed = 1
+    session['noti'] = RoomRequest.query.filter_by(
+        Seller_id=session['id'], readed=0).count()
+    db.session.commit()
+    return render_template("home/roomRequestDetail.html", request=request, user=user, room=room)
+
+
+def refuseRoomRequest():
+    requset_id = request.form.get("id")
+    roomRequestDetail = RoomRequest.query.filter_by(id=requset_id).first()
+    customer = User.query.filter_by(id=roomRequestDetail.user_id).first()
+    homeOnwer = User.query.filter_by(id=roomRequestDetail.Seller_id).first()
+    email = customer.email
+
+    if roomRequestDetail:
+
+        msg = Message('Your room request has been refused',
+                      sender='sweethomehola@outlook.com', recipients=[email])
+        msg.body = "Home owner has been refuse your room request, please contact to home owner for more information \r\n Home owner email: " + \
+            homeOnwer.email + "\r\n Thank you for using our service"
+        mail.send(msg)
+
+        db.session.delete(roomRequestDetail)
+        db.session.commit()
+
+        requests = RoomRequest.query.filter_by(Seller_id=session["id"]).all()
+        users = User.query.all()
+        return render_template("home/roomRequests.html", requests=requests, user=users)
+    requests = RoomRequest.query.filter_by(Seller_id=session["id"]).all()
+    users = User.query.all()
+    return render_template("home/roomRequests.html", requests=requests, user=users)
+
+
+def acceptRoomRequest():
+    requset_id = request.form.get("id")
+    roomRequestDetail = RoomRequest.query.filter_by(id=requset_id).first()
+    customer = User.query.filter_by(id=roomRequestDetail.user_id).first()
+    homeOnwer = User.query.filter_by(id=roomRequestDetail.Seller_id).first()
+    email = customer.email
+
+    if roomRequestDetail:
+
+        msg = Message('Your room request has been accpetd',
+                      sender='sweethomehola@outlook.com', recipients=[email])
+        msg.body = "Home owner has been accept your room request, please contact to home owner for more information \r\n Home owner email: " + \
+            homeOnwer.email + "\r\n Thank you for using our service"
+        mail.send(msg)
+
+        db.session.delete(roomRequestDetail)
+        db.session.commit()
+
+        requests = RoomRequest.query.filter_by(Seller_id=session["id"]).all()
+        users = User.query.all()
+        return render_template("home/roomRequests.html", requests=requests, user=users)
+    requests = RoomRequest.query.filter_by(Seller_id=session["id"]).all()
+    users = User.query.all()
+    return render_template("home/roomRequests.html", requests=requests, user=users)

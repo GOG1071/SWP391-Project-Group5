@@ -38,10 +38,12 @@
 					<td> {{i.description}} </td>
 					<td>{{i.total_rooms}}</td>
 					<td> {{i.available_rooms}} </td>
-					<td> <a href="{{url_for('home_router.home_detail', home_id = i.id)}}"><button class="btn btn-danger">
+					<td> <a href="{{url_for('home_router.home_detail', home_id = i.id)}}"><button
+								class="btn btn-danger">
 								View Detail </button></a> </td>
-					<td> <a href="{{url_for('home_router.home_compare', home_id = i.id)}}"><button class="btn btn-danger"> 
-						Compare with </button></a> </td>
+					<td> <a href="{{url_for('home_router.home_compare', home_id = i.id)}}"><button
+								class="btn btn-danger">
+								Compare with </button></a> </td>
 				</tr>
 			</tbody>
 			{%endfor%}

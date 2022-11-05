@@ -11,6 +11,7 @@ class Home(db.Model):
     timestamp = db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     reports = db.relationship('ReportHome', backref='home', lazy=True)
+    room = db.relationship('RoomDetail', backref='home', lazy=True)
 
 
 class RoomDetail(db.Model):
@@ -20,6 +21,7 @@ class RoomDetail(db.Model):
     amount = db.Column(db.Integer, unique=False, nullable=False)
     price = db.Column(db.Float, nullable=False)
     description = db.Column(db.String(1000), unique=False, nullable=False)
+    roomRequest = db.relationship('RoomRequest', backref='room', lazy=True)
 
 
 class RoomImage(db.Model):

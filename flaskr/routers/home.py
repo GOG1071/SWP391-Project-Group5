@@ -1,6 +1,7 @@
 from decorators.authentication import login_required, seller_required
 from flask import Blueprint, request, render_template, url_for, redirect
 import controllers.home
+from models.home import RoomDetail
 
 home_router = Blueprint('home_router', __name__)
 
@@ -18,12 +19,14 @@ def add_home():
 def load_home():
     return controllers.home.load_home()
 
+
 @home_router.route('/edit_home', methods=["POST", "GET"])
 @seller_required
 def edit_home():
     return controllers.home.edit_home()
 
-@home_router.route('/remove_home',methods = ["POST","GET"])
+
+@home_router.route('/remove_home', methods=["POST", "GET"])
 @seller_required
 def remove_home():
     return controllers.home.remove_home()
@@ -34,7 +37,8 @@ def remove_home():
 def load_room():
     return controllers.home.load_room()
 
-@home_router.route('/remove_room',methods = ["POST","GET"])
+
+@home_router.route('/remove_room', methods=["POST", "GET"])
 @seller_required
 def remove_room():
     return controllers.home.remove_room()
@@ -49,6 +53,7 @@ def add_room():
     if request.method == "POST":
         return controllers.home.add_room()
     return render_template("home/add_room.html", home_id=home_id)
+
 
 @home_router.route('/')
 @login_required
@@ -68,10 +73,13 @@ def home_detail():
 def report(home_id):
     return controllers.home.report(home_id=home_id)
 
+
 @home_router.route('/do_report', methods=["POST"])
 @login_required
 def do_report():
-    return controllers.home.do_report(request.form.get("home_id"), request.form.get("user_id") ,request.form.get("reason"))
+    return controllers.home.do_report(request.form.get("home_id"), request.form.get("user_id"), request.form.get("reason"))
+
+
 @home_router.route('/search', methods=["GET", "POST"])
 @login_required
 def search():
@@ -85,9 +93,45 @@ def search():
 def compare():
     return controllers.home.compare(request.args.get("home1"), request.args.get("home2"))
 
+
 @home_router.route('/home_compare', methods=["GET"])
 @login_required
 def home_compare():
     home_id = request.args.get('home_id')
     return controllers.home.home_compare(home_id)
 
+
+@home_router.route('/newRoomRequest/<int:room_id>', methods=["GET", "POST"])
+def newRoomRequest(room_id):
+    if request.method == "POST":
+        return controllers.home.new_room_request(room_id)
+    room = RoomDetail.query.filter_by(id=room_id).first()
+    return render_template("home/roomRequest.html", room_id=room_id, room=room)
+
+
+@home_router.route("/roomRequests")
+@login_required
+def roomRequests():
+    return controllers.home.roomRequests()
+
+
+@home_router.route("/roomRequestDetail/<int:room_id>", methods=["GET", "POST"])
+@login_required
+def roomRequestDetail(room_id):
+    if request.method == "POST":
+        return controllers.home.roomRequestDetail(room_id)
+    return controllers.home.roomRequestDetail(room_id)
+
+
+@home_router.route("/roomRequestDetail/refuseRoomRequest", methods=["GET", "POST"])
+@login_required
+def refuseRoomRequest():
+    if request.method == "POST":
+        return controllers.home.refuseRoomRequest()
+
+
+@home_router.route('/roomRequestDetail/accept_report', methods=["POST", "GET"])
+@login_required
+def acceptRoomRequest():
+    if request.method == "POST":
+        return controllers.home.acceptRoomRequest()
