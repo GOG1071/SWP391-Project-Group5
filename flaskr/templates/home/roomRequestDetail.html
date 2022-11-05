@@ -50,7 +50,9 @@
                                 <input type="text" value="{{room.id}}" name="id" hidden>
                                 <div class="row">
                                     <div class="col-md-4 form-group">
-                                        <div class="form-control">Username: {{name}} </div>
+                                        <div class="form-control">Username:<a
+                                                href="{{ url_for('user_router.profile', username = user.username) }}">{{user.username}}</a>
+                                        </div>
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <div class="form-control">Name: {{request.name}} </div>
