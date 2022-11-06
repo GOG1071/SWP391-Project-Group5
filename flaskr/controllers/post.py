@@ -193,6 +193,16 @@ def user_posts(user_id):
     posts = Post.query.filter_by(author_id=user_id).order_by(
         Post.timestamp.desc()).paginate(page=page, per_page=5)
     return render_template('post/newsfeed.html', posts=posts)
+def get_all_comment(post_id):
+    list_comment = Comment.query.filter_by(post_id=post_id).all()
+    #size of list_comment
+    size = len(list_comment)
+    #get name of author of comment
+    list_author = []
+    for comment in list_comment:
+        author = User.query.filter_by(id=comment.author_id).first()
+        list_author.append(author)
+    return render_template('post/get_all_comment.html', list_comment = list_comment,size = post_id,list_author=list_author)
 def comment(post_id):
     author_id = session['id']
     content = request.form['content']
@@ -203,7 +213,7 @@ def comment(post_id):
         content=content,
         timestamp=timestamp,
     )
-    list_comment = Comment.query.filter_by(post_id=post_id).all()
     db.session.add(comment)
     db.session.commit()
+    list_comment = Comment.query.filter_by(post_id=post_id).all()
     return redirect(url_for('post_router.post_detail', id=post_id, list_comment = list_comment))

@@ -52,6 +52,9 @@
             </p>
             <p class="post-time">{{ post.timestamp.strftime('%Y-%m-%d') }}</p>
           </div>
+          <div>
+            <a href="{{url_for('post_router.get_all_comment',post_id = post.id)}}"> View all comment</a>
+          </div>
           <div class="comment-wrapper">
             <form method="post" action ="{{ url_for('post_router.comment',post_id = post.id) }}"enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" /> 
