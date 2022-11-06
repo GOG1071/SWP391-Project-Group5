@@ -246,9 +246,17 @@
                                             posts: {{reportedPosts.query.all()|length}}</span></h4>
                                     </span></h4>
                                     <div class="progress mb-4">
+                                        {% with lengthp = post.query.all()|length %}
+                                        {% if lengthp != 0 %}
                                         <div class="progress-bar bg-danger" role="progressbar"
-                                            style="width: {{100-reportedPosts.query.all()|length/post.query.all()|length*100}}%">
+                                            style="width: {{100-reportedPosts.query.all()|length/lengthp*100}}%">
                                         </div>
+                                        {%else%}
+                                        <div class="progress-bar bg-danger" role="progressbar"
+                                            style="width: {{100-reportedPosts.query.all()|length*100}}%">
+                                        </div>
+                                        {%endif%}
+                                        {% endwith %}
                                     </div>
 
 
