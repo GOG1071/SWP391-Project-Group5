@@ -33,6 +33,10 @@ class Bookmark(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     home_id = db.Column(db.Integer, db.ForeignKey('home.id'), nullable=False)
 
+class Like(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
 
 class RoomRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
