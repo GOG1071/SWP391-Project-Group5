@@ -135,3 +135,13 @@ def refuseRoomRequest():
 def acceptRoomRequest():
     if request.method == "POST":
         return controllers.home.acceptRoomRequest()
+
+@home_router.route('/bookmark/<int:id>', methods=["POST", "GET"])
+@login_required
+def bookmark(id):
+    return controllers.home.bookmark(id)
+
+@home_router.route('/unbookmark/<int:id>', methods=["POST", "GET"])
+@login_required
+def unbookmark(id):
+    return controllers.home.unbookmark(id)
