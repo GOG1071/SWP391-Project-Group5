@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from models.post import Comment
 from models.post import Upvote
 from models.post import PostImage
 from models.post import Post
@@ -178,8 +178,7 @@ def list_user_post(user_id):
 def upvote(post_id):
     user_id = session['id']
     #find user of post has post_id
-    post = Post.query.filter_by(id=post_id).first()
-    user = User.query.filter_by(id=post.author_id).first()
+    user = User.query.filter_by(id=user_id).first()
     upvote = Upvote.query.filter_by(user_id=user_id, post_id=post_id).first()
     if upvote:
         db.session.delete(upvote)
@@ -188,9 +187,23 @@ def upvote(post_id):
         upvote = Upvote(user_id=user_id, post_id=post_id)
         db.session.add(upvote)
         db.session.commit()
-    return redirect(url_for('post_router.user_posts',user_id = user.id))
+    return redirect(url_for('post_router.post_detail', id=post_id))
 def user_posts(user_id):
     page = request.args.get('page', 1, type=int)
     posts = Post.query.filter_by(author_id=user_id).order_by(
         Post.timestamp.desc()).paginate(page=page, per_page=5)
     return render_template('post/newsfeed.html', posts=posts)
+def comment(post_id):
+    author_id = session['id']
+    content = request.form['content']
+    timestamp = datetime.now()
+    comment = Comment(
+        post_id=post_id,
+        author_id=author_id,
+        content=content,
+        timestamp=timestamp,
+    )
+    list_comment = Comment.query.filter_by(post_id=post_id).all()
+    db.session.add(comment)
+    db.session.commit()
+    return redirect(url_for('post_router.post_detail', id=post_id, list_comment = list_comment))
