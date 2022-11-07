@@ -112,3 +112,10 @@ def delete():
     if request.method == "POST":
         return controllers.user.delete(request.form.get("step"),request.form.get("input"))
     return render_template("user/delete.html")
+
+@user_router.route('/upgrade', methods=["GET","POST"])
+@login_required
+def upgrade():
+    if request.method == "POST":
+        return controllers.user.upgrade(request.form.get('email'))
+    return render_template("user/upgrade.html")

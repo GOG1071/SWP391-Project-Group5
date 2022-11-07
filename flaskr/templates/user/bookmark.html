@@ -23,11 +23,15 @@
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <h6 class="mb-2 text-prim">Liked Posts</h6>
                                     <p>
-                                        {% for post in posts %}
+                                        {%if likes %}
+                                        {% for post in likes %}
                                         <a
                                             href="{{ url_for('user_router.post', post_id=post['id']) }}">{{post['title']}}</a>
                                         <br>
                                         {% endfor %}
+                                        {%else%}
+                                        <p class="text-danger">There is no liked post</p>
+                                        {%endif%}
                                     </p>
                                 </div>
                             </div>
@@ -45,11 +49,13 @@
                                 </div>
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <p>
-                                        {% for home in bookmarks %}
-                                        <a
-                                            href="{{ url_for('home_router.info', home_id=home['id']) }}">{{home['title']}}</a>
-                                        <br>
+                                        {%if homes %}
+                                        {% for home in homes %}
+                                        <a href="{{ url_for('home_router.home_detail', home_id=home['id']) }}">{{home['name']}}</a>
                                         {% endfor %}
+                                        {%else%}
+                                        <p class="text-danger">There is no bookmarked home</p>
+                                        {%endif%}
                                     </p>
                                 </div>
                             </div>

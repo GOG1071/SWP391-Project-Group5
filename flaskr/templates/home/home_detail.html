@@ -18,6 +18,8 @@
 			<h1 class="text-center" style="margin-bottom: 30px">Detail of rooms type in the home</h1>
 			{% if username != session['username']%}
 			<a href="/home/report/{{home_id}}"><button>Report this home</button></a>
+			<a href="/home/bookmark/{{home_id}}"><button>Bookmark this home</button></a>
+			<a href="/home/unbookmark/{{home_id}}"><button>Unbookmark this home</button></a>
 			{% endif %}
 		</div>
 		<table class="table table-bordered table-hover table-dark">

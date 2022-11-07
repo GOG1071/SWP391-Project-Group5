@@ -4,7 +4,7 @@ from models.report import ReportHome
 from models.home import Home
 from models.home import RoomDetail
 from models.home import RoomImage
-from models.user import User, RoomRequest
+from models.user import User, Bookmark, RoomRequest
 from models.model import db
 from flask import Flask, redirect, url_for, json, render_template, request, session, flash
 from flask_mail import Message
@@ -282,3 +282,28 @@ def acceptRoomRequest():
     requests = RoomRequest.query.filter_by(Seller_id=session["id"]).all()
     users = User.query.all()
     return render_template("home/roomRequests.html", requests=requests, user=users)
+
+def bookmark(id):
+    user_id = session["id"]
+    bookmark = Bookmark.query.filter_by(user_id=user_id, home_id =id).first()
+    if not bookmark:
+        bookmark = Bookmark(user_id=user_id, home_id=id)
+        db.session.add(bookmark)
+        db.session.commit()
+        flash("Bookmark successfully", "bookmark")
+        return redirect(url_for('home_router.list_home'))
+    else:
+        flash("You have bookmarked this home", "bookmark")
+        return redirect(url_for('home_router.list_home'))
+
+def unbookmark(id):
+    user_id = session["id"]
+    bookmark = Bookmark.query.filter_by(user_id=user_id, home_id =id).first()
+    if bookmark:
+        db.session.delete(bookmark)
+        db.session.commit()
+        flash("Unbookmark successfully", "bookmark")
+        return redirect(url_for('home_router.list_home'))
+    else:
+        flash("You have not bookmarked this home", "bookmark")
+        return redirect(url_for('home_router.list_home'))

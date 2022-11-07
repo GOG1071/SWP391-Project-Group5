@@ -90,34 +90,16 @@
                                 <a href="/user/chpwd"><button type="button" id="submit" name="submit" class="btn btn-primary">Change Password</button>
                                 </a>
                                 <a href="/user/delete"><button type="button" id="submit" name="submit" class="btn btn-primary">Deactive</button></a>
+                                <a href="/user/upgrade"><button type="button" id="submit" name="submit" class="btn btn-primary">Upgrade</button></a>
                                 {% endif %}
                                 {%if user.username != session['username']  %}
-                                <a href="{{url_for('user_router.report', username = user.username)}}"><button type="button" id="submit" name="submit" class="btn btn-primary btn-danger">Report</button>
-                                </a>
+                                <a href="{{url_for('user_router.report', username = user.username)}}"><button type="button" id="submit" name="submit" class="btn btn-primary btn-danger">Report</button></a>
+                                <a href="{{ url_for('chat_router.message_user',receiver_id = user.id) }}"><button type="button" class="btn btn-primary">Message</button></a>
                                 {% endif %}
+                                <a href="{{ url_for('post_router.user_posts',user_id = user.id) }}" ><button type="button" class="btn btn-primary">Post</button></a>
                                 </div>
                         </div>
 
-                    </div>
-                  </div>
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <div class="text-right">
-                      <a
-                        href="{{ url_for('chat_router.message_user',receiver_id = user.id) }}"
-                        ><button type="button" class="btn btn-primary">
-                          Message
-                        </button>
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <div class="text-right">
-                      <a
-                        href="{{ url_for('post_router.user_posts',user_id = user.id) }}"
-                        ><button type="button" class="btn btn-primary">
-                          Post
-                        </button>
-                      </a>
                     </div>
                   </div>
                 </div>

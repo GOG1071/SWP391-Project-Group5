@@ -1,7 +1,8 @@
 import random
 import string
 from models.report import ReportUser, ReportUserDetail
-from models.user import Bookmark, RoomRequest
+from models.user import Bookmark, Like, RoomRequest
+from models.home import Home 
 from models.user import UserRole, User, HomeOwnerRequest, WebsiteFeedback
 from models.model import db
 from flask import Flask, redirect, url_for, json, render_template, request, session, flash
@@ -182,12 +183,16 @@ def user_posts(username):
 
 
 def bookmark(userid):
-    bookmarks = Bookmark.query.filter(User.id == userid).all()
-    # missing liked posts
-    if bookmarks:
-        return render_template("user/bookmark.html", bookmarks=bookmarks)
-    flash("You don't have any bookmark yet!", "info")
-    return render_template("user/bookmark.html")
+    bookmarks = Bookmark.query.filter(Bookmark.user_id == userid).all()
+    homes = []
+    for bookmark in bookmarks:
+        homes.append(Home.query.filter(Home.id == bookmark.home_id).first())
+    _likes = Like.query.filter(Like.user_id == userid ).all()
+    likes = []
+    for like in _likes:
+        likes.append(Home.query.filter(Home.id == like.home_id).first())
+    
+    return render_template("user/bookmark.html", homes=homes, likes=likes)
 
 
 def report(username):
@@ -239,19 +244,31 @@ def chpwd(oldpass, newpass, cfnewpass):
 def delete(step, input):
     if(step == '0'):
         if(input != 'Confirm'):
-            print(0)
             message = "Assuming you accidently got here. Click OK to get back Home!"
             return render_template("user/delete.html", message=message)
-        print(1)
         return render_template("user/delete.html", isConfirmed = True)
     else:
         user = User.query.filter(User.id == session['id']).first()
         if(user.password == input):
-            print(2)
             db.session.delete(user)
             db.session.commit()
             session.clear()
             return render_template("user/delete.html", message="Delete successfully!")
         else:
-            print(3)
             return render_template("user/delete.html", message = "Wrong password")
+
+def upgrade(email):
+    user = User.query.filter(User.id == session['id']).first()
+    userWithMail = User.query.filter(User.email == email).first()
+    if user.role == 'MEMBER':
+        if userWithMail:
+            return render_template("user/upgrade.html", message="Mail is used!")
+        else:
+            user.role = 'SELLER'
+            user.email = email
+            user.banned = True
+            db.session.commit()
+            session.clear()
+            return render_template("user/upgrade.html", message="Upgrade successfully!")
+    else:
+        return render_template("user/upgrade.html", message="You are already a seller!")
