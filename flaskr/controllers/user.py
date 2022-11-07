@@ -69,7 +69,7 @@ def forgot_password(email):
         db.session.commit()
         # send email
         msg = Message('Your new password is: ' + new_password,
-                      sender='sweethomehola@outlook.com', recipients=[email])
+                      sender='yenduls@gmail.com', recipients=[email])
         mail.send(msg)
 
         # thong bao toi front end

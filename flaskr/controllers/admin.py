@@ -38,7 +38,7 @@ def allow_access():
     request_register.status = True
     db.session.commit()
     msg = Message('Your request has been accepted. Your password is: ' + home_user.password,
-                  sender='sweethomehola@outlook.com', recipients=[home_user.email])
+                  sender='yenduls@gmail.com', recipients=[home_user.email])
     mail.send(msg)
     return redirect(url_for("admin_router.view_request_register"))
 
@@ -57,7 +57,7 @@ def delete_report():
         db.session.commit()
 
         msg = Message('Refuse report',
-                      sender='sweethomehola@outlook.com', recipients=[email])
+                      sender='yenduls@gmail.com ', recipients=[email])
         msg.body = "Your report has been refuse by admin \r\n Reason: " + report.reason + \
             "\r\n Please contact admin for more information"
         mail.send(msg)
@@ -88,13 +88,13 @@ def accept_report():
         db.session.commit()
 
         msg = Message('Accept report',
-                      sender='sweethomehola@outlook.com', recipients=[emailReporter])
+                      sender='yenduls@gmail.com ', recipients=[emailReporter])
         msg.body = "Your report has been accpted by admin \r\n Reason: " + report.reason + \
             "\r\n Please contact admin for more information"
         mail.send(msg)
 
         msg = Message('Delete post',
-                      sender='sweethomehola@outlook.com', recipients=[email])
+                      sender='yenduls@gmail.com ', recipients=[email])
         msg.body = "Your post has been delete by admin \r\n Reason: " + report.reason + \
             "\r\n Reason" + post.content + \
             "\r\n Please contact admin for more information"
@@ -136,7 +136,7 @@ def delete_home():
         db.session.commit()
 
         msg = Message('Your home has been deleted by admin',
-                      sender='sweethomehola@outlook.com', recipients=[email])
+                      sender='yenduls@gmail.com ', recipients=[email])
         msg.body = "Your post has been deleted by admin  \r\nPlease contact admin for more information"
         mail.send(msg)
 
@@ -156,7 +156,7 @@ def delete_home_report():
     if report:
 
         msg = Message('Your report has been refuse',
-                      sender='sweethomehola@outlook.com', recipients=[email])
+                      sender='yenduls@gmail.com ', recipients=[email])
         msg.body = "Your report has been refused by admin  \r\nHome: " + report.home.name + "\r\nReason: " + \
             report.reason + "\r\nPlease contact admin for more information"
         mail.send(msg)
@@ -191,13 +191,13 @@ def accept_home_report():
     if home:
 
         msg = Message('Your report has been accepted',
-                      sender='sweethomehola@outlook.com', recipients=[emailReporter])
+                      sender='yenduls@gmail.com ', recipients=[emailReporter])
         msg.body = "Your report has been accepted by admin  \r\nHome: " + home.name + " is deleted\r\nReason: " + \
             report.reason + "\r\nPlease contact admin for more information"
         mail.send(msg)
 
         msg = Message('Your home has been deleted',
-                      sender='sweethomehola@outlook.com', recipients=[email])
+                      sender='yenduls@gmail.com ', recipients=[email])
         msg.body = "Your home has been reported and deleted by admin\r\nHome: " + home.name + "\r\nReason: " + \
             report.reason + "\r\nPlease contact admin for more information"
         mail.send(msg)
@@ -229,7 +229,7 @@ def delete_post():
         db.session.commit()
 
         msg = Message('Your post has been deleted by admin',
-                      sender='sweethomehola@outlook.com', recipients=[email])
+                      sender='yenduls@gmail.com ', recipients=[email])
         msg.body = "Your post has been deleted by admin, post content :" + \
             post.content + ", please contact admin for more information"
         mail.send(msg)
