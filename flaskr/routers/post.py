@@ -1,5 +1,5 @@
 from decorators.authentication import login_required,admin_required
-from flask import Blueprint, jsonify, request, render_template, session,url_for,flash
+from flask import Blueprint, jsonify, request, render_template, session,url_for,flash, redirect
 from models.post import Post
 import controllers.post
 
@@ -76,3 +76,14 @@ def upvote(post_id):
 def user_posts(user_id):
     return controllers.post.user_posts(user_id)
 
+@post_router.route("/user_post/<int:post_id>",methods=["POST", "GET"])
+#@login_required
+def comment(post_id):
+    if request.method == "POST":
+        return controllers.post.comment(post_id)
+    else:
+        return controllers.post.get_all_comment(post_id)
+@post_router.route("/get_all_comment/<int:post_id>")
+#@login_required
+def get_all_comment(post_id):
+    return controllers.post.get_all_comment(post_id)
