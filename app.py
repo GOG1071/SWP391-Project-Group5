@@ -15,7 +15,7 @@ from flask_wtf.csrf import CSRFProtect
 from exceptions.handle import error_router
 
 # load environment variables
-env_path = Path('.') / '../.env'
+env_path = Path('.') / '.env'
 load_dotenv(dotenv_path=env_path)
 
 # start
