@@ -63,5 +63,3 @@ def apply_caching(response):
     response.headers["HTTP-HEADER"] = "VALUE"
     return response
 
-
-app.run()
