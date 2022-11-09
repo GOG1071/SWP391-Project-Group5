@@ -33,7 +33,7 @@ def allow_access():
     id = request.args.get("id")
     request_register = HomeOwnerRequest.query.filter_by(id=id).first()
     home_user = User.query.filter_by(id=request_register.user_id).first()
-    home_user.banned = False
+    home_user.banned = 0
     db.session.commit()
     request_register.status = True
     db.session.commit()
