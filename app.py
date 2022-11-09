@@ -64,4 +64,4 @@ def apply_caching(response):
     return response
 
 
-app.run(debug=True)
+app.run("0.0.0.0", port=22345 , debug=True)
